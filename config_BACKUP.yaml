@@ -1,0 +1,65 @@
+baseURL: http://example.org/
+languageCode: en-us
+title: Luc Vedrenne's home page
+theme: hugo-profile
+
+
+params:
+    theme:
+        disableThemeToggle: false
+        defaultTheme: "dark" # light or dark
+    navbar:
+        align: ms-auto
+        brandLogo: "/logo.png" # Logo for the brand | default is the favicon variable
+        brandName: "Profile" # Brand name for the brand | default is the title variable
+  
+
+Menus:
+  main:
+    - identifier: projects
+      title: Some projects more or less linked to my research
+      name: Projects
+      url: /blog
+      weight: 1
+    - identifier: research
+      title: My research work
+      name: Research
+      url: /blog
+      weight: 1
+    - identifier: about
+      title: Who am I ?
+      name: About
+      url: /blog
+      weight: 1
+    - identifier: teaching
+      title: Courses I've been involved in
+      name: Teaching
+      url: /blog
+      weight: 1
+    
+
+
+    # #Dropdown menu
+    # - identifier: dropdown
+    #   title: Example dropdown menu
+    #   name: Dropdown
+    #   weight: 2
+    # - identifier: dropdown1
+    #   title: example dropdown 1
+    #   name: example 1
+    #   url: /#
+    #   parent: dropdown
+    #   weight: 1
+    # - identifier: dropdown2
+    #   title: example dropdown 2
+    #   name: example 2
+    #   url: /#
+    #   parent: dropdown
+    #   weight: 2
+  
+
+footer:
+    # recentPosts: false
+    socialNetworks:
+      github: https://github.com/ListIndexOutOfRange
+      linkedin: https://linkedin.com
