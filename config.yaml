@@ -120,16 +120,17 @@ params:
     intro: "ICube lab"
     title: "Luc Vedrenne"
     subtitle: "IMAGeS team"
-    content: "I'm a PhD student working biomedical imaging processing through deep learning. Currenctly working on 3D point clouds registration."
+    content: "I'm a PhD student working on biomedical imaging processing through deep learning. Currenctly working on 3D point clouds registration."
     image: /images/logo_icube_short.svg
+    url: "https://images.icube.unistra.fr/index.php/Accueil"
     # bottomImage:
     #   enable: true
     roundImage: true # Make hero image circular | default false
     button:
       enable: true
       name: "Resume"
-      url: "resume"
-      download: false
+      url: "#"
+      download: true
       newPage: false
     socialLinks:
       fontAwesomeIcons:
@@ -185,6 +186,8 @@ params:
           enable: true
           name: "Poster (in french)"
           url: "IABM.pdf"
+        info:
+          enable: false
         content: |
           I did my master thesis in the same laboratory. I worked on particle picking, that is the detection of isolated particles on fluorescent microscopy.
           The aim of the project was to develop a deep learning pipeline in a weakly supervised setup.
@@ -203,46 +206,46 @@ params:
 
   # Education
   education:
-    enable: false
-    # title: "Custom Name"
+    enable: true
+    title: "Research"
     index: false
     items:
-      - title: "Master of Business Administration"
+      # - title: "Master of Business Administration"
+      #   school:
+      #     name: "University of California, Berkeley"
+      #     url: "https://example.org"
+      #   date: "2013 - 2015"
+      #   GPA: "3.8 out of 5.0"
+      #   content: |-
+      #     Extracurricular Activities
+      #       - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+      #       - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
+      - title: "Fast and interpretable unsupervised domain adaptation for FIB-SEM cell segmentation"
         school:
-          name: "University of California, Berkeley"
-          url: "https://example.org"
-        date: "2013 - 2015"
-        GPA: "3.8 out of 5.0"
-        content: |-
-          Extracurricular Activities
-            - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
-      - title: "Bachelor of Science in Computer Science"
-        school:
-          name: "Massachusetts Institute of Technology"
-          url: "https://example.org"
-        date: "2009 - 2013"
-        GPA: "3.9 out of 5.0"
-        content: |-
-          I Publiced two papers in the ACM SIGCHI Conference on Artificial Intelligence.
-          - [Fast and Accurate Object Detection with a Single Convolutional Neural Network](https://example.com)
-          - Face mask detection using a single convolutional neural network.
+          name: "International Symposium on Biomedical Imaging (ISBI)"
+          url: "https://2023.biomedicalimaging.org/en/"
+        date: "2023"
+        # GPA: "3.9 out of 5.0"
+        # content: |-
+        #   I Publiced two papers in the ACM SIGCHI Conference on Artificial Intelligence.
+        #   - [Fast and Accurate Object Detection with a Single Convolutional Neural Network](https://example.com)
+        #   - Face mask detection using a single convolutional neural network.
 
-          Extracurricular Activities
-            - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
+        #   Extracurricular Activities
+        #     - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        #     - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
         featuredLink:
           enable: true
-          name: "My academic record"
-          url: "https://example.com"
-      - title: "High School"
-        school:
-          name: "Thomas Jefferson High School for Science and Technology."
-          url: "https://example.org"
-        GPA: "4.2 out of 5.0"
-        featuredLink:
-          enable: true
-          url: "https://example.com"
+          name: "PDF"
+          url: "ISBI_paper_559.pdf"
+      # - title: "High School"
+      #   school:
+      #     name: "Institution Jeanne d'Arc."
+      #     url: "https://www.ejda.fr/"
+      #   GPA: "4.2 out of 5.0"
+      #   featuredLink:
+      #     enable: true
+      #     url: "https://example.com"
 
   # Achievements
   achievements:
