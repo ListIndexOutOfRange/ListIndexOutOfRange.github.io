@@ -228,7 +228,7 @@ params:
           enable: true
           name: "PDF"
           url: "ISBI24_paper_1067.pdf"
-     - title: "Fast and interpretable unsupervised domain adaptation for FIB-SEM cell segmentation"
+      - title: "Fast and interpretable unsupervised domain adaptation for FIB-SEM cell segmentation"
         school:
           name: "International Symposium on Biomedical Imaging (ISBI)"
           url: "https://2023.biomedicalimaging.org/en/"
