@@ -210,17 +210,25 @@ params:
     title: "Research"
     index: false
     items:
-      # - title: "Master of Business Administration"
-      #   school:
-      #     name: "University of California, Berkeley"
-      #     url: "https://example.org"
-      #   date: "2013 - 2015"
-      #   GPA: "3.8 out of 5.0"
-      #   content: |-
-      #     Extracurricular Activities
-      #       - Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-      #       - Tempora esse, eaque delectus nulla quo doloribus itaque expedita alias natus optio totam maxime nihil excepturi velit a animi laborum hic similique.
-      - title: "Fast and interpretable unsupervised domain adaptation for FIB-SEM cell segmentation"
+      - title: "Optimizing failure mode analysis of dental restorative materials: balancing efficiency and accuracy"
+        school:
+          name: "International Symposium on Biomedical Imaging (ISBI)"
+          url: "https://biomedicalimaging.org/2024/"
+        date: "2024"
+        featuredLink:
+          enable: true
+          name: "PDF"
+          url: "2024050559.pdf"
+      - title: "Particle detection based on few shot learning in 3D fluorescence microscopy"
+        school:
+          name: "International Symposium on Biomedical Imaging (ISBI)"
+          url: "https://biomedicalimaging.org/2024/"
+        date: "2024"
+        featuredLink:
+          enable: true
+          name: "PDF"
+          url: "ISBI24_paper_1067.pdf"
+     - title: "Fast and interpretable unsupervised domain adaptation for FIB-SEM cell segmentation"
         school:
           name: "International Symposium on Biomedical Imaging (ISBI)"
           url: "https://2023.biomedicalimaging.org/en/"
@@ -321,7 +329,7 @@ params:
     enable: true
     # title: "Custom Name"
     content: My inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-    email: contact@lucvedrenne.fr
+    email: luc.vedrenne@etu.unistra.fr
     btnName: Mail me
     # formspree:
     #   enable: true # `contact.email` value will be ignored
