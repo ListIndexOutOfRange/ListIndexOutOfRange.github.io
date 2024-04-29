@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section>
+				<h1 class="r-fit-text fragment highlight-current-red" data-fragment-index="2">Multiview registration</h1>
+				<div class="r-stack">
+					<h2 class="r-fit-text fragment fade-out" data-fragment-index="1">of highly degraded point clouds</h2>
+					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="1">of highly degraded <span>point clouds</span></h2>
+					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="3">of <span>highly degraded</span> point clouds</h2>
+				</div>
+				</section>
+				<!------------------------------------------------------------------------------------------------------------>
+
+
+				<!--------------------------------------------- 1. Point clouds ---------------------------------------------->
+				<!-- <section data-auto-animate data-hide-slide-number="true">
+					<h2>Point Clouds</h2>
+				</section> -->
+				<section>
+					<h2>Point Clouds</h2>
+					<div class="container" style="margin-left: 0;">
+						<div class="col fragment fade-in" style="margin-left: 0;">
+							<!-- <img style="max-width: 100%; height: auto;" src="assets/images/DEV2.png"> -->
+							<img src="assets/images/V2/reference.png">
+						</div>
+						<div class="col">
+							<ul class="fragment fade-in">
+								<li style="font-size:65%;">Comes from surface sampling</li>
+								<li style="font-size:65%;">Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$</li>
+								<li style="font-size:60%; opacity: 0; visibility: hidden;">Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$</li>
+							</ul>
+							<ul class="fragment fade-in" style="list-style-type: circle">
+								Applications
+								<li style="font-size:80%;">Autonomous driving</li>
+								<li style="font-size:80%;">Robotics</li>
+								<li style="font-size:80%;">Microscopy</li>
+								<li style="font-size:80%; opacity: 0; visibility: hidden;">List of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$</li>
+							</ul>
+						</div>
+					</div>
+					<!-- <div class="container">
+						<div class="col fragment fade-in">
+							<ul style="list-style-type: none;">
+								<li class="col">➕
+									<ul style="list-style-type: circle">
+										<li style="font-size:80%;">high resolution while sparse</li>
+										<li style="font-size:80%;">easy to apply rigid motion</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="col fragment fade-in">
+							<ul style="list-style-type: none;">
+								<li class="col">➖
+									<ul style="list-style-type: circle">
+										<li style="font-size:80%;">no explicit neighborhood</li>
+										<li style="font-size:80%;">permutation invariance</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div> -->
+				</section>
+				<!------------------------------------------------------------------------------------------------------------>
+
+				
+				<!---------------------------------------- 2. Multiviews registration ---------------------------------------->
+				<!-- <section data-auto-animate data-hide-slide-number="true">
+					<h2>Multiviews registration</h2>
+				</section>
+				<section data-auto-animate>
+					<h2>Multiviews registration</h2>
+					<p class="r-fit-text" style="opacity: 0; visibility: hidden;">pad</p>
+				</section> -->
+				<section>
+					<h2>Multiview registration</h2>
+					<section>
+						<h3>1. Rigid motion</h3>
+						<p>Rigid motion $=$ affine map $\,\rho\,$ of $\,\mathbb{R^3}\,$: 
+							$$ \rho x = Rx + t$$
+						</p>
+						<p style="font-size:80%;">$\rho \in SE(3)$, $\quad R$ rotation matrix $\in S0(3)$, $\quad t$ translation vector $\in \mathbb{R^3}$</p>
+					</section>
+					<section>
+						<h3>2. Pairwise Rigid Registration</h3>
+						<p class="r-fit-text">Find the rigid motion that best align two points clouds $x$ and $y$</p>
+						<p>$$ \rho^{\star} = \underset{\rho}{\text{argmin}}\, \lVert \rho x - y \rVert $$</p>
+					</section>
+					<section>
+						<h3>3. Multiview extension</h3>
+						<ul style="list-style-type: circle">
+							<li style="font-size:80%;">Set of $N$ point clouds</li>
+							<li style="font-size:80%;">Find $N$ rigid motions aligning the $N$ point clouds</li>
+						</ul>
+						<h2 style="opacity: 0; visibility: hidden;">pad</h2>
+						<h2 style="opacity: 0; visibility: hidden;">pad</h2>
+						<!-- <h1>test</h1> -->
+						<!-- <h1>test</h1> -->
+					</section>
+					<section data-auto-animate>
+						<h4>Two approaches</h4>
+					</section>
+					<section data-auto-animate>
+						<h4 style="padding-top: 10%;">Two approaches</h4>
+						<p class="fragment fade-in" style="font-size:60%;">1. All pairwise registration, then motion synchronization</p>
+						<img class="fragment fade-in" style="max-width: 70%; height: auto;" src="assets/images/V2/multiviews_registration.png">
+						<ul class="fragment fade-in" style="list-style-type: circle">
+							<li style="font-size:60%;">bad scaling with number of views: $\,\mathcal{O}(N^2)$</li>
+							<li style="font-size:60%;">requires robustness to failed pairwise registrations</li>
+							<li style="font-size:60%; opacity: 0; visibility: hidden;">pad</li>
+						</ul>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 10%;">Two approaches</h4>
+						<p style="font-size:60%;">2. Generative modeling</p>
+						<img class="fragment fade-in" style="max-width: 70%; height: auto;" src="assets/images/V2/generative_modelling.png">
+						<div class="container">
+							<div class="col">
+								<ul class="fragment fade-in" style="list-style-type: circle">
+									<li style="font-size:60%;">better scaling with number of views: $\,\mathcal{O}(N)$</li>
+									<li style="font-size:60%;">robustness</li>
+								</ul>
+							</div>
+							<div class="col">
+								<ul class="fragment fade-in" style="list-style-type: circle">
+									<li style="font-size:60%;">harder optimization problem</li>
+									<li style="font-size:60%;">typically : EM-GMM</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</section>
+
+				<!------------------------------------------------------------------------------------------------------------>
+				
+				
+				<!--------------------------------------------- 3. Degradations ---------------------------------------------->
+				<!-- <section data-auto-animate data-hide-slide-number="true">
+					<h2>Degradations</h2>
+				</section>
+				<section data-auto-animate>
+					<h2>Degradations</h2>
+					<p class="r-fit-text" style="opacity: 0; visibility: hidden;">pad</p>
+				</section> -->
+				<section>
+					<h2>Degradations</h2>
+					<section>
+						<h4 style="padding-top: 10%">Reference</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/reference.html">
+						</iframe>
+					</section>
+					<section>
+						<h4 style="padding-top: 10%">Anisotropic noise</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/anisotropy.html">
+						</iframe>
+					</section>
+					<section>
+						<h4 style="padding-top: 10%">Partial visibility</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/partial_visibility.html">
+						</iframe>
+					</section>
+					<!-- <section>
+						<h4 style="padding-top: 10%">Outliers</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/outliers.html">
+						</iframe>
+					</section> -->
+					<section>
+						<h4 style="padding-top: 10%">Real data</h4>
+						<p>Single Molecule Localization Microscopy</p>
+						<img class="fragment fade-in" style="max-width: 50%; height: auto;" src="assets/images/V2/smlm.png">
+						<p style="font-size:20%;">C. Franke, "Advancing Single-Molecule Localization Microscopy: Quantitative Analyses and Photometric Three-Dimensional Imaging" (2019)</p>
+					</section>
+				</section>
+
+				<!------------------------------------------------------------------------------------------------------------>
+
+				<!-------------------------------------------- 4. Why is it hard ? ------------------------------------------->
+				<section>
+					<h2>Why is it hard ?</h2>
+					<section>
+						<h4 class="fragment fade-in" data-fragment-index="1" style="padding-top: 5%;">1. Local correspondences</h4>
+						<img class="fragment fade-in" data-fragment-index="2" style="display: block; margin: auto; max-width: 50%; max-height: auto;" src="assets/images/V2/p2p_matching.png">
+						<p class="fragment fade-in" data-fragment-index="2" style="font-size: 30%;">Zhengyang Shen, Jean Feydy et al. "Accurate Point Cloud Registration with Robust Optimal Transport", NeurIPS 2021</p>
+						<ul class="fragment fade-in" style="list-style-type: circle">
+							<!-- <li style="font-size:60%; opacity: 0; visibility: hidden;">pad</li> -->
+							<li style="font-size:60%;">unreliable on higly degraded data</li>
+							<li style="font-size:60%;">sensitive to point density</li>
+							<li style="font-size:60%;">sensitive to repetitive patterns</li>
+						</ul>
+					</section>
+					<section>
+						<h4 style="padding-top: 10%">2. Local convergence</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/toy_cubes.html">
+						</iframe>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 10%">2. Local convergence</h4>
+						<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/cube_energy.png">
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 10%">2. Local convergence</h4>
+						<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/airplane_local_minima.png">
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+				</section>
+				
+				<!------------------------------------------------ 5. Methods ------------------------------------------------>
+				<section data-auto-animate>
+					<h1 style="font-size:90%;">POLAR : POint cloud LAtent Registration</h1>
+				</section>
+				<section data-auto-animate>
+					<h1 style="font-size:90%;">POLAR : POint cloud LAtent Registration</h1>
+					<section>
+						<h2 style="font-size:90%;">Core idea</h2>
+						<ol>
+							<li class="fragment fade-in" style="font-size:80%;">Pretrain an autoencoder to reconstruct degraded point clouds</li>
+							<li class="fragment fade-in" style="font-size:80%;">Once trained, freeze it</li>
+							<li class="fragment fade-in" style="font-size:80%;">Registrate within its latent space</li>
+						</ol>
+					</section>
+					<section>
+						<h2 style="padding-top: 10%; font-size:90%;">Autoencoder</h2>
+						<img style="display: block; margin: auto; max-width: 50%; max-height: auto;" src="assets/images/V2/ae.png">
+						<p>$\mathcal{L} = \lVert x - x' \rVert$</p>
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-transition="none">
+						<h2 style="padding-top: 10%; font-size: 80%;">Benefits of registering within the autoencoder's latent space</h2>
+						<h2 style="font-size:60%; opacity: 0; visibility: hidden;">pad</h2>
+						<ol>
+							<li class="fragment fade-in" style="font-size:80%;">Generative method</li>
+								<ul style="list-style-type: circle">
+									<li class="fragment fade-in" style="font-size:80%;">template $=$ $d(\hat{z})$ instead of GMM</li>
+									<li style="opacity: 0; visibility: hidden; font-size:80%;">pad</li>	
+								</ul>
+							<li class="fragment fade-in" style="font-size:80%;">Global descriptor : no local correspondences</li>
+								<ul style="list-style-type: circle">
+									<li class="fragment fade-in" style="font-size:80%;">point cloud discrepancy $=$ $\lVert z_1 - z_2 \rVert$</li>
+								</ul>
+						</ol>
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-auto-animate>
+						<h2 style="padding-top: 5%; font-size: 90%;">POLAR graphical model</h2>
+						<div class="r-stack">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step1.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step2.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step3.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step4.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step5.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step6.png">
+						</div>
+						<p class="r-fit-text fragment fade-in" style="font-size:60%;">$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - z_i \rVert_{_{_2}}$</p>
+					</section>
+					<section data-auto-animate>
+						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>
+						<p>$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - z_i \rVert_{_{_2}}$</p>
+						<ul style="list-style-type: circle">
+							<li class="fragment fade-in" style="font-size:80%;" data-fragment-index="1">$d(\hat{z})$ should be a clean object</li>
+							<li class="fragment fade-in" style="font-size:80%;" data-fragment-index="2">$z_i = e(x_i)$ are latent vectors of degraded object</li>
+							<li class="fragment fade-in" style="opacity: 0; visibility: hidden;" data-fragment-index="2">pad</li>
+						</ul>
+						<div class="r-stack">
+							<p class="fragment current-visible" data-fragment-index="3">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) ) - z_i \rVert_{_{_2}}$</p>
+							<p class="fragment current-visible" data-fragment-index="4">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon_i}) - z_i \rVert_{_{_2}}$</p>
+							<p class="fragment fade-in" data-fragment-index="5">$\mathcal{L} = \sum_i \lVert e(\textcolor{green}{\operatorname{M}_i}(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon_i})) - z_i \rVert_{_{_2}}$</p>
+							<!-- <div class="fragment fade-in overlay-contained" data-fragment-index="4" style="border: 1pt solid red; margin-left: 10%; height: 100%; width: 5%;"></div> -->
+						</div>
+						<div class="r-stack">
+							<p class="fragment current-visible" style="padding-left:25%; line-height: 5%; font-size:40%" data-fragment-index="4">$\textcolor{red}{\text{anisotropic noise}}$</p>
+							<p class="fragment current-visible" style="padding-left:5%; line-height: 5%; font-size:40%;" data-fragment-index="5">$\textcolor{green}{\text{partial visibility mask}}\hspace{60pt}\textcolor{red}{\text{anisotropic noise}}$</p>
+						</div>
+						<p class="fragment current-visible" style="padding-left:25%; font-size:40%; color: red; margin-top: 0;" data-fragment-index="4">$\sim \mathcal{N}(0, \Sigma)$</p>						  
+						<p class="fragment current-visible" style="padding-left:34%; font-size:40%; color: red; margin-top: -4%;" data-fragment-index="5">$\sim \mathcal{N}(0, \Sigma)$</p>						  
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<!-- <section>
+						<h2 style="padding-top: 10%; font-size: 90%;">Regularization matters</h2>
+						<div class="r-stack">
+							<p class="fragment current-visible" data-fragment-index="1">$\mathcal{L} = \sum_i \lVert e(\operatorname{M}_i(\hat{\rho}_i d(\hat{z}) + \varepsilon_i)) - z_i \rVert_{_{_2}}$</p>
+							<p class="fragment fade-in" data-fragment-index="2">$\mathcal{L} = \sum_i \lVert e(\operatorname{M}_i(\hat{\rho}_i d(\hat{z}) + \varepsilon_i)) - z_i \rVert_{_{_2}}  + r(d(\hat{z}))$</p>
+						</div>
+						<p class="fragment fade-in" style="padding-left: 75%; line-height: 5%; font-size:50%" data-fragment-index="3">standard deviation</p>
+						<p class="fragment fade-in" style="padding-left: 75%; line-height: 5%; font-size:50%" data-fragment-index="3">of points density</p>
+					</section> -->
+					<section>
+						<h2 style="padding-top: 5%; font-size: 90%;">Optimization scheme</h2>
+						<ul style="list-style-type: circle">
+							<li class="fragment fade-in" style="font-size:50%;" data-fragment-index="1">Find plausible initializations
+								<ul style="list-style-type: disc">
+									<li class="fragment fade-in" data-fragment-index="3">Coarse exhaustive search over $SO(3)$ with fixed $\hat{z}$ and $t$</li>
+								</ul>
+							</li>
+							<li class="fragment fade-in" style="font-size:50%;" data-fragment-index="2">Parallel gradient descent from each initialization</li>
+						</ul>
+						<!-- <p class="fragment fade-in" style="font-size: 90%;">Idea : SO(3) Local Minima</p>
+						<div class="container">
+							<div class="col" style="flex: 0 0 70%;">
+								<ul style="list-style-type: circle">
+									<li class="fragment fade-in" style="font-size:50%;">S0(3) geodesic distance : $\angle(R_1, R_2) = \arccos\frac{\operatorname{Tr}(R_1 R_2^\top) - 1}{2}$</li>
+									<li class="fragment fade-in" style="font-size:50%;">SO(3) uniform sampling : Super-Fibonacci Spirals</li>
+								</ul>
+							</div>
+							<div class="col fragment fade-in" style="flex: 0 0 30%">
+								<p style="font-size:70%;">➡️ k-NN SO(3) graph</p>
+							</div>
+						</div>
+						<ul style="list-style-type: circle">
+							<li style="font-size:30%; opacity: 0; visibility: hidden;">pad</li>
+							<li class="fragment fade-in" style="font-size:60%;">Compute loss for each graph's node</li>
+							<li class="fragment fade-in" style="font-size:60%;">Local Minimum = node whose error is smaller than those of all its neighbors</li>
+						</ul> -->
+						<img
+							class="fragment fade-in"
+							style="display: block; margin: auto; max-width: 70%; max-height: auto;" src="assets/images/V2/cube_local_minima.png">
+					</section>
+				</section>
+
+				<!------------------------------------------------ 5. Results ------------------------------------------------>
+				<section>
+					<h2>Results</h2>
+					<section>
+						<table style="font-size: 60%;">
+							<h2 class="fragment fade-in" style="font-size: 80%;">Contenders</h2>
+							<thead>
+							  <tr class="fragment fade-in">
+								<th scope="col">Method</th>
+								<th style="text-align: center;" scope="col">Main idea</th>
+								<th scope="col">Global</th>
+								<th scope="col">Multiview</th>
+								<th scope="col">Generative</th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr class="fragment fade-in">
+								<th scope="row">RPM-Net</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">learnable Sinkhorn</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">🚫</td>
+								<td style="text-align: center">🚫</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">DeepGMR</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">latent GMM</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">🚫</td>
+								<td style="text-align: center">✅</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">JRMPC</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">EM-GMM</th>
+								<td style="text-align: center">🚫</td>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">SGHR</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">sparse & reliable pose graph</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">🚫</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">POLAR</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">generative latent registration</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+							  </tr>
+							</tbody>
+							</tfoot>
+						  </table>
+					</section>
+					<section>
+					<table style="font-size: 60%;">
+						<h2 style="font-size: 80%;">Success rate by initial angle (threshold = 15°)</h2>
+						<thead>
+						  <tr>
+							<th scope="col">Method</th>
+							<th scope="col">$\le 45°$</th>
+							<th scope="col">$\in [45°, 90°]$</th>
+							<th scope="col">$\in [90°, 135]$</th>
+							<th scope="col">$\in [135, 180]$</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr class="fragment fade-in">
+							<th scope="row">RPM-Net</th>
+							<td style="text-align: right">99.83 %</td>
+							<td style="text-align: right">99.70 %</td>
+							<td style="text-align: right">99.43 %</td>
+							<td style="text-align: right">99.32 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">DeepGMR</th>
+							<td style="text-align: right">99.44 %</td>
+							<td style="text-align: right">98.11 %</td>
+							<td style="text-align: right">97.35 %</td>
+							<td style="text-align: right">98.54 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">JRMPC</th>
+							<td style="text-align: right">95.65 %</td>
+							<td style="text-align: right">78.97 %</td>
+							<td style="text-align: right">54.62 %</td>
+							<td style="text-align: right">35.17 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">SGHR</th>
+							<td style="text-align: right">100.0 %</td>
+							<td style="text-align: right">100.0 %</td>
+							<td style="text-align: right">100.0 %</td>
+							<td style="text-align: right">100.0 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">POLAR</th>
+							<td style="text-align: right">99.69 %</td>
+							<td style="text-align: right">99.82 %</td>
+							<td style="text-align: right">99.81 %</td>
+							<td style="text-align: right">99.91 %</td>
+						  </tr>
+						</tbody>
+						</tfoot>
+					  </table>
+					  <p style="font-size:40%;">Synchronization method (RPM-Net & DeepGMR):</p>
+					  <p style="font-size:30%;">Yunpeng Shi and Gilad Lerman, "Message Passing Least Squares Algorithm for Rotation Averaging " (ICML 2020)</p>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to isotropic noise</h2>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_isotropic_noise.html">
+						</iframe>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to anisotropic noise</h2>
+						<p style="font-size:40%;">$\varepsilon \sim \mathcal{N}(0, \Sigma = \operatorname{diag}(0.03, 0.03, 0.15))$</p>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_anisotropic_noise.html">
+						</iframe>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to partial visibility</h2>
+						<h3 style="font-size: 60%; opacity: 0; visibility: hidden;">Impact of the number of views : SGHR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_cropped_noisy.html">
+						</iframe>
+					</section>
+					<!-- <section data-transition="none">
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to partial visibility</h2>
+						<h3 style="font-size: 60%">Impact of the number of views : SGHR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_cropped_noisy_num_views_SGHR.html">
+						</iframe>
+					</section>
+					<section data-transition="none">
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to partial visibility</h2>
+						<h3 style="font-size: 60%">Impact of the number of views : POLAR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_cropped_noisy_num_views_POLAR.html">
+						</iframe>
+					</section> -->
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to points density</h2>
+						<h3 style="font-size: 60%">Uniform sampling : number of points $\in [205, 1024]$</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_point_density.html">
+						</iframe>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Varying noise level per object</h2>
+						<p style="font-size: 60%">$\varepsilon \sim \mathcal{N}(0, \sigma)\,,\quad \sigma \sim \mathcal{U}(0.01, 0.20)$</p>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_varying_noise_per_object.html">
+						</iframe>	
+					</section>
+					<section>
+						<h4 style="padding-top: 10%">Visual results</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/crop_viz.html">
+						</iframe>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 10%">Visual results</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/anisotropic_noise_viz.html">
+						</iframe>
+					</section>
+				</section>
+
+				<section>
+					<h1>Thank you !</h1>
+				</section>
+
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				preloadIframes: false,
+				viewDistance: 30,
+				margin: 0.02,
+				width: 1060,
+  				height: 700,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+	</body>
+	<!-- <script type="text/javascript">
+		Reveal.addEventListener('slidechanged', (event) => {
+		  const isSnOn = (event.currentSlide.dataset.hideSlideNumber !== 'true');
+		  Reveal.configure({ slideNumber: isSnOn });
+		});
+	</script> -->
+</html>

@@ -20,6 +20,16 @@
     <loc>http://example.org/tags/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
+    <loc>http://example.org/polar/css/theme/readme/</loc>
+  </url><url>
+    <loc>http://example.org/polar/examples/markdown/</loc>
+  </url><url>
+    <loc>http://example.org/polar/plugin/notes/speaker-view/</loc>
+  </url><url>
+    <loc>http://example.org/polar/test/simple/</loc>
+  </url><url>
     <loc>http://example.org/categories/</loc>
+  </url><url>
+    <loc>http://example.org/polar/</loc>
   </url>
 </urlset>
