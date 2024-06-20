@@ -29,6 +29,9 @@
 					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="1">of highly degraded <span>point clouds</span></h2>
 					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="3">of <span>highly degraded</span> point clouds</h2>
 				</div>
+				<div style="padding-top: 10%"></div>
+				<p>CSI 2<sup>ème</sup> année &ensp;-&ensp; Luc Vedrenne</p>
+				<p>Encadré par Denis Fortun & Sylvain Faisan</p>
 				</section>
 				<!------------------------------------------------------------------------------------------------------------>
 
@@ -196,7 +199,7 @@
 							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
 							data-src="assets/plotly/outliers.html">
 						</iframe>
-					</section> -->
+					</section> --> 
 					<section>
 						<h4 style="padding-top: 10%">Real data</h4>
 						<p>Single Molecule Localization Microscopy</p>
@@ -287,29 +290,36 @@
 							<img class="fragment" src="assets/images/V2/polar_graphical_model_step5.png">
 							<img class="fragment" src="assets/images/V2/polar_graphical_model_step6.png">
 						</div>
-						<p class="r-fit-text fragment fade-in" style="font-size:60%;">$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - z_i \rVert_{_{_2}}$</p>
+						<p class="r-fit-text fragment fade-in" style="font-size:60%;">$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - e(x_i) \rVert_{_{_2}}$</p>
 					</section>
 					<section data-auto-animate>
 						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>
-						<p>$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - z_i \rVert_{_{_2}}$</p>
+						<p>$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - e(x_i) \rVert_{_{_2}}$</p>
 						<ul style="list-style-type: circle">
 							<li class="fragment fade-in" style="font-size:80%;" data-fragment-index="1">$d(\hat{z})$ should be a clean object</li>
 							<li class="fragment fade-in" style="font-size:80%;" data-fragment-index="2">$z_i = e(x_i)$ are latent vectors of degraded object</li>
 							<li class="fragment fade-in" style="opacity: 0; visibility: hidden;" data-fragment-index="2">pad</li>
 						</ul>
 						<div class="r-stack">
-							<p class="fragment current-visible" data-fragment-index="3">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) ) - z_i \rVert_{_{_2}}$</p>
-							<p class="fragment current-visible" data-fragment-index="4">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon_i}) - z_i \rVert_{_{_2}}$</p>
-							<p class="fragment fade-in" data-fragment-index="5">$\mathcal{L} = \sum_i \lVert e(\textcolor{green}{\operatorname{M}_i}(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon_i})) - z_i \rVert_{_{_2}}$</p>
+							<p class="fragment current-visible" data-fragment-index="3">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) ) - e(x_i) \rVert_{_{_2}}$</p>
+							<p class="fragment current-visible" data-fragment-index="4">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon}) - e(x_i) \rVert_{_{_2}}$</p>
+							<p class="fragment current-visible" data-fragment-index="5">$\mathcal{L} = \sum_i \lVert e(\textcolor{green}{\operatorname{M}_i^c}(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon})) - e(x_i) \rVert_{_{_2}}$</p>
+							<p class="fragment fade-in" data-fragment-index="6">$\mathcal{L} = \sum_i \lVert e(\textcolor{green}{\operatorname{M}_i^c}(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon})) - e(\textcolor{blue}{\operatorname{M}_i^o}(x_i)) \rVert_{_{_2}}$</p>
 							<!-- <div class="fragment fade-in overlay-contained" data-fragment-index="4" style="border: 1pt solid red; margin-left: 10%; height: 100%; width: 5%;"></div> -->
 						</div>
 						<div class="r-stack">
-							<p class="fragment current-visible" style="padding-left:25%; line-height: 5%; font-size:40%" data-fragment-index="4">$\textcolor{red}{\text{anisotropic noise}}$</p>
-							<p class="fragment current-visible" style="padding-left:5%; line-height: 5%; font-size:40%;" data-fragment-index="5">$\textcolor{green}{\text{partial visibility mask}}\hspace{60pt}\textcolor{red}{\text{anisotropic noise}}$</p>
+							<p class="fragment current-visible" style="padding-left:20%; line-height: 5%; font-size:40%" data-fragment-index="4">$\textcolor{red}{\text{anisotropic noise}}$</p>
+							<p class="fragment current-visible" style="padding-left:0%; line-height: 5%; font-size:40%;" data-fragment-index="5">$\textcolor{green}{\text{partial visibility mask}}\hspace{40pt}\textcolor{red}{\text{anisotropic noise}}$</p>
+							<p class="fragment current-visible" style="padding-left:15%; line-height: 5%; font-size:40%;" data-fragment-index="6">$\textcolor{green}{\text{partial visibility mask}}\hspace{50pt}\textcolor{red}{\text{anisotropic noise}}\hspace{30pt}\textcolor{blue}{\text{outliers mask}}\hspace{60pt}$</p>
 						</div>
-						<p class="fragment current-visible" style="padding-left:25%; font-size:40%; color: red; margin-top: 0;" data-fragment-index="4">$\sim \mathcal{N}(0, \Sigma)$</p>						  
-						<p class="fragment current-visible" style="padding-left:34%; font-size:40%; color: red; margin-top: -4%;" data-fragment-index="5">$\sim \mathcal{N}(0, \Sigma)$</p>						  
+						<p class="fragment current-visible" style="padding-left:20%; font-size:40%; color: red; margin-top: 0;" data-fragment-index="4">$\sim \mathcal{N}(0, \Sigma)$</p>						  
+						<p class="fragment current-visible" style="padding-left:25%; font-size:40%; color: red; margin-top: -4%;" data-fragment-index="5">$\sim \mathcal{N}(0, \Sigma)$</p>						  
+						<p class="fragment current-visible" style="padding-left:15%; font-size:40%; color: red; margin-top: -4%;" data-fragment-index="6">$\sim \mathcal{N}(0, \Sigma)$</p>
 						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-auto-animate>
+						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>
+						<img class="fragment" src="assets/images/V2/masks.png">
 					</section>
 					<!-- <section>
 						<h2 style="padding-top: 10%; font-size: 90%;">Regularization matters</h2>
@@ -485,6 +495,14 @@
 							data-src="assets/plotly/results_cropped_noisy.html">
 						</iframe>
 					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to outliers</h2>
+						<h3 style="font-size: 60%; opacity: 0; visibility: hidden;">Impact of the number of views : SGHR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_outliers.html">
+						</iframe>
+					</section>
 					<!-- <section data-transition="none">
 						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to partial visibility</h2>
 						<h3 style="font-size: 60%">Impact of the number of views : SGHR</h3>
@@ -517,26 +535,88 @@
 							data-src="assets/plotly/results_varying_noise_per_object.html">
 						</iframe>	
 					</section>
-					<section>
-						<h4 style="padding-top: 10%">Visual results</h4>
-						<iframe
-							style="padding-left: 25%"
-							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/crop_viz.html">
-						</iframe>
-					</section>
 					<section data-transition="none">
-						<h4 style="padding-top: 10%">Visual results</h4>
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">Anisotropic noise</p>
 						<iframe
 							style="padding-left: 25%"
 							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
 							data-src="assets/plotly/anisotropic_noise_viz.html">
 						</iframe>
 					</section>
+					<section>
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">Partial visibility</p>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/crop_viz.html">
+						</iframe>
+					</section>
+					<section>
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">Outliers</p>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/outliers.html">
+						</iframe>
+					</section>
 				</section>
 
 				<section>
-					<h1>Thank you !</h1>
+					<h2>En pratique</h2>
+					<img class="fragment" src="assets/images/V2/polar_code_sample.png">
+				</section>
+
+				<section>
+					<h2>Perspectives</h2>
+					<ul style="list-style-type: circle">
+						<li class="fragment" style="font-size:80%;">Critère ambiant plutôt que latent ?</li>
+							<ul style="list-style-type: disc">
+								<li class="fragment fade-in" style="font-size:80%;">$\mathcal{L}_{\text{latent}} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - e(x_i) \rVert_{_{_2}}$</li>
+								<li class="fragment fade-in" style="font-size:80%;">$\mathcal{L}_{\text{ambient}} = \sum_i d_C \left[ \textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}), x_i \right]$</li>
+							</ul>
+						<li style="font-size: 60%; opacity: 0; visibility: hidden;"></li>
+						<li class="fragment" style="font-size:80%;">Latent Diffusion Model</li>
+						<ul style="list-style-type: disc">
+							<li class="fragment fade-in" style="font-size:60%;">Template & motions estimated by diffusion process within a VAE latent space</li>
+						</ul>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Développements open-source</h2>
+					<ul style="list-style-type: none; padding-left: 25%" id="botoes">
+						<li style="opacity: 0; visibility: hidden;"></li>
+						<li class="fragment"><img style="width: 10%;" src="assets/images/V2/pytorch3dfavicon.png">PyTorch 3d</li>
+						<li class="fragment"><img style="width: 10%;" src="assets/images/V2/streamlit_logo.png">Streamlit ecosystem</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Publications</h2>
+					<ul style="list-style-type: circle">
+						<li class="fragment" style="font-size:50%;"><i style="font-style: italic !important">POLAR</i>: IEEE Image processing (pour mi-juillet)</li>
+						<li style="font-size: 60%; opacity: 0; visibility: hidden;"></li>
+						<li class="fragment" style="font-size:50%;"><i style="font-style: italic !important">Particle detection based on few shot learning in 3D fluorescence microscopy</i>, ISBI</li>
+						<li class="fragment" style="font-size:50%;"><i style="font-style: italic !important">Optimizing failure mode analysis of dental restorative materials: balancing efficiency and accuracy</i>, ISBI</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Enseignements</h2>
+					<p>Télécom Physique Strasbourg</p>
+					<ul style="list-style-type: circle">
+						<li style="font-size: 60%; opacity: 0; visibility: hidden;"></li>
+						<li style="font-size: 60%">Basics of Image Processing (24h)</li>
+						<li style="font-size: 60%">Traitement des signaux aléatoires (18h)</li>
+						<li style="font-size: 60%">Traitement de signaux 2D (16h)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h1 class="r-fit-text">Merci de votre attention !</h1>
 				</section>
 
 
@@ -560,7 +640,9 @@
 				margin: 0.02,
 				width: 1060,
   				height: 700,
-
+				// highlight: {
+				// 	beforeHighlight: (hljs) => hljs.registerLanguage("python", require('plugin/highlight/languages/python')),
+  				// },
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
 			});
