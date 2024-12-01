@@ -29,9 +29,9 @@
 					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="1">of highly degraded <span>point clouds</span></h2>
 					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="3">of <span>highly degraded</span> point clouds</h2>
 				</div>
-				<!-- <div style="padding-top: 10%"></div>
-				<p>CSI 2<sup>ème</sup> année &ensp;-&ensp; Luc Vedrenne</p>
-				<p>Encadré par Denis Fortun & Sylvain Faisan</p> -->
+				<div style="padding-top: 10%"></div>
+				<p>ICube Lab | Strasbourg</p>
+				<p>Luc Vedrenne - Denis Fortun - Sylvain Faisan</p>
 				</section>
 				<!------------------------------------------------------------------------------------------------------------>
 
@@ -173,33 +173,56 @@
 						<iframe
 							style="padding-left: 25%"
 							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/reference.html">
+							data-src="assets/plotly/pointclouds/reference.html">
 						</iframe>
 					</section>
+					<!-- <section data-background-iframe="assets/plotly/pointclouds/anisotropic_view1.html" data-background-interactive>
+  						<h2>Iframe</h2>
+					</section> -->
 					<section>
-						<h4 style="padding-top: 10%">Anisotropic noise</h4>
+						<h4 style="opacity: 0; visibility: hidden;">pad</h4>
+						<h4>1. Anisotropic noise</h4>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view2.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 style="opacity: 0; visibility: hidden;">pad</h4>
+						<h4>2. Partial visibility</h4>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view2.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 style="padding-top: 10%">3. Outliers</h4>
 						<iframe
 							style="padding-left: 25%"
 							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/anisotropy.html">
+							data-src="assets/plotly/pointclouds/outliers.html">
 						</iframe>
 					</section>
-					<section>
-						<h4 style="padding-top: 10%">Partial visibility</h4>
-						<iframe
-							style="padding-left: 25%"
-							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/partial_visibility.html">
-						</iframe>
-					</section>
-					<section>
-						<h4 style="padding-top: 10%">Outliers</h4>
-						<iframe
-							style="padding-left: 25%"
-							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/outliers_example.html">
-						</iframe>
-					</section> 
 					<section>
 						<h4 style="padding-top: 10%">Real data</h4>
 						<p>Single Molecule Localization Microscopy</p>
@@ -225,22 +248,31 @@
 						</ul>
 					</section>
 					<section>
-						<h4 style="padding-top: 10%">2. Local convergence</h4>
-						<iframe
-							style="padding-left: 25%"
-							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/toy_cubes.html">
-						</iframe>
+						<h4 style="opacity: 0; visibility: hidden;">pad</h4>
+						<h4>2. Local convergence</h4>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/cube_source.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/cube_target.html">
+							</iframe>
+							</div>
+						</div>
 					</section>
 					<section data-transition="none">
-						<h4 style="padding-top: 10%">2. Local convergence</h4>
+						<h4 style="padding-top: 7%">2. Local convergence</h4>
 						<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/cube_energy.png">
 						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
 					</section>
 					<section data-transition="none">
-						<h4 style="padding-top: 10%">2. Local convergence</h4>
-						<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/airplane_local_minima.png">
-						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+						<h4 style="padding-top: 7%">2. Local convergence</h4>
+						<img style="display: block; margin: auto; max-width: 60%; max-height: auto;" src="assets/images/V2/airplane_loss_landscape.png">
 					</section>
 				</section>
 				
@@ -322,11 +354,25 @@
 						<p class="fragment current-visible" style="padding-left:15%; font-size:40%; color: red; margin-top: -4%;" data-fragment-index="6">$\sim \mathcal{N}(0, \Sigma)$</p>
 						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
 					</section>
-					<section data-auto-animate>
+					<section data-transition="none">
 						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>
-						<img class="fragment" src="assets/images/V2/masks.png">
+						<img src="assets/images/V2/masks.png">
 					</section>
-					<!-- <section>
+					<section data-transition="none">
+						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>	
+						<div class="container">
+							<div class="col">
+								<p style="font-size:10%; opacity: 0; visibility: hidden;">pad</p>
+								<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/crop.png">
+							</div>
+							<div class="col">
+								<p style="font-size:10%; opacity: 0; visibility: hidden;">pad</p>
+								<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/outliers.png">
+							</div>
+						</div>
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section>
 						<h2 style="padding-top: 10%; font-size: 90%;">Regularization matters</h2>
 						<div class="r-stack">
 							<p class="fragment current-visible" data-fragment-index="1">$\mathcal{L} = \sum_i \lVert e(\operatorname{M}_i(\hat{\rho}_i d(\hat{z}) + \varepsilon_i)) - z_i \rVert_{_{_2}}$</p>
@@ -334,7 +380,7 @@
 						</div>
 						<p class="fragment fade-in" style="padding-left: 75%; line-height: 5%; font-size:50%" data-fragment-index="3">standard deviation</p>
 						<p class="fragment fade-in" style="padding-left: 75%; line-height: 5%; font-size:50%" data-fragment-index="3">of points density</p>
-					</section> -->
+					</section>
 					<section>
 						<h2 style="padding-top: 5%; font-size: 90%;">Optimization scheme</h2>
 						<ul style="list-style-type: circle">
@@ -543,29 +589,74 @@
 					<section data-transition="none">
 						<h4 style="padding-top: 6%">Visual results</h4>
 						<p style="font-size:50%;">Anisotropic noise</p>
-						<iframe
-							style="padding-left: 25%"
-							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/anisotropic_noise_viz.html">
-						</iframe>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view2.html">
+							</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_template.html">
+							</iframe>
+							</div>
+						</div>
 					</section>
 					<section>
 						<h4 style="padding-top: 6%">Visual results</h4>
 						<p style="font-size:50%;">Partial visibility</p>
-						<iframe
-							style="padding-left: 25%"
-							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/crop_viz.html">
-						</iframe>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view2.html">
+							</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_template.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">Outliers</p>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/outliers.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/outliers_template.html">
+							</iframe>
+							</div>
+						</div>
 					</section>
 					<section>
 						<h4 style="padding-top: 6%">Visual results</h4>
-						<p style="font-size:50%;">Outliers</p>
-						<iframe
-							style="padding-left: 25%"
-							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/outliers.html">
-						</iframe>
+						<p style="font-size:50%;">SMLM data</p>
+						<img style="display: block; margin: auto; max-width: 100%; max-height: auto;" src="assets/images/V2/viz_dstorm.png">
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
 					</section>
 				</section>
 
@@ -574,7 +665,6 @@
 					<p>pypolar.github.io/polar</p>
 					<p style="font-size:60%;">$\texttt{pip install polaregistration}$</p>
 					<img class="fragment" src="assets/images/V2/polar_code_sample.png">
-
 				</section>
 
 				<!-- <section>
@@ -643,7 +733,7 @@
 			Reveal.initialize({
 				hash: true,
 				slideNumber: true,
-				preloadIframes: false,
+				preloadIframes: true,
 				viewDistance: 30,
 				margin: 0.02,
 				width: 1060,
