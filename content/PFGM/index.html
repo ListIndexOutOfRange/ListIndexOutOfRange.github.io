@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section>
+				<div class="container" style="height: 15rem;"></div>
+				<h1 class="r-fit-text">Can Push-forward Generative Models Fit Multimodal Distributions ?</h1>
+				<div class="container" style="height: 2rem;"></div>
+				<div class="container" style="font-size:60%;">
+					<div class="col">
+						<ul style="list-style-type: none;">
+							<li class="col">Antoine Salmona</li>
+							<li style="font-size:60%;">Centre Borelli</li>
+							<li style="font-size:60%;">ENS Paris Saclay, France</li>							
+						</ul>
+					</div>
+					<div class="col">
+						<ul style="list-style-type: none;">
+							<li class="col">Agnès Desolneux</li>
+							<li style="font-size:60%;">Centre Borelli, CNRS</li>
+							<li style="font-size:60%;">ENS Paris Saclay, France</li>
+						</ul>
+					</div>
+					<div class="col">
+						<ul style="list-style-type: none;">
+							<li class="col">Julie Delon</li>
+							<li style="font-size:60%;">MAP5, Université Paris Cité, France</li>
+							<li style="font-size:60%;">Institut Universitaire de France (IUF)</li>
+						</ul>
+					</div>
+					<div class="col">
+						<ul style="list-style-type: none;">
+							<li class="col">Valentin De Bortoli</li>
+							<li style="font-size:60%;">Center for Sciences of Data, CNRS</li>
+							<li style="font-size:60%;">ENS Ulm, France</li>
+						</ul>
+					</div>
+				</div>
+				</section>
+
+			<section>
+				<h3 style="text-align: left">Plan</h3>
+				<ol style="font-size: 80%;">
+					<li>Generative modeling
+						<ul style="list-style-type: none;">
+							<li style="font-size:80%">a. C'est quoi ?</li>
+							<li style="font-size:80%">b. Pourquoi c'est dur ?</li>
+							<li style="font-size:80%; opacity: 0; visibility: hidden;">pad</li>
+						</ul>
+					</li>
+					<li>Push-forward model</li>
+						<ul style="list-style-type: none;">
+							<li style="font-size:80%; opacity: 0; visibility: hidden;">pad</li>
+						</ul>
+					<li>Inégalité isopérimétrique
+					<ul style="list-style-type: none;">
+						<li style="font-size:80%">a. Cas simple</li>
+						<li style="font-size:80%">b. Extension</li>
+						<li style="font-size:80%; opacity: 0; visibility: hidden;">pad</li>
+					</ul>
+					</li>
+					<li>Inégalité isopérimétrique pour push-forward models
+						<ul style="list-style-type: none;">
+							<li style="font-size:80%">a. Présentation</li>
+							<li style="font-size:80%">b. Conséquences</li>
+							<li style="font-size:80%; opacity: 0; visibility: hidden;">pad</li>
+						</ul>
+					</li>
+				</ol>
+			</section>
+
+			<section>
+				<p style="text-align: left; line-height: 20px;">1. Generative Modeling</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px; ">a. C'est quoi ?</p>
+				<ul class="fragment fade-in" style="list-style-type: circle">
+					<li style="font-size:80%"><b>Dataset</b> : $\{x_1, \ldots, x_N\} \sim \nu(x)$</li>
+					<li style="font-size:80%"><b>But</b> : sampler de nouveaux échantillons de $\nu(x)$</li>
+					<li style="font-size:80%; opacity: 0; visibility: hidden;">pad</li>
+				</ul>
+				<div class="fragment fade-in">
+					<img style="max-width: 60%; height: auto; margin-top: 0; padding-top: 0;" src="assets/anthro_fractal_v2.jpg">
+					<p style="line-height: 20px; margin-top: 0; padding-top: 0; font-size: 40%;"><it>"An anthropomorphic fractal person behind the counter at a fractal themed restaurant."</it></p>	
+				</div>
+				</section>
+
+			<section data-transition="none">
+				<p style="text-align: left; line-height: 20px;">1. Generative Modeling</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px;">b. Pourquoi c'est dur ?</p>
+				<h1 style="font-size:80%; opacity: 0; visibility: hidden;">pad</h1>
+				<ul style="list-style-type: circle; font-size: 80%;">
+					<li class="fragment fade-in" style="font-size:80%"><b>Estimateur paramétrique</b>
+						$$\nu_{\theta}(x) = \frac{e^{-f_{\theta}(x)}}{Z_{\theta}}$$
+					</li>
+					<li class="fragment fade-in" style="font-size:80%"><b>Maximum de vraisemblance</b>
+						$$\max_{\theta} \sum_{i=1}^N \log \nu_{\theta}(x_i)$$
+						<p class="fragment fade-in">$$\log \nu_{\theta}(x_i) = -f_{\theta}(x_i) - \textcolor{red}{\log Z_{\theta}}$$</p>
+					</li>
+					<!-- <li style="font-size:80%; opacity: 0; visibility: hidden;"></li> -->
+				</ul>
+			</section>
+
+			<section>
+				<p style="text-align: left; line-height: 20px;">2. Push-forward Generative Models</p>
+				<p class="fragment fade-in" style="text-align: left; font-size: 80%;">Transformer une distribution connue en notre distribution cible</p>
+				<!-- <h1 style="font-size:80%; opacity: 0; visibility: hidden;">pad</h1> -->
+				<ul style="list-style-type: circle; font-size: 80%;">
+					<li class="fragment fade-in" style="font-size:80%"><b>Distribution prior, samplable</b> :
+						$\quad\mu_p = \mathcal{N}(0, \mathrm{Id}_p)$
+					</li>
+					<li class="fragment fade-in" style="font-size:80%"><b>Mapping déterministe, inversible</b> :
+						$g_{\theta}$ (réseau de neurones)
+					</li>
+					<li class="fragment fade-in" style="font-size:80%"><b>Sampling procedure</b> :
+						$$x \sim \mu_p\,,\quad y=g_{\theta}(x)$$
+					</li>
+					<li class="fragment fade-in" style="font-size:80%"><b>Loi de y</b> :
+						<p class="fragment fade-in">$$\nu(y) = \mu(g_{\theta}^{-1}(y)) \bigg\lvert \det{\frac{\partial g_{\theta}^{-1}}{\partial y}} (y) \bigg\rvert = \frac{\mu(x)}{\big\lvert \det{\frac{\partial g_{\theta}}{\partial x}} (x) \big\rvert}$$</p>
+						<p class="fragment fade-in">$$\nu_{\theta} = g_{\theta \#}\mu_p$$</p>
+					</li>
+					<li class="fragment fade-in" style="font-size:80%">VAE, GAN, NF</li>
+					<li class="fragment fade-in" style="list-style-type: none; font-size:80%">variational lower bound, minimax zero sum game Nash equilibrium, exact likelihood</li>
+				</ul>
+			</section>
+
+			<section>
+				<p style="text-align: left; line-height: 20px;">3. Inégalité isopérimétrique</p>
+				<p class="fragment fade-in" style="text-align: left; font-size: 80%; line-height: 20px;">a. Forme basique</p>
+				<ul style="list-style-type: none; font-size: 80%;">
+					<li class="fragment fade-in" style="font-size:80%">Inégalité entre <b>périmètre</b> et <b>surface</b></li>
+				</ul>
+				<h1 style="font-size:80%; opacity: 0; visibility: hidden;">pad</h1>
+				<div class="container" style="font-size:60%;">
+					<div class="col fragment fade-in">
+						<img style="max-width: 80%; height: auto;" src="assets/surface_ville.jpg">
+					</div>
+					<div>
+						<ul class="fragment fade-in" style="list-style-type: circle; font-size: 100%;">
+							<li style="font-size:400%; opacity: 0; visibility: hidden;">pad</li>
+							<li style="font-size:100%">$p^2 \geq 4 \pi S\quad\quad$ (égalité = disque)</li>
+							<li style="font-size:80%; opacity: 0; visibility: hidden;">pad</li>
+							<li style="font-size:100%">$S^3 \geq 36 \pi V^2\quad$ (égalité = sphère)</li>
+						</ul>
+					</div>
+			</section>
+
+			<section data-transition="none">
+				<p style="text-align: left; line-height: 20px;">3. Inégalité isopérimétrique</p>
+				<p class="fragment fade-in" style="text-align: left; font-size: 80%; line-height: 20px;">b. Extension à des surfaces généralisées</p>
+				<h1 style="font-size:80%; opacity: 0; visibility: hidden;">pad</h1>
+				<ul style="list-style-type: circle; font-size: 80%;">
+					<li class="fragment fade-in" style="font-size:80%">$(\mathcal{X}, d, \gamma)$ espace mesurée, $A$ borélien de $\mathcal{X}$ (évènement)</li>
+					<li class="fragment fade-in" style="font-size:80%">r-voisinage (ouvert) de $A$ :
+						$$A_r = \{ x \in \mathcal{X}, d(x, A) < r \}$$
+					</li>
+					<li class="fragment fade-in" style="font-size:80%">"périmètre" de $A$ :
+						$$\gamma^{+}(\partial A) = \underset{r \, \rightarrow \, 0}{\lim \inf} \; \frac{\gamma(A_r) - \gamma(A)}{r}$$ 
+					</li>
+					<li class="fragment fade-in" style="font-size:80%">fonction isopérimétrique $\mathcal{I}_{\gamma}$ de $\gamma$ :
+						$$\gamma^{+}(\partial A) \geq \mathcal{I}_{\gamma}(\gamma(A))$$ 
+					</li>
+				</ul>
+			</section>
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">3. Inégalité isopérimétrique</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px;">b. Extension à des surfaces généralisées</p>
+				<ul style="list-style-type: circle; font-size: 60%;">
+					<li class="fragment fade-in" style="font-size:80%">Mesure gaussienne $\mu_p$ dans $\mathcal{X} = \mathbb{R}^p$ :
+						\[\begin{aligned} d\mu_p(x) &= (2\pi)^{-\frac{n}{2}}e^{-\frac{-|x|^2}{2}} dx \\
+						\mu_p(A) &= \int_A d\mu_p(x)
+						\end{aligned} \]
+						<p>"Aire" de A = probabilité que $Z \sim \mu_p = \mathcal{N}(0, \mathrm{Id}_p)$  soit dans $A$</p>
+					</li>
+					<li class="fragment fade-in" style="font-size:80%">Fonction isopérimétrique de $\mu_p$ : 
+						<p>$$\mathcal{I}_{\mu_p} = \phi \circ \Phi^{-1},$$</p>
+						<p>avec $$\phi(x) = \frac{e^{-\frac{x^2}{2}}}{\sqrt{2\pi}} \quad\text{et}\quad \Phi = s \mapsto \int_{-\infty}^{s}\phi(x)dx = \mu_1(]-\infty, s[)$$</p>
+					</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">3. Inégalité isopérimétrique</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px;">b. Extension à des surfaces généralisées</p>
+				<ul style="list-style-type: circle; font-size: 60%;">
+					<li style="font-size:80%">Mesure gaussienne $\mu_p$ dans $\mathcal{X} = \mathbb{R}^p$ :
+						\[\begin{aligned} d\mu_p(x) &= (2\pi)^{-\frac{n}{2}}e^{-\frac{-|x|^2}{2}} dx \\
+						\mu_p(A) &= \int_A d\mu_p(x)
+						\end{aligned} \]
+						<p>"Aire" de A = probabilité que $Z \sim \mu_p = \mathcal{N}(0, \mathrm{Id}_p)$  soit dans $A$</p>
+					</li>
+				</ul>
+				<img style="max-width: 50%; height: auto" src="assets/gii_v2.png">
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">4. Inégalité isopérimétrique pour push-forward models</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px;">a. Et alors ?</p>
+				<ul style="list-style-type: circle; font-size: 60%;">On a 
+					<li style="font-size:80%; opacity: 0; visibility: hidden;">Une mesure engendrée par la mesure gaussienne "pushed-forward" :</li>
+					<li class="fragment fade-in" style="font-size:80%">Une mesure engendrée par la mesure gaussienne "pushed-forward" :
+						$$\nu_{\theta} = g_{\theta \#}\mu_p$$
+					</li>
+					<li class="fragment fade-in" style="font-size:80%">Une inégalié isopérimétrique pour la mesure gaussienne :
+						$$\mu_p^{+}(\partial A) \geq (\phi \circ \Phi^{-1})(\mu_p(A))$$
+					</li>
+				</ul>
+				<h1 style="font-size:80%; opacity: 0; visibility: hidden;">pad</h1>
+				<ul class="fragment fade-in" style="list-style-type: circle; font-size: 60%;">On veut 
+					<li style="font-size:80%; opacity: 0; visibility: hidden;">Une mesure engendrée par la mesure gaussienne "pushed-forward" :</li>
+					<li class="fragment fade-in" style="font-size:80%">Une inégalité sur la mesure "pushed-forward" :
+						<p class="fragment fade-in">$$\operatorname{Lip}(g_{\theta})(g_{\theta \#}\mu_p)^{+}(\partial A) \geq (\phi \circ \Phi^{-1})(g_{\theta \#}\mu_p(A))$$</p> 
+					</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">4. Inégalité isopérimétrique pour push-forward models</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px; padding-bottom: 0; margin: 0;">a. Et alors ?</p>
+				<ul style="list-style-type: circle; font-size: 60%;">
+					<li style="font-size:80%; opacity: 0; visibility: hidden;">Une mesure engendrée par la mesure gaussienne "pushed-forward" :</li>
+					<li style="font-size:80%">Une inégalité sur la mesure "pushed-forward" :
+						<p>$$\operatorname{Lip}(g_{\theta})(g_{\theta \#}\mu_p)^{+}(\partial A) \geq (\phi \circ \Phi^{-1})(g_{\theta \#}\mu_p(A))$$</p> 
+					</li>
+				</ul>
+				<ul class="fragment fade-in" style="list-style-type: circle; font-size: 60%;">
+					<li style="font-size:80%; opacity: 0; visibility: hidden;">Une mesure engendrée par la mesure gaussienne "pushed-forward" :</li>
+					<li style="font-size:80%">S'écrit aussi, pour tout $r \geq 0$ :
+						<p>$$(g_{\theta \#}\mu_p)(A_r) \geq \Phi\left(\frac{r}{\operatorname{Lip}(g_{\theta})} + \Phi^{-1}\left(g_{\theta \#}\mu_p(A)\right)\right)$$</p> 
+					</li>
+				</ul>
+				<img class="fragment fade-in" style="padding-bottom: 0; margin: 0; max-width: 45%; height: auto" src="assets/gii_exp1.png">
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">4. Inégalité isopérimétrique pour push-forward models</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px">a. Et alors ?</p>
+				<h1 style="font-size:150%; opacity: 0; visibility: hidden;">pad</h1>
+				<ul style="font-size: 60%;">
+					<li>$g_{\theta \#}\mu_p$ multimodal $\Rightarrow$ $\operatorname{Lip}(g_{\theta})$ large
+						<p class="fragment fade-in">Mais $\operatorname{Lip}(g_{\theta})$ terme de régularisation</p>
+						<!-- <p class="fragment highlight-red"></p> -->
+					</li>
+				</ul>
+				<div style="width: 100%; margin: 0 auto;">
+					<span class="fragment fade-in">
+						<span class="fragment highlight-red">Compromis expressivité - stabilité</span>
+					</span>
+				</div>	
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">4. Inégalité isopérimétrique pour push-forward models</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px">b. Expérimentations</p>
+				<h1 style="font-size:150%; opacity: 0; visibility: hidden;">pad</h1>
+				<img class="fragment fade-in" style="padding-bottom: 0; margin: 0; max-width: 100%; height: auto" src="assets/gii_exp2.png">
+				<div class="container fragment fade-in">
+					<div class="col fragment fade-in">
+						<ul style="list-style-type: none;">
+							<li>VAE</li>
+							<li class="fragment highlight-green" style="list-style-type: circle; font-size: 50%;">modes gaussiens</li>
+							<li class="fragment highlight-red" style="list-style-type: circle; font-size: 50%;">interpole fortement entre eux</li>
+						</ul>
+					</div>
+					<div class="col fragment fade-in">
+						<ul style="list-style-type: none;">
+							<li>GAN</li>
+							<li class="fragment highlight-red" style="list-style-type: circle; font-size: 50%; font-style: italic;">mode collapse</li>
+							<li class="fragment highlight-green" style="list-style-type: circle; font-size: 50%;">pas d'interpolation</li>
+						</ul>
+					</div>
+					<div class="col fragment fade-in">
+						<ul style="list-style-type: none;">
+							<li>SGM</li>
+							<li class="fragment highlight-green" style="list-style-type: circle; font-size: 50%;">modes gaussiens</li>
+							<li class="fragment highlight-green" style="list-style-type: circle; font-size: 50%;">pas d'interpolation</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">4. Inégalité isopérimétrique pour push-forward models</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px">b. Expérimentations</p>
+				<h1 style="font-size:150%; opacity: 0; visibility: hidden;">pad</h1>
+				<img class="fragment fade-in" style="padding-bottom: 0; margin: 0; max-width: 100%; height: auto" src="assets/gii_exp3.png">
+				<div class="container">
+					<div class="col fragment fade-in">
+						<ul style="list-style-type: circle;">
+							<li style="font-size: 50%;">$\operatorname{Lip}(\operatorname{GAN}) \gg \operatorname{Lip}(\operatorname{VAE})$</li>
+							<!-- <li class="fragment highlight-green" style="list-style-type: circle; font-size: 50%;">modes gaussiens</li>
+							<li class="fragment highlight-red" style="list-style-type: circle; font-size: 50%;">interpole fortement entre eux</li> -->
+						</ul>
+					</div>
+					<div class="col fragment fade-in">
+						<ul style="list-style-type: circle;">
+							<li style="font-size: 50%;">GAN & VAE saturent la borne inférieure</li>
+							<!-- <li class="fragment highlight-red" style="list-style-type: circle; font-size: 50%; font-style: italic;">mode collapse</li>
+							<li class="fragment highlight-green" style="list-style-type: circle; font-size: 50%;">pas d'interpolation</li> -->
+						</ul>
+					</div>
+				</div>
+				<!-- <p style="font-size: 50%; text-align: center;">Test</p> -->
+				<ul class="col fragment fade-in" style="list-style-type: circle;">
+					<li style="font-size: 50%;">SGM appelée plusieurs fois $\Rightarrow$ compromis gagnant</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">4. Inégalité isopérimétrique pour push-forward models</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px">b. Expérimentations</p>
+				<h1 style="font-size:150%; opacity: 0; visibility: hidden;">pad</h1>
+				<p class="fragment fade-in" style="font-size: 50%;">Régularisation $\;\operatorname{Lip}(\operatorname{GAN})$</p>
+				<img class="fragment fade-in" style="padding-bottom: 0; margin: 0; max-width: 100%; height: auto" src="assets/gii_exp4.png">
+				<p class="fragment fade-in" style="font-size: 50%; font-style: italic;">mode dropping $\rightarrow$ mode collapse</p>
+			</section>
+
+			<section data-auto-animate>
+				<p style="text-align: left; line-height: 20px;">4. Inégalité isopérimétrique pour push-forward models</p>
+				<p style="text-align: left; font-size: 80%; line-height: 20px">b. Expérimentations</p>
+				<h1 style="font-size:150%; opacity: 0; visibility: hidden;">pad</h1>
+				<img class="fragment fade-in" style="padding-bottom: 0; margin: 0; max-width: 100%; height: auto" src="assets/gii_exp5.png">
+				<ul class="fragment fade-in" style="list-style-type: circle;">
+					<li style="font-size: 50%;">Instabilité croissante avec profondeur et temps d'entraînement</li>
+				</ul>
+			</section>
+
+			<section>
+				<h1 style="font-size: 250%; opacity: 0; visibility: hidden;">Thank you for your attention</h1>
+				<h1 class="r-fit-text">Thank you for your attention</h1>
+			</section>
+			
+
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				preloadIframes: true,
+				viewDistance: 30,
+				margin: 0.02,
+				center: false,
+				width: 1060,
+  				height: 700,
+				// highlight: {
+				// 	beforeHighlight: (hljs) => hljs.registerLanguage("python", require('plugin/highlight/languages/python')),
+  				// },
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+	</body>
+	<!-- <script type="text/javascript">
+		Reveal.addEventListener('slidechanged', (event) => {
+		  const isSnOn = (event.currentSlide.dataset.hideSlideNumber !== 'true');
+		  Reveal.configure({ slideNumber: isSnOn });
+		});
+	</script> -->
+</html>
