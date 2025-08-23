@@ -24,33 +24,33 @@ markup:
 
 # Menus:
 #   main:
-    # - identifier: blog
-    #   name: Blog
-    #   title: Blog posts
-    #   url: /blogs
-    #   weight: 1
-    # - identifier: gallery
-    #   name: Gallery
-    #   title: Blog posts
-    #   url: /gallery
-    #   weight: 2
-    #Dropdown menu
-    # - identifier: dropdown
-    #   title: Example dropdown menu
-    #   name: Dropdown
-    #   weight: 3
-    # - identifier: dropdown1
-    #   title: example dropdown 1
-    #   name: example 1
-    #   url: /#
-    #   parent: dropdown
-    #   weight: 1
-    # - identifier: dropdown2
-    #   title: example dropdown 2
-    #   name: example 2
-    #   url: /#
-    #   parent: dropdown
-    #   weight: 2
+#     - identifier: education
+#       name: education
+#       title: research
+#       url: /#
+#       weight: 2
+#     - identifier: gallery
+#       name: Gallery
+#       title: Blog posts
+#       url: /gallery
+#       weight: 2
+#     - Dropdown menu:
+#     - identifier: dropdown
+#       title: Example dropdown menu
+#       name: Dropdown
+#       weight: 3
+#     - identifier: dropdown1
+#       title: example dropdown 1
+#       name: example 1
+#       url: /#
+#       parent: dropdown
+#       weight: 1
+#     - identifier: dropdown2
+#       title: example dropdown 2
+#       name: example 2
+#       url: /#
+#       parent: dropdown
+#       weight: 2
 
 params:
   title: "Luc Vedrenne"
@@ -102,26 +102,28 @@ params:
   navbar:
     align: ms-auto # Left: ms-auto | center: mx-auto | right: me-auto | Default: ms-auto
     # brandLogo: "/logo.png" # Logo for the brand | default is the favicon variable
-    # showBrandLogo: false # Show brand logo in nav bar | default is true
-    brandName: "LV" # Brand name for the brand | default is the title variable
+    showBrandLogo: false # Show brand logo in nav bar | default is true
+    brandName: "" # Brand name for the brand | default is the title variable
     disableSearch: false
     # searchPlaceholder: "Search"
-    menus:
-      disableAbout: false
-      disableExperience: false
-      disableEducation: false
-      disableProjects: true
-      disableAchievements: true
-      disableContact: false
+    # menus:
+    #   disableAbout: false
+    #   disableExperience: false
+    #   disableEducation: true
+    #   disableProjects: false
+    #   disableAchievements: true
+    #   disableContact: false
 
   # Hero
   hero:
     enable: true
-    intro: "ICube lab"
+    intro: "Hi, my name is"
     title: "Luc Vedrenne"
-    subtitle: "IMAGeS team"
-    content: "I'm a PhD student working on biomedical imaging processing through deep learning. Currenctly working on 3D point clouds registration."
+    subtitle: "I'm a deep learning researcher"
+    content: "Ph.D candidate working on biomedical imaging processing through deep learning. Currenctly working on 3D point clouds registration."
     image: /images/logo_icube_short.svg
+    bottomImage:
+        enable: false
     url: "https://images.icube.unistra.fr/index.php/Accueil"
     # bottomImage:
     #   enable: true
@@ -148,7 +150,7 @@ params:
     title: "About"
     image: "/images/me_padded.jpg"
     content: |-
-      I'm a PhD student working on the IMAGeS team of the ICube lab in Strasbourg, France.
+      I'm a Ph.D student working on the IMAGeS team of the ICube lab in Strasbourg, France.
       
       Prior to that, I graduated from the IMT Atlantique engineer school, with a strong emphasis in computer sciences and applied mathematics.
     skills:
@@ -165,33 +167,38 @@ params:
     enable: true
     # title: "Custom Name"
     items:
-      - job: "PhD student"
+      - job: "Ph.D"
         company: "ICube"
         companyUrl: "https://icube.unistra.fr/"
-        date: "Apr 2022 - present"
+        date: "Apr 2022 - Oct 2025"
         featuredLink:
           enable: true
-          name: "View the subject"
-          url: "these_point_clouds.pdf"
+          name: "Paper"
+          url: "polar_arxiv.pdf"
         info:
-          enable: true
-          content: My thesis is planned to end in 2025.
-        content: "Currently doing my thesis on multiviews registration of higly degraded point clouds. Applied to Single Particle Localization Microscopy (SMLM)."
+          enable: false
+        content: |
+          Multi-view registration of highly degraded point clouds using deep learning.
+          - Robust generative registration algorithm (POLAR), leveraging a pretrained VAE latent space to align highly degraded multi-view point clouds: [pypolar.github.io/polar](https://pypolar.github.io/polar).<br>
+          First-author [paper](https://arxiv.org/abs/2504.21467) in *IEEE Transactions on Image Processing*.
+          - Plug-and-play global optimization framework (GRIP) that transforms any local registration method into a global one for non-convex problems: [github.com/pcrresearch/GRIP](https://github.com/pcrresearch/GRIP).
+          - First pure PyTorch implementation of the JRMPC algorithm, 50x runtime improvement: [github.com/pcrresearch/JRMPC-PyTorch-Numpy](https://github.com/pcrresearch/JRMPC-PyTorch-Numpy/tree/main).
 
-      - job: "Master 2 internship"
+      - job: "Research intern"
         company: "ICube"
         companyUrl: "https://icube.unistra.fr/"
         date: "Jan 2021 - Aug 2021"
         featuredLink:
           enable: true
-          name: "Poster (in french)"
-          url: "IABM.pdf"
+          name: "Paper"
+          url: "ISBI24_pu.pdf"
         info:
           enable: false
         content: |
-          I did my master thesis in the same laboratory. I worked on particle picking, that is the detection of isolated particles on fluorescent microscopy.
-          The aim of the project was to develop a deep learning pipeline in a weakly supervised setup.
-      - job: "Deep learning engineer"
+          - Developed a weakly supervised deep learning pipeline (positive-unlabeled learning) for particle detection in fluorescence microscopy. Reached fully supervised performances with 500x fewer annotations.
+          - Collaborated with Prof. Paul Guichard \& Dr. Virginie Hamel, University of Geneva.
+          - Contributed to open-source software for biologists: [spfluo-app](https://spfluo.icube.unistra.fr/en/usage/tutorial/index.html)
+      - job: "Research intern"
         company: "OncoNeural"
         # companyUrl: "https://example.com"
         date: "Sep 2019 - Jan 2020"
@@ -202,7 +209,8 @@ params:
           enable: true
           content: Unfortunately, this startup no longer exists.
         content: |
-          I worked for a young startup on the development of a multi organs cancer detection framework on PET-SCAN images using supervised deep learning algorithms.  
+          - **Lead PyTorch Developer** -- designed and implemented deep learning pipelines for cancer detection on CT scans.
+          - Collaborated with Gustave Roussy Hospital, the largest cancer center in Europe.
 
   # Education
   education:
@@ -229,7 +237,7 @@ params:
         featuredLink:
           enable: true
           name: "PDF"
-          url: "2024050559.pdf"
+          url: "ISBI24_dental.pdf"
 
       - title: "Particle detection based on few shot learning in 3D fluorescence microscopy"
         school:
@@ -239,7 +247,7 @@ params:
         featuredLink:
           enable: true
           name: "PDF"
-          url: "ISBI24_paper_1067.pdf"
+          url: "ISBI24_pu.pdf"
 
       - title: "Fast and interpretable unsupervised domain adaptation for FIB-SEM cell segmentation"
         school:
@@ -249,7 +257,7 @@ params:
         featuredLink:
           enable: true
           name: "PDF"
-          url: "ISBI_paper_559.pdf"
+          url: "ISBI23_uda.pdf"
 
   # Achievements
   achievements:

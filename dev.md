@@ -1,0 +1,10 @@
+It is a circle, $A_{2}$. I don’t think this is necessarily obvious to everyone, and in fact, I would say I believed it more than I understood it, but I managed to convince myself with the Wikipedia explanation that a drop of water becomes a sphere.
+
+We fixed the length of the strings in this example, but now we assume that the strings are stretchable, and instead, we fix the area inside the enclosure; I mean $\mu(A_{1}) = \mu(A_{2})$, where $\mu(A)$ is the area of $A$. In this case, which length of the string is shorter, $A_{1}$ or $A_{2}$? If the water drop story makes sense to us, then no surprise about this, it is $A_{2}$, saying that if the areas are equal, the perimeter will be the smallest when forming a circle. Let us express this a little more formally. The perimeter is defined as [ \text{surf}(A) := \liminf_{\epsilon \rightarrow \infty}\ \frac{\mu(A_{\epsilon}) - \mu(A)}{\epsilon}. ] We introduce the notion of $\epsilon$-extension, and the $\epsilon$-extension of $A$ is denoted by $\mu(A_{\epsilon}$, which is defined as [ A_{\epsilon} =\{ x: d(x, A) \leq \epsilon \} ] where $d(x,A)$ denotes the distance from $x$ to the nearest point in $A$. It is just saying that $A_{\epsilon}$ is $A$ blown up by a small $\epsilon$, like below.
+
+
+We saw that, when $A \subset \mathbb{R}^{2}$ is a circle, the length of the string is the shortest, which means that the variation due to $\epsilon$-extension is minimum. In Gaussian measure, when $A$ is the half space $H = \{ x \in \mathbb{R}^{n}: \langle x,u \rangle \leq a \}$, the change due to $\epsilon$-extension is minimum, i.e., $\gamma(A + \epsilon B_{n}) \geq \gamma(H + \epsilon B_{n})$ for all $A$.
+
+It is difficult to get an intuition as to all this, but let me leave this for now and move on. We show that when $A = H$, the equality holds in Eq.$\,$($\ref{eq:1}$), i.e., [ \Phi^{-1} ( \gamma(H + \epsilon B_{n})) = \Phi^{-1} ( \gamma(H)) + \epsilon. ] Here, we use the property that an orthogonal projection of a multidimensional Gaussian into one dimension becomes a $1$-dimensional Gaussian.
+
+Projection of Gaussian
