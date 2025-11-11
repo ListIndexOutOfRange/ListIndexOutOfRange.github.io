@@ -1,0 +1,429 @@
+<head>
+  <meta charset="utf-8" />
+  <title>Sphère + plan tangent + projection + géodésique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Import map (ES modules) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <style>
+    html, body { height: 100%; margin: 0; background: #fff; font-family: system-ui, sans-serif; }
+    .wrap { max-width: 960px; margin: 24px auto; padding: 0 12px; }
+    .row  { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+    .canvas-holder {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #fff;
+      /* border: 1px solid #ddd;
+      border-radius: 8px; */
+      overflow: hidden;
+      cursor: crosshair;
+    }
+    .title { margin: 0 0 8px; color: #333; }
+    .hint  { color: #666; font-size: 0.95rem; margin-bottom: 10px; }
+    .ctrl  { display: inline-flex; align-items: center; gap: 8px; color: #333; }
+    .val   { min-width: 2ch; text-align: right; display: inline-block; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- <h2 class="title">Plan tangent maillé → projection radiale sur la sphère</h2> -->
+    <!-- <div class="hint">Glisser pour orbiter (hors points) • Molette pour zoomer • Tirer un point noir pour le déplacer</div> -->
+    <div id="canvas" class="canvas-holder"></div>
+        <div class="row">
+      <label class="ctrl">
+        Finesse de la grille :
+        <input id="gridN" type="range" min="4" max="64" step="1" value="16">
+        <span id="gridNVal" class="val">16</span>
+      </label>
+      <label class="ctrl">
+        Afficher les lignes projetées :
+        <input id="toggleLines" type="checkbox">
+      </label>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js";
+
+    const container = document.getElementById('canvas');
+    const slider = document.getElementById('gridN');
+    const sliderVal = document.getElementById('gridNVal');
+    const toggleLines = document.getElementById('toggleLines');
+
+    // --- Scène ---
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
+
+    const camera = new THREE.PerspectiveCamera(45, 4/3, 0.01, 100);
+    camera.position.set(2.2, 1.6, 2.0);
+    camera.lookAt(0,0,0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    // Lumières
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x888888, 0.9));
+    const dir = new THREE.DirectionalLight(0xffffff, 0.6);
+    dir.position.set(2, 3, 2);
+    scene.add(dir);
+
+    // --- Sphère lisse ---
+    const sphereGeom = new THREE.SphereGeometry(1, 128, 128);
+    const sphereMat  = new THREE.MeshPhysicalMaterial({
+      color: 0xf6f6f6,
+      roughness: 0.35,
+      metalness: 0.0,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.3,
+      transparent: true,
+      opacity: 0.95
+    });
+    const sphere = new THREE.Mesh(sphereGeom, sphereMat);
+    scene.add(sphere);
+
+    // --- Plan tangent ---
+    const PLANE_SIZE = 1.6;
+    const planeY = 1.0;
+
+    const planeMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(PLANE_SIZE, PLANE_SIZE, 1, 1),
+      new THREE.MeshBasicMaterial({ color: 0x1f4ed8, transparent: true, opacity: 0.12, side: THREE.DoubleSide })
+    );
+    planeMesh.position.set(0, planeY, 0);
+    planeMesh.rotation.x = -Math.PI / 2;
+    scene.add(planeMesh);
+
+    // Contour du plan
+    const outlinePos = new Float32Array([
+      -PLANE_SIZE/2, planeY, -PLANE_SIZE/2,   PLANE_SIZE/2, planeY, -PLANE_SIZE/2,
+       PLANE_SIZE/2, planeY, -PLANE_SIZE/2,   PLANE_SIZE/2, planeY,  PLANE_SIZE/2,
+       PLANE_SIZE/2, planeY,  PLANE_SIZE/2,  -PLANE_SIZE/2, planeY,  PLANE_SIZE/2,
+      -PLANE_SIZE/2, planeY,  PLANE_SIZE/2,  -PLANE_SIZE/2, planeY, -PLANE_SIZE/2
+    ]);
+    const outlineGeom = new THREE.BufferGeometry();
+    outlineGeom.setAttribute('position', new THREE.BufferAttribute(outlinePos, 3));
+    const outline = new THREE.LineSegments(outlineGeom, new THREE.LineBasicMaterial({ color: 0x1f4ed8 }));
+    scene.add(outline);
+
+    // Point de tangence
+    const dot = new THREE.Mesh(
+      new THREE.SphereGeometry(0.015, 16, 16),
+      new THREE.MeshBasicMaterial({ color: 0x000000 })
+    );
+    dot.position.set(0, planeY, 0);
+    scene.add(dot);
+
+    // --- Groupes dynamiques ---
+    const planeGridGroup   = new THREE.Group();
+    const projectedPtsGrp  = new THREE.Group();
+    const projectedLines   = new THREE.Group();
+    const tangentPairGrp   = new THREE.Group();
+    const projectedPairGrp = new THREE.Group();
+    scene.add(planeGridGroup, projectedPtsGrp, projectedLines, tangentPairGrp, projectedPairGrp);
+
+    // --- Helpers géodésique ---
+    function greatCircleArcPoints(p, q, samples = 128) {
+      // p, q : THREE.Vector3 unitaires
+      const dot = THREE.MathUtils.clamp(p.dot(q), -1, 1);
+      let angle = Math.acos(dot);
+
+      // Cas quasi identiques : petit segment (évite les NaN)
+      if (angle < 1e-6) {
+        return [p.clone(), q.clone()];
+      }
+
+      // Cas quasi antipodal : choisir un axe quelconque orthogonal à p
+      let axis = new THREE.Vector3().crossVectors(p, q);
+      if (axis.lengthSq() < 1e-12) {
+        // p ≈ ±q => cross ~ 0 : prendre un axe orthogonal à p
+        axis = new THREE.Vector3(1, 0, 0);
+        if (Math.abs(p.dot(axis)) > 0.9) axis.set(0, 1, 0);
+        axis.crossVectors(p, axis).normalize();
+        angle = Math.PI; // demi-tour
+      } else {
+        axis.normalize();
+      }
+
+      const pts = [];
+      const base = p.clone();
+      for (let i = 0; i <= samples; i++) {
+        const t = i / samples;
+        const qRot = new THREE.Quaternion().setFromAxisAngle(axis, angle * t);
+        const pt = base.clone().applyQuaternion(qRot).normalize();
+        pts.push(pt);
+      }
+      return pts;
+    }
+
+    // --- Grille sur le plan ---
+    function buildPlaneGrid(N) {
+      planeGridGroup.clear();
+      const half = PLANE_SIZE / 2;
+      const pos = [];
+
+      for (let i = 0; i <= N; i++) {
+        const u = -half + (i / N) * PLANE_SIZE;
+        pos.push(u, planeY, -half,  u, planeY,  half);
+      }
+      for (let j = 0; j <= N; j++) {
+        const v = -half + (j / N) * PLANE_SIZE;
+        pos.push(-half, planeY, v,   half, planeY, v);
+      }
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+      const mat = new THREE.LineBasicMaterial({ color: 0x1f4ed8 });
+      planeGridGroup.add(new THREE.LineSegments(geom, mat));
+    }
+
+    // --- Points projetés (centres de cellules) ---
+    function buildProjectedPoints(N) {
+      projectedPtsGrp.clear();
+      const half = PLANE_SIZE / 2;
+      const positions = new Float32Array(N * N * 3);
+      let k = 0;
+
+      for (let j = 0; j < N; j++) {
+        for (let i = 0; i < N; i++) {
+          const u = -half + ((i + 0.5) / N) * PLANE_SIZE; // x
+          const v = -half + ((j + 0.5) / N) * PLANE_SIZE; // z
+          const px = u, py = planeY, pz = v;
+          const len = Math.hypot(px, py, pz);
+          positions[k++] = px / len;
+          positions[k++] = py / len;
+          positions[k++] = pz / len;
+        }
+      }
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const pts = new THREE.Points(
+        geom,
+        new THREE.PointsMaterial({ color: 0xd24b39, size: 0.04, sizeAttenuation: true })
+      );
+      projectedPtsGrp.add(pts);
+    }
+
+    // --- (Optionnel) Lignes projetées ---
+    function buildProjectedLines(N) {
+      projectedLines.clear();
+      if (!toggleLines.checked) return;
+
+      const half = PLANE_SIZE / 2;
+      const addPolyline = (points) => {
+        const geom = new THREE.BufferGeometry().setFromPoints(points);
+        projectedLines.add(new THREE.Line(geom, new THREE.LineBasicMaterial({ color: 0x888888 })));
+      };
+
+      for (let i = 0; i <= N; i++) {
+        const u = -half + (i / N) * PLANE_SIZE;
+        const pts = [];
+        const samples = Math.max(24, 6 * N);
+        for (let s = 0; s <= samples; s++) {
+          const t = s / samples;
+          const v = -half + t * PLANE_SIZE;
+          const px = u, py = planeY, pz = v;
+          const invLen = 1 / Math.hypot(px, py, pz);
+          pts.push(new THREE.Vector3(px * invLen, py * invLen, pz * invLen));
+        }
+        addPolyline(pts);
+      }
+      for (let j = 0; j <= N; j++) {
+        const v = -half + (j / N) * PLANE_SIZE;
+        const pts = [];
+        const samples = Math.max(24, 6 * N);
+        for (let s = 0; s <= samples; s++) {
+          const t = s / samples;
+          const u = -half + t * PLANE_SIZE;
+          const px = u, py = planeY, pz = v;
+          const invLen = 1 / Math.hypot(px, py, pz);
+          pts.push(new THREE.Vector3(px * invLen, py * invLen, pz * invLen));
+        }
+        addPolyline(pts);
+      }
+    }
+
+    // --- Deux points sur le plan + projections (DRAG) + géodésique sur la sphère ---
+    const P1 = new THREE.Vector2(-0.45,  0.25);
+    const P2 = new THREE.Vector2( 0.55, -0.30);
+
+    const planePointMat = new THREE.MeshBasicMaterial({ color: 0x0f0f0f });
+    const planePointGeom = new THREE.SphereGeometry(0.03, 16, 16);
+
+    const spherePointMat = new THREE.MeshBasicMaterial({ color: 0xd24b39 });
+    const spherePointGeom = new THREE.SphereGeometry(0.03, 16, 16);
+
+    let m1, m2, planeSeg, s1, s2, projGeodesic;
+
+    function buildPairs() {
+      tangentPairGrp.clear();
+      projectedPairGrp.clear();
+
+      const p1_plane = new THREE.Vector3(P1.x, planeY, P1.y);
+      const p2_plane = new THREE.Vector3(P2.x, planeY, P2.y);
+
+      // Points + segment dans le plan
+      m1 = new THREE.Mesh(planePointGeom, planePointMat);
+      m2 = new THREE.Mesh(planePointGeom, planePointMat);
+      m1.position.copy(p1_plane);
+      m2.position.copy(p2_plane);
+      tangentPairGrp.add(m1, m2);
+
+      planeSeg = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints([p1_plane, p2_plane]),
+        new THREE.LineBasicMaterial({ color: 0x0f0f0f })
+      );
+      tangentPairGrp.add(planeSeg);
+
+      // Projections sphère
+      const p1_sph = p1_plane.clone().normalize();
+      const p2_sph = p2_plane.clone().normalize();
+
+      s1 = new THREE.Mesh(spherePointGeom, spherePointMat);
+      s2 = new THREE.Mesh(spherePointGeom, spherePointMat);
+      s1.position.copy(p1_sph);
+      s2.position.copy(p2_sph);
+      projectedPairGrp.add(s1, s2);
+
+      // Géodésique (arc grand cercle) : matériau visible "au-dessus"
+      const arcPts = greatCircleArcPoints(p1_sph, p2_sph, 192);
+      const arcGeom = new THREE.BufferGeometry().setFromPoints(arcPts);
+      const arcMat  = new THREE.LineBasicMaterial({
+        color: 0xd24b39,
+        transparent: true,
+        opacity: 0.95,
+        depthTest: false,
+        depthWrite: false
+      });
+      projGeodesic = new THREE.Line(arcGeom, arcMat);
+      projGeodesic.renderOrder = 10;
+      projectedPairGrp.add(projGeodesic);
+    }
+
+    function updatePairs() {
+      const p1_plane = new THREE.Vector3(P1.x, planeY, P1.y);
+      const p2_plane = new THREE.Vector3(P2.x, planeY, P2.y);
+      m1.position.copy(p1_plane);
+      m2.position.copy(p2_plane);
+
+      // Segment dans le plan (maj des positions)
+      const arrPlane = planeSeg.geometry.attributes.position.array;
+      arrPlane[0] = p1_plane.x; arrPlane[1] = p1_plane.y; arrPlane[2] = p1_plane.z;
+      arrPlane[3] = p2_plane.x; arrPlane[4] = p2_plane.y; arrPlane[5] = p2_plane.z;
+      planeSeg.geometry.attributes.position.needsUpdate = true;
+      planeSeg.geometry.computeBoundingSphere();
+
+      // Projections sphère
+      const p1_sph = p1_plane.clone().normalize();
+      const p2_sph = p2_plane.clone().normalize();
+      s1.position.copy(p1_sph);
+      s2.position.copy(p2_sph);
+
+      // Recalcule l'arc géodésique
+      const pts = greatCircleArcPoints(p1_sph, p2_sph, 192);
+      projGeodesic.geometry.dispose();
+      projGeodesic.geometry = new THREE.BufferGeometry().setFromPoints(pts);
+    }
+
+    function rebuild(N) {
+      buildPlaneGrid(N);
+      buildProjectedPoints(N);
+      buildProjectedLines(N);
+      buildPairs();
+    }
+
+    // --- Resize ---
+    function resize() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    new ResizeObserver(resize).observe(container);
+
+    // --- Init + UI ---
+    let N = parseInt(slider.value, 10);
+    sliderVal.textContent = N;
+    rebuild(N);
+
+    slider.addEventListener('input', () => {
+      N = parseInt(slider.value, 10);
+      sliderVal.textContent = N;
+      rebuild(N);
+    });
+    toggleLines.addEventListener('change', () => buildProjectedLines(N));
+
+    // --- Drag ---
+    const raycaster = new THREE.Raycaster();
+    const ndc = new THREE.Vector2();
+    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -planeY); // y=planeY
+    const hit = new THREE.Vector3();
+    const pickRadius = 0.10; // rayon de détection (unités du plan)
+    let dragging = null;
+    let controlsEnabledBeforeDrag = true;
+
+    function getNDC(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      ndc.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      ndc.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    }
+    function clampToPlaneBounds(v2) {
+      const half = PLANE_SIZE / 2;
+      v2.x = Math.max(-half, Math.min(half, v2.x));
+      v2.y = Math.max(-half, Math.min(half, v2.y));
+    }
+    function startDrag(event) {
+      getNDC(event);
+      raycaster.setFromCamera(ndc, camera);
+      if (!raycaster.ray.intersectPlane(plane, hit)) return;
+      const p = new THREE.Vector2(hit.x, hit.z);
+      const d1 = p.distanceTo(P1);
+      const d2 = p.distanceTo(P2);
+      if (d1 <= pickRadius || d2 <= pickRadius) {
+        dragging = (d1 <= d2) ? 'P1' : 'P2';
+        controlsEnabledBeforeDrag = controls.enabled;
+        controls.enabled = false;
+        container.style.cursor = 'grabbing';
+      }
+    }
+    function doDrag(event) {
+      if (!dragging) return;
+      getNDC(event);
+      raycaster.setFromCamera(ndc, camera);
+      if (!raycaster.ray.intersectPlane(plane, hit)) return;
+      const p = new THREE.Vector2(hit.x, hit.z);
+      clampToPlaneBounds(p);
+      if (dragging === 'P1') P1.copy(p);
+      else P2.copy(p);
+      updatePairs();
+    }
+    function endDrag() {
+      if (!dragging) return;
+      dragging = null;
+      controls.enabled = controlsEnabledBeforeDrag;
+      container.style.cursor = 'crosshair';
+    }
+    renderer.domElement.addEventListener('pointerdown', startDrag);
+    renderer.domElement.addEventListener('pointermove', doDrag);
+    window.addEventListener('pointerup', endDrag);
+    renderer.domElement.addEventListener('pointerleave', endDrag);
+
+    // --- Boucle ---
+    (function animate(){
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    })();
+  </script>
+</body>

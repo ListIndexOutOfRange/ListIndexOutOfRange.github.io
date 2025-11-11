@@ -1,0 +1,156 @@
+<head>
+<meta charset="UTF-8" />
+<title>NN Arrows – Vertical</title>
+<style>
+  html, body { margin:0; padding:0; width:100%; height:100%; background:white; }
+  svg { width:300px; height:300px; display:block; margin:0 auto; }
+</style>
+</head>
+<body>
+  <svg id="nn-svg" viewBox="0 0 450 450"></svg>
+
+  <script>
+  (() => {
+    const COLOR_TARGET = "indianred";
+    const COLOR_SOURCE = "royalblue";
+    const COLOR_LINES  = "gray";
+
+    const add=(a,b)=>[a[0]+b[0],a[1]+b[1]];
+
+    const svg = document.getElementById("nn-svg");
+    const vb = svg.viewBox.baseVal;
+    const W = vb.width, H = vb.height;
+
+    // --- vertical arrow: shaft (few points) + triangle head (many points) ---
+    function makeVerticalArrow({
+      len = H*0.55,       // shaft length
+      headH = H*0.12,     // triangle height
+      headW = H*0.12,     // triangle base width
+      shaftN = 10,        // FEWER points along the shaft
+      headEdgeN = 8,     // MORE points along each slanted edge
+      baseN = 7,         // points along the triangle base
+      xCenter = W*0.75,   // horizontal placement
+      yBottom = H*0.78    // bottom Y of the shaft
+    } = {}) {
+      const pts = [];
+
+      // Shaft points (vertical line going up)
+      const yTop = yBottom - len;
+      for (let i = 0; i < shaftN; i++) {
+        const t = (i / (shaftN - 1));
+        const y = yBottom - t * len;
+        pts.push([xCenter, y]);
+      }
+
+      // Triangle head geometry
+      const tip = [xCenter, yTop - headH];
+      const leftBase  = [xCenter - headW/2, yTop];
+      const rightBase = [xCenter + headW/2, yTop];
+
+      // Helper to sample N points on a segment [A->B]
+      const sampleEdge = (A, B, N) => {
+        const out = [];
+        for (let i = 0; i < N; i++) {
+          const t = (N === 1) ? 0 : (i / (N - 1));
+          out.push([ A[0] + t*(B[0]-A[0]), A[1] + t*(B[1]-A[1]) ]);
+        }
+        return out;
+      };
+
+      // Edges: leftBase->tip, tip->rightBase, rightBase->leftBase (base)
+      pts.push(...sampleEdge(leftBase, tip, headEdgeN));
+      pts.push(...sampleEdge(tip, rightBase, headEdgeN));
+      pts.push(...sampleEdge(rightBase, leftBase, baseN));
+
+      return pts;
+    }
+
+    function nearestNeighbors(A,B){
+      const idx=new Array(A.length);
+      for (let i=0;i<A.length;i++){
+        const [ax,ay]=A[i];
+        let best=-1, bestd=Infinity;
+        for (let j=0;j<B.length;j++){
+          const dx=ax-B[j][0], dy=ay-B[j][1];
+          const d=dx*dx+dy*dy;
+          if (d<bestd){ bestd=d; best=j; }
+        }
+        idx[i]=best;
+      }
+      return idx;
+    }
+
+    function elt(tag,attrs={},parent){
+      const e=document.createElementNS("http://www.w3.org/2000/svg",tag);
+      for (const [k,v] of Object.entries(attrs)) e.setAttribute(k,v);
+      if (parent) parent.appendChild(e);
+      return e;
+    }
+    function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
+    function drawPoints(svg, pts, {fill, r=4}){
+      const g=elt("g",{},svg);
+      for (const [x,y] of pts) elt("circle",{cx:x, cy:y, r, fill, opacity:"0.95"}, g);
+      return g;
+    }
+    function drawLines(svg, A, B, idx, {stroke="gray", lw=1.6, alpha=0.95}){
+      const g=elt("g",{},svg);
+      for (let i=0;i<A.length;i++){
+        const j=idx[i]; if (j<0) continue;
+        const [x1,y1]=A[i], [x2,y2]=B[j];
+        elt("line",{x1,y1,x2,y2,stroke,"stroke-width":lw,"stroke-linecap":"round",opacity:String(alpha)}, g);
+      }
+      return g;
+    }
+
+    // --- Build the two vertical arrows ---
+    const target = makeVerticalArrow({
+      xCenter: W - 60,    // near right edge
+      yBottom: H*0.80
+    });
+
+    const source0 = makeVerticalArrow({
+      xCenter: W*0.35,    // left side
+      yBottom: H*0.80
+    });
+
+    // Source can be dragged
+    let offset = [0, 0];
+    const currentSource = () => source0.map(p => add(p, offset));
+
+    function render(){
+      clear(svg);
+      const src = currentSource();
+      const idx = nearestNeighbors(src, target);
+      drawLines(svg, src, target, idx, {stroke: COLOR_LINES, lw: 1.6, alpha: 0.9});
+      drawPoints(svg, target, {fill: COLOR_TARGET, r: 4});
+      drawPoints(svg, src,    {fill: COLOR_SOURCE, r: 4});
+    }
+    render();
+
+    // --- dragging (mouse + touch) ---
+    let dragging=false, start=[0,0], base=[...offset];
+
+    function getPt(evt){
+      const p = ('touches' in evt && evt.touches.length) ? evt.touches[0] : evt;
+      const rect = svg.getBoundingClientRect();
+      return [ p.clientX - rect.left, p.clientY - rect.top ];
+    }
+    function onDown(e){ e.preventDefault(); dragging=true; start=getPt(e); base=[...offset]; }
+    function onMove(e){
+      if (!dragging) return;
+      const p = getPt(e);
+      offset = [ base[0] + (p[0]-start[0]), base[1] + (p[1]-start[1]) ];
+      render();
+    }
+    function onUp(){ dragging=false; }
+
+    svg.addEventListener("mousedown", onDown);
+    svg.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    svg.addEventListener("touchstart", onDown, {passive:false});
+    svg.addEventListener("touchmove", onMove, {passive:false});
+    window.addEventListener("touchend", onUp);
+    window.addEventListener("touchcancel", onUp);
+  })();
+  </script>
+</body>

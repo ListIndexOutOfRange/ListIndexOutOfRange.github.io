@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body { margin:0; height:100%; overflow:hidden; background:white; }
+    .dual { position:relative; display:flex; width:100%; height:100%; }
+    canvas { flex:1; width:50%; height:100%; display:block; }
+  </style>
+
+  <!-- Import map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="dual" id="dual">
+    <canvas id="canvasLeft"></canvas>
+    <canvas id="canvasRight"></canvas>
+  </div>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js";
+    import { PLYLoader }   from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/PLYLoader.js";
+
+    const container = document.getElementById("dual");
+    const canvasL = document.getElementById("canvasLeft");
+    const canvasR = document.getElementById("canvasRight");
+
+    // ---- Renderers (physically-correct + tonemapping) ----
+    const rendererL = new THREE.WebGLRenderer({ canvas: canvasL, antialias: true });
+    const rendererR = new THREE.WebGLRenderer({ canvas: canvasR, antialias: true });
+    for (const r of [rendererL, rendererR]) {
+      r.setPixelRatio(window.devicePixelRatio || 1);
+      r.shadowMap.enabled = true;                 // OK même sans sol ; désactive si besoin
+      r.shadowMap.type = THREE.PCFSoftShadowMap;
+      r.toneMapping = THREE.ACESFilmicToneMapping;
+      r.toneMappingExposure = 1.0;
+      r.outputColorSpace = THREE.SRGBColorSpace;
+      r.physicallyCorrectLights = true;
+    }
+
+    // ---- Scenes ----
+    const sceneL = new THREE.Scene();
+    const sceneR = new THREE.Scene();
+    sceneL.background = new THREE.Color(0xffffff);
+    sceneR.background = new THREE.Color(0xffffff);
+
+    // ---- Caméras ----
+    const cameraL = new THREE.PerspectiveCamera(60, 1, 0.01, 100);
+    const cameraR = new THREE.PerspectiveCamera(60, 1, 0.01, 100);
+    cameraL.position.set(2.4, 1.9, 2.6);
+    cameraR.position.copy(cameraL.position);
+    cameraL.lookAt(0, 0, 0);
+    cameraR.lookAt(0, 0, 0);
+
+    // ---- Contrôles (gauche seulement) ----
+    const controlsL = new OrbitControls(cameraL, rendererL.domElement);
+    controlsL.enableDamping = true;
+    controlsL.dampingFactor = 0.08;
+    controlsL.target.set(0, 0, 0);
+    controlsL.update();
+
+    // ---- Matériaux physiques ----
+    const matLeft  = new THREE.MeshPhysicalMaterial({
+      color: 0x2b7cff, roughness: 0.25, metalness: 0.1,
+      clearcoat: 1.0, clearcoatRoughness: 0.05,
+      sheen: 1.0, sheenRoughness: 0.4, sheenColor: new THREE.Color(0x99ccff)
+    });
+    const matRight = new THREE.MeshPhysicalMaterial({
+      color: 0xff6a2b, roughness: 0.28, metalness: 0.08,
+      clearcoat: 1.0, clearcoatRoughness: 0.06,
+      sheen: 1.0, sheenRoughness: 0.45, sheenColor: new THREE.Color(0xffc9a8)
+    });
+
+    // ---- Lumières (3-points soft) ----
+    function setupLights(scene) {
+      const key = new THREE.DirectionalLight(0xffffff, 3.0);
+      key.position.set(3, 5, 3);
+      key.castShadow = true;
+      key.shadow.mapSize.set(1024, 1024);
+      key.shadow.radius = 4;
+      key.shadow.camera.near = 0.1;
+      key.shadow.camera.far = 20;
+      key.shadow.camera.left = -4;
+      key.shadow.camera.right = 4;
+      key.shadow.camera.top = 4;
+      key.shadow.camera.bottom = -4;
+
+      const fill = new THREE.DirectionalLight(0xffffff, 1.2);
+      fill.position.set(-4, 2, 1);
+
+      const rim = new THREE.DirectionalLight(0xffffff, 1.8);
+      rim.position.set(-2, 4, -4);
+
+      const hemi = new THREE.HemisphereLight(0xdfe9f3, 0xe7ecf2, 0.6);
+
+      scene.add(key, fill, rim, hemi);
+    }
+    setupLights(sceneL);
+    setupLights(sceneR);
+
+    // ---- Chargement du mesh PLY ----
+    const PLY_PATH = "../assets/BunnyMesh.ply";  // <- chemin relatif depuis ./viewers/
+
+    const loader = new PLYLoader();
+    loader.load(
+      PLY_PATH,
+      (geom) => {
+        // Normales + centrage + mise à l’échelle homogène
+        geom.computeVertexNormals();
+        geom.computeBoundingBox();
+        geom.computeBoundingSphere();
+
+        // Centre géométrique → origine
+        const center = geom.boundingSphere.center.clone();
+        geom.translate(-center.x, -center.y, -center.z);
+
+        // Mise à l’échelle pour que le rayon ≈ 0.8 (rempli l’écran)
+        const targetRadius = 0.8;
+        const scale = (geom.boundingSphere.radius > 0) ? (targetRadius / geom.boundingSphere.radius) : 1.0;
+        geom.scale(scale, scale, scale);
+
+        // Matériaux : si le PLY a des couleurs par sommet, on peut activer vertexColors
+        const hasColors = !!geom.attributes.color;
+        if (hasColors) {
+          matLeft.vertexColors = true;
+          matRight.vertexColors = true;
+        }
+
+        // Deux meshes (on clone la géométrie pour être propre)
+        const meshL = new THREE.Mesh(geom, matLeft);
+        const meshR = new THREE.Mesh(geom.clone(), matRight);
+        meshL.castShadow = meshR.castShadow = true;
+
+        sceneL.add(meshL);
+        sceneR.add(meshR);
+
+        // cible caméra au centre
+        controlsL.target.set(0, 0, 0);
+        controlsL.update();
+      },
+      undefined,
+      (err) => {
+        console.error("Erreur de chargement PLY:", err);
+      }
+    );
+
+    // ---- Synchronisation caméra gauche → droite ----
+    function syncCamera() {
+      cameraR.position.copy(cameraL.position);
+      cameraR.quaternion.copy(cameraL.quaternion);
+      cameraR.zoom = cameraL.zoom;
+      cameraR.projectionMatrix.copy(cameraL.projectionMatrix);
+      cameraR.updateMatrixWorld(true);
+    }
+    controlsL.addEventListener("change", syncCamera);
+    syncCamera();
+
+    // ---- Resize ----
+    function resize() {
+      const rect = container.getBoundingClientRect();
+      const w = rect.width, h = rect.height, w2 = Math.max(1, w/2);
+      rendererL.setSize(w2, h, false);
+      rendererR.setSize(w2, h, false);
+      cameraL.aspect = w2 / h;
+      cameraR.aspect = w2 / h;
+      cameraL.updateProjectionMatrix();
+      cameraR.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(container);
+    resize();
+
+    // ---- Loop ----
+    function tick() {
+      controlsL.update();
+      rendererL.render(sceneL, cameraL);
+      rendererR.render(sceneR, cameraR);
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
+</body>
+</html>
