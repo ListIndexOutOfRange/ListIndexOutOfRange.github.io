@@ -177,7 +177,10 @@
 					<h4 data-id="subtitle"> Qu'est-ce que c'est ? </h4>
 					<p data-id="subsubtitle" style="padding-top: 2%;"><b><span style="color: royalblue;">• &nbsp;</span> Super-résolution</b></p>
 					<!-- <p><b>Pipeline</b></p> -->
-					<img data-id="smlm" class="fragment" src="assets/smlm_step1_cropped.png" style="display: block; margin: 0 auto;">
+					<div class="r-stack">
+						<img class="fragment fade-in-then-out" src="assets/fluo_tag.jpg" style="display: block; margin: 0 auto;">
+						<img data-id="smlm" class="fragment" src="assets/smlm_step1_cropped.png" style="display: block; margin: 0 auto;">
+					</div>
 				</section>
 
 				<!-- Intro I.C - SMLM -->
@@ -225,23 +228,7 @@
 				<section data-auto-animate class="topleft">
 					<h3> <span class="circle-text">I.A</span> Single Molecule Localization Microscopy </h3>
 					<h4 data-id="subtitle"> Dégradations </h4>
-					<p data-id="subsubtitle" style="padding-top: 2%;"><b><span style="color: royalblue;">1.</span> Anisotropie</b></p>
-					<div class="flex-container">
-						<iframe
-							width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/pointclouds/anisotropic_view1.html">
-						</iframe>
-						<iframe
-							width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
-							data-src="assets/plotly/pointclouds/anisotropic_view2.html">
-					</iframe>
-					</div>
-				</section>
-
-				<section data-auto-animate class="topleft">
-					<h3> <span class="circle-text">I.A</span> Single Molecule Localization Microscopy </h3>
-					<h4 data-id="subtitle"> Dégradations </h4>
-					<p data-id="subsubtitle" style="padding-top: 2%;"><b><span style="color: royalblue;">2.</span> Occlusion</b></p>
+					<p data-id="subsubtitle" style="padding-top: 2%;"><b><span style="color: royalblue;">1.</span> Occlusion</b></p>
 					<div class="flex-container">
 						<iframe
 							width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
@@ -250,6 +237,22 @@
 						<iframe
 							width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
 							data-src="assets/plotly/pointclouds/crop_view2.html">
+					</iframe>
+					</div>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3> <span class="circle-text">I.A</span> Single Molecule Localization Microscopy </h3>
+					<h4 data-id="subtitle"> Dégradations </h4>
+					<p data-id="subsubtitle" style="padding-top: 2%;"><b><span style="color: royalblue;">2.</span> Anisotropie</b></p>
+					<div class="flex-container">
+						<iframe
+							width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/pointclouds/anisotropic_view1.html">
+						</iframe>
+						<iframe
+							width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/pointclouds/anisotropic_view2.html">
 					</iframe>
 					</div>
 				</section>
@@ -1166,15 +1169,15 @@
 				<section data-auto-animate class="topleft">
 					<h3 data-id="title"> <span class="circle-text">II.A</span> Convergence globale</h3>
 					<h4 data-id="subtitle" style="font-size:90%;">Exemple</h4>
-					<div class="fragment" data-fragment-index="2" style="display: flex; justify-content: left; align-items: flex-start; gap: 0em;">
+					<div class="fragment" data-fragment-index="3" style="display: flex; justify-content: left; align-items: flex-start; gap: 0em;">
 						<img style="padding: 2% 0 0 0; display: block; margin-left: 16%; max-width: 13%; max-height: auto;" src="assets/s1_cropped.png">
 						<img style="padding: 2% 0 0 0; display: block; margin-left: 2%; max-width: 13%; max-height: auto;" src="assets/s3_cropped.png">
 						<img style="padding: 2% 0 0 0; display: block; margin-left: 2%; max-width: 13%; max-height: auto;" src="assets/s0_cropped.png">
 						<img style="padding: 2% 0 0 0; display: block; margin-left: 2%; max-width: 13%; max-height: auto;" src="assets/s2_cropped.png">
 					</div>
-					<div class="fragment" data-fragment-index="1" class="flex-container" style="align-items: center;">
-						<img src="assets/airplane_loss_landscape_cropped.png" style="height: 15em; width: auto; margin: 0 auto;">
-						<img src="assets/airplane_viz_cropped.png" style="height: 10em; width: auto; margin: 0 0 0 5%; padding-top: 5%;">
+					<div style="display: flex; justify-content: left; align-items: center; gap: 0em;">
+						<img class="fragment" data-fragment-index="2" src="assets/airplane_loss_landscape_cropped.png" style="height: 15em; width: auto; margin: 0;">
+						<img class="fragment" data-fragment-index="1" src="assets/airplane_viz_cropped.png" style="height: 15em; width: auto; margin: 0 0 0 0; padding-top: 0%;">
 					</div>
 				</section>
 
@@ -1193,9 +1196,9 @@
 						<img style="padding: 2% 0 0 0; display: block; margin-left: 2%; max-width: 13%; max-height: auto;" src="assets/s0_cropped.png">
 						<img style="padding: 2% 0 0 0; display: block; margin-left: 2%; max-width: 13%; max-height: auto;" src="assets/s2_cropped.png">
 					</div>
-					<div class="flex-container" style="align-items: center;">
-						<img src="assets/airplane_loss_landscape_cropped.png" style="height: 15em; width: auto; margin: 0 auto;">
-						<img src="assets/airplane_viz_cropped.png" style="height: 10em; width: auto; margin: 0 0 0 5%; padding-top: 5%;">
+					<div style="display: flex; justify-content: left; align-items: center; gap: 0em;">
+						<img src="assets/airplane_loss_landscape_cropped.png" style="height: 15em; width: auto; margin: 0;">
+						<img src="assets/airplane_viz_cropped.png" style="height: 15em; width: auto; margin: 0 0 0 0; padding-top: 0%;">
 					</div>
 				</section>
 
@@ -1338,7 +1341,7 @@
 
 				<section data-auto-animate class="topleft">
 					<h3> <span class="circle-text">II.B</span> Une solution globale, multivue et robuste</h3>
-					<h4 data-id="subtitle">Autoencoder</h4>
+					<h4 data-id="subtitle">Autoencodeur</h4>
 					<img class="fragment" style="display: block; margin: auto; max-width: 50%; max-height: auto;" src="assets/ae.png">
 					<p class="fragment" style="font-size: 150%; text-align: center;">$\mathcal{L} = \lVert x - x' \rVert$</p>
 				</section>
@@ -1351,7 +1354,7 @@
 							<li>1 template $\textcolor{#4169e1}{z}$</li>
 						</ul>
 						<ul class="fragment" data-fragment-index="2" style="list-style: circle;">
-							<li>N mouvements rigide $\textcolor{#4169e1}{\rho_i}$</li>
+							<li>N mouvements rigides $\textcolor{#4169e1}{\rho_i}$</li>
 						</ul>
 					</div>
 					<h4 class="fragment" data-fragment-index="3" data-id="subtitle" style="padding-top: 2%;">Modèle graphique</h4>
@@ -1526,7 +1529,7 @@
             </ul>
             <p class="fragment fade-in"><span style="color: royalblue;">3. &nbsp;</span>Descripteur global</p>
             <ul style="list-style-type: circle; margin-left: 10%;">
-							<li class="fragment fade-in" style="font-size:80%;">pas de correspondences locales</li>
+							<li class="fragment fade-in" style="font-size:80%;">pas de correspondances locales</li>
               <li class="fragment fade-in" style="font-size:80%;">Coût $=$ $\lVert z_1 - z_2 \rVert$</li>
               <li style="opacity: 0; visibility: hidden; font-size:80%;">pad</li>
             </ul>
@@ -1838,7 +1841,7 @@
 		</section>
 
 		<section data-auto-animate class="topleft">
-			<h3> <span class="circle-text">III.A</span> Perspective</h3>
+			<h3> <span class="circle-text">III.A</span> Perspectives</h3>
 			<div style="width: 50%; margin-inline: auto;">
 				<p class="fragment" style="padding-top: 5%;">
 					<b><span style="color: royalblue;">• &nbsp;</span> Transposition latente</b>
@@ -1846,7 +1849,7 @@
 				<ul class="fragment" style="list-style: circle; padding-left: 5%;">
 					<li>Autoencodeur plus fort</li>
 					<li>Plus ou moins global, multi-échelles</li>
-					<li>Cross-datasets & Cross-modalités</li>
+					<li>Cross-datasets & Inter-modalités</li>
 				</ul>
 				<p class="fragment" style="padding-top: 5%;">
 					<b><span style="color: royalblue;">• &nbsp;</span> Critère plus qu'optimisation</b>
