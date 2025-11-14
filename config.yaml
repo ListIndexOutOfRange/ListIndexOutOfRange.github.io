@@ -120,7 +120,7 @@ params:
     intro: "Hi, my name is"
     title: "Luc Vedrenne"
     subtitle: "I'm a deep learning researcher"
-    content: "Ph.D candidate working on biomedical imaging processing through deep learning. Currenctly working on 3D point clouds registration."
+    content: "Ph.D working on biomedical imaging processing through deep learning. Currenctly working on 3D point clouds registration."
     image: /images/logo_icube_short.svg
     bottomImage:
         enable: false
@@ -150,7 +150,9 @@ params:
     title: "About"
     image: "/images/me_padded.jpg"
     content: |-
-      I'm a Ph.D student working on the IMAGeS team of the ICube lab in Strasbourg, France.
+      I am currently open to work ! 
+
+      I just finished my Ph.D, in the IMAGeS team of the ICube lab in Strasbourg, France.
       
       Prior to that, I graduated from the IMT Atlantique engineer school, with a strong emphasis in computer sciences and applied mathematics.
     skills:
