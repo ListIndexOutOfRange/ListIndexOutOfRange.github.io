@@ -150,9 +150,9 @@ params:
     title: "About"
     image: "/images/me_padded.jpg"
     content: |-
-      I am currently open to work ! 
-
       I just finished my Ph.D, in the IMAGeS team of the ICube lab in Strasbourg, France.
+      I'm now a postdoctoral researcher in the CAMMA team of the same lab, at the IHU, working
+      on automated understanding of surgical procedures through deep learning.
       
       Prior to that, I graduated from the IMT Atlantique engineer school, with a strong emphasis in computer sciences and applied mathematics.
     skills:
@@ -169,50 +169,43 @@ params:
     enable: true
     # title: "Custom Name"
     items:
-      - job: "Ph.D"
-        company: "ICube"
+      - company: "ICube"
         companyUrl: "https://icube.unistra.fr/"
-        date: "Apr 2022 - Oct 2025"
-        featuredLink:
-          enable: true
-          name: "Paper"
-          url: "polar_arxiv.pdf"
-        info:
-          enable: false
-        content: |
-          Multi-view registration of highly degraded point clouds using deep learning.
-          - Robust generative registration algorithm (POLAR), leveraging a pretrained VAE latent space to align highly degraded multi-view point clouds: [pypolar.github.io/polar](https://pypolar.github.io/polar).<br>
-          First-author [paper](https://arxiv.org/abs/2504.21467) in *IEEE Transactions on Image Processing*.
-          - Plug-and-play global optimization framework (GRIP) that transforms any local registration method into a global one for non-convex problems: [github.com/pcrresearch/GRIP](https://github.com/pcrresearch/GRIP).
-          - First pure PyTorch implementation of the JRMPC algorithm, 50x runtime improvement: [github.com/pcrresearch/JRMPC-PyTorch-Numpy](https://github.com/pcrresearch/JRMPC-PyTorch-Numpy/tree/main).
+        jobs:
+          - name: "Ph.D"
+            date: "Apr 2022 - Oct 2025"
+            featuredItems:
+              fontAwesomeIcons:
+                - icon: fas fa-file-pdf
+                  url: "polar_arxiv.pdf"
+                  tooltip: "Paper"
+            content: |
+              Multi-view registration of highly degraded point clouds using deep learning.
+              - Robust generative registration algorithm (POLAR), leveraging a pretrained VAE latent space to align highly degraded multi-view point clouds: [pypolar.github.io/polar](https://pypolar.github.io/polar).<br>
+              First-author [paper](https://arxiv.org/abs/2504.21467) in *IEEE Transactions on Image Processing*.
+              - Plug-and-play global optimization framework (GRIP) that transforms any local registration method into a global one for non-convex problems: [github.com/pcrresearch/GRIP](https://github.com/pcrresearch/GRIP).
+              - First pure PyTorch implementation of the JRMPC algorithm, 50x runtime improvement: [github.com/pcrresearch/JRMPC-PyTorch-Numpy](https://github.com/pcrresearch/JRMPC-PyTorch-Numpy/tree/main).
+          - name: "Research intern"
+            date: "Jan 2021 - Aug 2021"
+            featuredItems:
+              fontAwesomeIcons:
+                - icon: fas fa-file-pdf
+                  url: "ISBI24_pu.pdf"
+                  tooltip: "Paper"
+            content: |
+              - Developed a weakly supervised deep learning pipeline (positive-unlabeled learning) for particle detection in fluorescence microscopy. Reached fully supervised performances with 500x fewer annotations.
+              - Collaborated with Prof. Paul Guichard \& Dr. Virginie Hamel, University of Geneva.
+              - Contributed to open-source software for biologists: [spfluo-app](https://spfluo.icube.unistra.fr/en/usage/tutorial/index.html)
 
-      - job: "Research intern"
-        company: "ICube"
-        companyUrl: "https://icube.unistra.fr/"
-        date: "Jan 2021 - Aug 2021"
-        featuredLink:
-          enable: true
-          name: "Paper"
-          url: "ISBI24_pu.pdf"
-        info:
-          enable: false
-        content: |
-          - Developed a weakly supervised deep learning pipeline (positive-unlabeled learning) for particle detection in fluorescence microscopy. Reached fully supervised performances with 500x fewer annotations.
-          - Collaborated with Prof. Paul Guichard \& Dr. Virginie Hamel, University of Geneva.
-          - Contributed to open-source software for biologists: [spfluo-app](https://spfluo.icube.unistra.fr/en/usage/tutorial/index.html)
-      - job: "Research intern"
-        company: "OncoNeural"
-        # companyUrl: "https://example.com"
-        date: "Sep 2019 - Jan 2020"
-        featuredLink:
-          enable: false
-          url: "https://example.com"
-        info:
-          enable: true
-          content: Unfortunately, this startup no longer exists.
-        content: |
-          - **Lead PyTorch Developer** -- designed and implemented deep learning pipelines for cancer detection on CT scans.
-          - Collaborated with Gustave Roussy Hospital, the largest cancer center in Europe.
+      - company: "OncoNeural"
+        jobs:
+          - name: "Research intern"
+            date: "Sep 2019 - Jan 2020"
+            info:
+              content: Unfortunately, this startup no longer exists.
+            content: |
+              - **Lead PyTorch Developer** -- designed and implemented deep learning pipelines for cancer detection on CT scans.
+              - Collaborated with Gustave Roussy Hospital, the largest cancer center in Europe.
 
   # Education
   education:

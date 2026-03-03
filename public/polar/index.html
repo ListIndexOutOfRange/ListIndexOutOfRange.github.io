@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+<link rel="icon" href=/images/logo_icube_short.svg type="image/gif">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      media="print" onload="this.media='all'" />
+<noscript>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+</noscript>
+
+
+<link rel="stylesheet" href="/css/font.css" media="all">
+
+
+
+<meta property="og:title" content="" />
+<meta property="og:description" content="&lt;!doctype html&gt; reveal.js Multiview registration of highly degraded point clouds of highly degraded point clouds of highly degraded point clouds ICube Lab | Strasbourg
+Luc Vedrenne - Denis Fortun - Sylvain Faisan
+Point Clouds Comes from surface sampling Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$ Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$ Applications Autonomous driving Robotics Microscopy List of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$ Multiview registration 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/polar/" /><meta property="article:section" content="" />
+
+<meta property="og:site_name" content="Luc Vedrenne" />
+
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="&lt;!doctype html&gt; reveal.js Multiview registration of highly degraded point clouds of highly degraded point clouds of highly degraded point clouds ICube Lab | Strasbourg
+Luc Vedrenne - Denis Fortun - Sylvain Faisan
+Point Clouds Comes from surface sampling Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$ Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$ Applications Autonomous driving Robotics Microscopy List of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$ Multiview registration 1."/>
+
+
+<link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
+<link rel="stylesheet" href="/css/footer.css" media="all">
+
+
+<link rel="stylesheet" href="/css/theme.css" media="all">
+
+<style>
+    :root {
+        --text-color: #343a40;
+        --text-secondary-color: #6c757d;
+        --text-link-color: #007bff;
+        --background-color: #eaedf0;
+        --secondary-background-color: #64ffda1a;
+        --primary-color: #007bff;
+        --secondary-color: #f8f9fa;
+
+         
+        --text-color-dark: #e4e6eb;
+        --text-secondary-color-dark: #b0b3b8;
+        --text-link-color-dark: #ffffff;
+        --background-color-dark: #18191a;
+        --secondary-background-color-dark: #212529;
+        --primary-color-dark: #ffffff;
+        --secondary-color-dark: #212529;
+    }
+    body {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    html {
+        background-color: var(--background-color) !important;
+    }
+
+    body::-webkit-scrollbar {
+        height: 0px;
+        width: 8px;
+        background-color: var(--background-color);
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+        background: #b0b0b0;
+        outline: 1px solid var(--background-color);
+    }
+
+    #search-content::-webkit-scrollbar {
+        width: .5em;
+        height: .1em;
+        background-color: var(--background-color);
+    }
+</style>
+
+
+
+<meta name="description" content="">
+<link rel="stylesheet" href="/css/single.css">
+
+
+<script defer src="/fontawesome-6/all-6.4.2.js"></script>
+
+
+  
+  
+
+  <title>
+ | Luc Vedrenne
+
+  </title>
+</head>
+
+<body class="light">
+  
+  
+<script>
+    let localStorageValue = localStorage.getItem("pref-theme");
+    let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    switch (localStorageValue) {
+        case "dark":
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+            break;
+        case "light":
+            document.body.classList.remove('dark');
+            document.documentElement.classList.remove('dark');
+            break;
+        default:
+            if (mediaQuery) {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+            }
+            break;
+    }
+</script>
+
+
+
+
+
+<header id="profileHeader">
+    <nav class="pt-3 navbar navbar-expand-lg animate">
+        <div class="container-fluid mx-xs-2 mx-sm-5 mx-md-5 mx-lg-5">
+            
+            
+
+            
+                <div>
+                    <input id="search" autocomplete="off" class="form-control mr-sm-2 d-none d-md-block" placeholder='Ctrl &#43; k to Search...'
+                        aria-label="Search" oninput="searchOnChange(event)">
+                </div>
+            
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24" data-view-component="true">
+                    <path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"></path>
+                </svg>
+            </button>
+
+            
+            <div class="collapse navbar-collapse text-wrap primary-font" id="navbarContent">
+                <ul class="navbar-nav ms-auto text-center">
+                    
+                        <li class="nav-item navbar-text d-block d-md-none">
+                            <div class="nav-link">
+                                <input id="search" autocomplete="off" class="form-control mr-sm-2" placeholder='Ctrl &#43; k to Search...' aria-label="Search" oninput="searchOnChange(event)">
+                            </div>
+                        </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#about" aria-label="about">
+                            About
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#experience"
+                            aria-label="experience">
+                            Experience
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#education"
+                            aria-label="education">
+                            Research
+                        </a>
+                    </li>
+                    
+
+                    
+
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#contact"
+                            aria-label="contact">
+                            Contact
+                        </a>
+                    </li>
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        
+                        <div class="text-center">
+                            <button id="theme-toggle">
+                                <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                                <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </li>
+                    
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<div id="content">
+<section id="single">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-12 col-lg-9">
+        <div class="pr-lg-4">
+          <div class="title mb-5">
+            <h1 class="text-center mb-4"></h1>
+            <div class="text-center">
+              
+              Jan 1, 0001
+
+              
+              <span id="readingTime">
+                min read
+              </span>
+              
+            </div>
+          </div>
+          
+          <article class="page-content  p-2">
+          <!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section>
+				<h1 class="r-fit-text fragment highlight-current-red" data-fragment-index="2">Multiview registration</h1>
+				<div class="r-stack">
+					<h2 class="r-fit-text fragment fade-out" data-fragment-index="1">of highly degraded point clouds</h2>
+					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="1">of highly degraded <span>point clouds</span></h2>
+					<h2 class="r-fit-text fragment custom current-visible-highlight-span-red" data-fragment-index="3">of <span>highly degraded</span> point clouds</h2>
+				</div>
+				<div style="padding-top: 10%"></div>
+				<p>ICube Lab | Strasbourg</p>
+				<p>Luc Vedrenne - Denis Fortun - Sylvain Faisan</p>
+				</section>
+				<!------------------------------------------------------------------------------------------------------------>
+
+
+				<!--------------------------------------------- 1. Point clouds ---------------------------------------------->
+				<!-- <section data-auto-animate data-hide-slide-number="true">
+					<h2>Point Clouds</h2>
+				</section> -->
+				<section>
+					<h2>Point Clouds</h2>
+					<div class="container" style="margin-left: 0;">
+						<div class="col fragment fade-in" style="margin-left: 0;">
+							<!-- <img style="max-width: 100%; height: auto;" src="assets/images/DEV2.png"> -->
+							<img src="assets/images/V2/reference.png">
+						</div>
+						<div class="col">
+							<ul class="fragment fade-in">
+								<li style="font-size:65%;">Comes from surface sampling</li>
+								<li style="font-size:65%;">Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$</li>
+								<li style="font-size:60%; opacity: 0; visibility: hidden;">Unordered set of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$</li>
+							</ul>
+							<ul class="fragment fade-in" style="list-style-type: circle">
+								Applications
+								<li style="font-size:80%;">Autonomous driving</li>
+								<li style="font-size:80%;">Robotics</li>
+								<li style="font-size:80%;">Microscopy</li>
+								<li style="font-size:80%; opacity: 0; visibility: hidden;">List of cartesian coordinates : $$ x \in \mathbb{R}^{k \times 3}$$</li>
+							</ul>
+						</div>
+					</div>
+					<!-- <div class="container">
+						<div class="col fragment fade-in">
+							<ul style="list-style-type: none;">
+								<li class="col">➕
+									<ul style="list-style-type: circle">
+										<li style="font-size:80%;">high resolution while sparse</li>
+										<li style="font-size:80%;">easy to apply rigid motion</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="col fragment fade-in">
+							<ul style="list-style-type: none;">
+								<li class="col">➖
+									<ul style="list-style-type: circle">
+										<li style="font-size:80%;">no explicit neighborhood</li>
+										<li style="font-size:80%;">permutation invariance</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div> -->
+				</section>
+				<!------------------------------------------------------------------------------------------------------------>
+
+				
+				<!---------------------------------------- 2. Multiviews registration ---------------------------------------->
+				<!-- <section data-auto-animate data-hide-slide-number="true">
+					<h2>Multiviews registration</h2>
+				</section>
+				<section data-auto-animate>
+					<h2>Multiviews registration</h2>
+					<p class="r-fit-text" style="opacity: 0; visibility: hidden;">pad</p>
+				</section> -->
+				<section>
+					<h2>Multiview registration</h2>
+					<section>
+						<h3>1. Rigid motion</h3>
+						<p>Rigid motion $=$ affine map $\,\rho\,$ of $\,\mathbb{R^3}\,$: 
+							$$ \rho x = Rx + t$$
+						</p>
+						<p style="font-size:80%;">$\rho \in SE(3)$, $\quad R$ rotation matrix $\in S0(3)$, $\quad t$ translation vector $\in \mathbb{R^3}$</p>
+					</section>
+					<section>
+						<h3>2. Pairwise Rigid Registration</h3>
+						<p class="r-fit-text">Find the rigid motion that best align two points clouds $x$ and $y$</p>
+						<p>$$ \rho^{\star} = \underset{\rho}{\text{argmin}}\, \lVert \rho x - y \rVert $$</p>
+					</section>
+					<section>
+						<h3>3. Multiview extension</h3>
+						<ul style="list-style-type: circle">
+							<li style="font-size:80%;">Set of $N$ point clouds</li>
+							<li style="font-size:80%;">Find $N$ rigid motions aligning the $N$ point clouds</li>
+						</ul>
+						<h2 style="opacity: 0; visibility: hidden;">pad</h2>
+						<h2 style="opacity: 0; visibility: hidden;">pad</h2>
+						<!-- <h1>test</h1> -->
+						<!-- <h1>test</h1> -->
+					</section>
+					<section data-auto-animate>
+						<h4>Two approaches</h4>
+					</section>
+					<section data-auto-animate>
+						<h4 style="padding-top: 10%;">Two approaches</h4>
+						<p class="fragment fade-in" style="font-size:60%;">1. All pairwise registration, then motion synchronization</p>
+						<img class="fragment fade-in" style="max-width: 70%; height: auto;" src="assets/images/V2/multiviews_registration.png">
+						<ul class="fragment fade-in" style="list-style-type: circle">
+							<li style="font-size:60%;">bad scaling with number of views: $\,\mathcal{O}(N^2)$</li>
+							<li style="font-size:60%;">requires robustness to failed pairwise registrations</li>
+							<li style="font-size:60%; opacity: 0; visibility: hidden;">pad</li>
+						</ul>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 10%;">Two approaches</h4>
+						<p style="font-size:60%;">2. Generative modeling</p>
+						<img class="fragment fade-in" style="max-width: 70%; height: auto;" src="assets/images/V2/generative_modelling.png">
+						<div class="container">
+							<div class="col">
+								<ul class="fragment fade-in" style="list-style-type: circle">
+									<li style="font-size:60%;">better scaling with number of views: $\,\mathcal{O}(N)$</li>
+									<li style="font-size:60%;">robustness</li>
+								</ul>
+							</div>
+							<div class="col">
+								<ul class="fragment fade-in" style="list-style-type: circle">
+									<li style="font-size:60%;">harder optimization problem</li>
+									<li style="font-size:60%;">typically : EM-GMM</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</section>
+
+				<!------------------------------------------------------------------------------------------------------------>
+				
+				
+				<!--------------------------------------------- 3. Degradations ---------------------------------------------->
+				<!-- <section data-auto-animate data-hide-slide-number="true">
+					<h2>Degradations</h2>
+				</section>
+				<section data-auto-animate>
+					<h2>Degradations</h2>
+					<p class="r-fit-text" style="opacity: 0; visibility: hidden;">pad</p>
+				</section> -->
+				<section>
+					<h2>Degradations</h2>
+					<section>
+						<h4 style="padding-top: 10%">Reference</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/pointclouds/reference.html">
+						</iframe>
+					</section>
+					<!-- <section data-background-iframe="assets/plotly/pointclouds/anisotropic_view1.html" data-background-interactive>
+  						<h2>Iframe</h2>
+					</section> -->
+					<section>
+						<h4 style="opacity: 0; visibility: hidden;">pad</h4>
+						<h4>1. Anisotropic noise</h4>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view2.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 style="opacity: 0; visibility: hidden;">pad</h4>
+						<h4>2. Partial visibility</h4>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view2.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 style="padding-top: 10%">3. Outliers</h4>
+						<iframe
+							style="padding-left: 25%"
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/pointclouds/outliers.html">
+						</iframe>
+					</section>
+					<section>
+						<h4 style="padding-top: 10%">Real data</h4>
+						<p>Single Molecule Localization Microscopy</p>
+						<img class="fragment fade-in" style="max-width: 50%; height: auto;" src="assets/images/V2/smlm.png">
+						<p style="font-size:20%;">C. Franke, "Advancing Single-Molecule Localization Microscopy: Quantitative Analyses and Photometric Three-Dimensional Imaging" (2019)</p>
+					</section>
+				</section>
+
+				<!------------------------------------------------------------------------------------------------------------>
+
+				<!-------------------------------------------- 4. Why is it hard ? ------------------------------------------->
+				<section>
+					<h2>Why is it hard ?</h2>
+					<section>
+						<h4 class="fragment fade-in" data-fragment-index="1" style="padding-top: 5%;">1. Local correspondences</h4>
+						<img class="fragment fade-in" data-fragment-index="2" style="display: block; margin: auto; max-width: 50%; max-height: auto;" src="assets/images/V2/p2p_matching.png">
+						<p class="fragment fade-in" data-fragment-index="2" style="font-size: 30%;">Zhengyang Shen, Jean Feydy et al. "Accurate Point Cloud Registration with Robust Optimal Transport", NeurIPS 2021</p>
+						<ul class="fragment fade-in" style="list-style-type: circle">
+							<!-- <li style="font-size:60%; opacity: 0; visibility: hidden;">pad</li> -->
+							<li style="font-size:60%;">unreliable on higly degraded data</li>
+							<li style="font-size:60%;">sensitive to point density</li>
+							<li style="font-size:60%;">sensitive to repetitive patterns</li>
+						</ul>
+					</section>
+					<section>
+						<h4 style="opacity: 0; visibility: hidden;">pad</h4>
+						<h4>2. Local convergence</h4>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/cube_source.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/cube_target.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 7%">2. Local convergence</h4>
+						<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/cube_energy.png">
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 7%">2. Local convergence</h4>
+						<img style="display: block; margin: auto; max-width: 60%; max-height: auto;" src="assets/images/V2/airplane_loss_landscape.png">
+					</section>
+				</section>
+				
+				<!------------------------------------------------ 5. Methods ------------------------------------------------>
+				<section data-auto-animate>
+					<h1 style="font-size:90%;">POLAR : POint cloud LAtent Registration</h1>
+				</section>
+				<section data-auto-animate>
+					<h1 style="font-size:90%;">POLAR : POint cloud LAtent Registration</h1>
+					<section>
+						<h2 style="font-size:90%;">Core idea</h2>
+						<ol>
+							<li class="fragment fade-in" style="font-size:80%;">Pretrain an autoencoder to reconstruct degraded point clouds</li>
+							<li class="fragment fade-in" style="font-size:80%;">Once trained, freeze it</li>
+							<li class="fragment fade-in" style="font-size:80%;">Registrate within its latent space</li>
+						</ol>
+					</section>
+					<section>
+						<h2 style="padding-top: 10%; font-size:90%;">Autoencoder</h2>
+						<img style="display: block; margin: auto; max-width: 50%; max-height: auto;" src="assets/images/V2/ae.png">
+						<p>$\mathcal{L} = \lVert x - x' \rVert$</p>
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-transition="none">
+						<h2 style="padding-top: 10%; font-size: 80%;">Benefits of registering within the autoencoder's latent space</h2>
+						<h2 style="font-size:60%; opacity: 0; visibility: hidden;">pad</h2>
+						<ol>
+							<li class="fragment fade-in" style="font-size:80%;">Generative method</li>
+								<ul style="list-style-type: circle">
+									<li class="fragment fade-in" style="font-size:80%;">template $=$ $d(\hat{z})$ instead of GMM</li>
+									<li style="opacity: 0; visibility: hidden; font-size:80%;">pad</li>	
+								</ul>
+							<li class="fragment fade-in" style="font-size:80%;">Global descriptor : no local correspondences</li>
+								<ul style="list-style-type: circle">
+									<li class="fragment fade-in" style="font-size:80%;">point cloud discrepancy $=$ $\lVert z_1 - z_2 \rVert$</li>
+									<li style="opacity: 0; visibility: hidden; font-size:80%;">pad</li>
+								</ul>
+							<li class="fragment fade-in" style="font-size:80%;">Time efficiency</li>
+								<ul style="list-style-type: circle">
+									<li class="fragment fade-in" style="font-size:80%;">scales well with number of points</li>
+								</ul>
+						</ol>
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-auto-animate>
+						<h2 style="padding-top: 5%; font-size: 90%;">POLAR graphical model</h2>
+						<div class="r-stack">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step1.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step2.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step3.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step4.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step5.png">
+							<img class="fragment" src="assets/images/V2/polar_graphical_model_step6.png">
+						</div>
+						<p class="r-fit-text fragment fade-in" style="font-size:60%;">$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - e(x_i) \rVert_{_{_2}}$</p>
+					</section>
+					<section data-auto-animate>
+						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>
+						<p>$\mathcal{L} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - e(x_i) \rVert_{_{_2}}$</p>
+						<ul style="list-style-type: circle">
+							<li class="fragment fade-in" style="font-size:80%;" data-fragment-index="1">$d(\hat{z})$ should be a clean object</li>
+							<li class="fragment fade-in" style="font-size:80%;" data-fragment-index="2">$z_i = e(x_i)$ are latent vectors of degraded object</li>
+							<li class="fragment fade-in" style="opacity: 0; visibility: hidden;" data-fragment-index="2">pad</li>
+						</ul>
+						<div class="r-stack">
+							<p class="fragment current-visible" data-fragment-index="3">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) ) - e(x_i) \rVert_{_{_2}}$</p>
+							<p class="fragment current-visible" data-fragment-index="4">$\mathcal{L} = \sum_i \lVert e(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon}) - e(x_i) \rVert_{_{_2}}$</p>
+							<p class="fragment current-visible" data-fragment-index="5">$\mathcal{L} = \sum_i \lVert e(\textcolor{green}{\operatorname{M}_i^c}(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon})) - e(x_i) \rVert_{_{_2}}$</p>
+							<p class="fragment fade-in" data-fragment-index="6">$\mathcal{L} = \sum_i \lVert e(\textcolor{green}{\operatorname{M}_i^c}(\hat{\rho}_i d(\hat{z}) + \textcolor{red}{\varepsilon})) - e(\textcolor{blue}{\operatorname{M}_i^o}(x_i)) \rVert_{_{_2}}$</p>
+							<!-- <div class="fragment fade-in overlay-contained" data-fragment-index="4" style="border: 1pt solid red; margin-left: 10%; height: 100%; width: 5%;"></div> -->
+						</div>
+						<div class="r-stack">
+							<p class="fragment current-visible" style="padding-left:20%; line-height: 5%; font-size:40%" data-fragment-index="4">$\textcolor{red}{\text{anisotropic noise}}$</p>
+							<p class="fragment current-visible" style="padding-left:0%; line-height: 5%; font-size:40%;" data-fragment-index="5">$\textcolor{green}{\text{partial visibility mask}}\hspace{40pt}\textcolor{red}{\text{anisotropic noise}}$</p>
+							<p class="fragment current-visible" style="padding-left:15%; line-height: 5%; font-size:40%;" data-fragment-index="6">$\textcolor{green}{\text{partial visibility mask}}\hspace{50pt}\textcolor{red}{\text{anisotropic noise}}\hspace{30pt}\textcolor{blue}{\text{outliers mask}}\hspace{60pt}$</p>
+						</div>
+						<p class="fragment current-visible" style="padding-left:20%; font-size:40%; color: red; margin-top: 0;" data-fragment-index="4">$\sim \mathcal{N}(0, \Sigma)$</p>						  
+						<p class="fragment current-visible" style="padding-left:25%; font-size:40%; color: red; margin-top: -4%;" data-fragment-index="5">$\sim \mathcal{N}(0, \Sigma)$</p>						  
+						<p class="fragment current-visible" style="padding-left:15%; font-size:40%; color: red; margin-top: -4%;" data-fragment-index="6">$\sim \mathcal{N}(0, \Sigma)$</p>
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section data-transition="none">
+						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>
+						<img src="assets/images/V2/masks.png">
+					</section>
+					<section data-transition="none">
+						<h2 style="padding-top: 10%; font-size: 90%;">Taking degradations into account</h2>	
+						<div class="container">
+							<div class="col">
+								<p style="font-size:10%; opacity: 0; visibility: hidden;">pad</p>
+								<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/crop.png">
+							</div>
+							<div class="col">
+								<p style="font-size:10%; opacity: 0; visibility: hidden;">pad</p>
+								<img style="display: block; margin: auto; max-width: 80%; max-height: auto;" src="assets/images/V2/outliers.png">
+							</div>
+						</div>
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+					<section>
+						<h2 style="padding-top: 10%; font-size: 90%;">Regularization matters</h2>
+						<div class="r-stack">
+							<p class="fragment current-visible" data-fragment-index="1">$\mathcal{L} = \sum_i \lVert e(\operatorname{M}_i(\hat{\rho}_i d(\hat{z}) + \varepsilon_i)) - z_i \rVert_{_{_2}}$</p>
+							<p class="fragment fade-in" data-fragment-index="2">$\mathcal{L} = \sum_i \lVert e(\operatorname{M}_i(\hat{\rho}_i d(\hat{z}) + \varepsilon_i)) - z_i \rVert_{_{_2}}  + r(d(\hat{z}))$</p>
+						</div>
+						<p class="fragment fade-in" style="padding-left: 75%; line-height: 5%; font-size:50%" data-fragment-index="3">standard deviation</p>
+						<p class="fragment fade-in" style="padding-left: 75%; line-height: 5%; font-size:50%" data-fragment-index="3">of points density</p>
+					</section>
+					<section>
+						<h2 style="padding-top: 5%; font-size: 90%;">Optimization scheme</h2>
+						<ul style="list-style-type: circle">
+							<li class="fragment fade-in" style="font-size:50%;" data-fragment-index="1">Find plausible initializations
+								<ul style="list-style-type: disc">
+									<li class="fragment fade-in" data-fragment-index="3">Coarse exhaustive search over $SO(3)$ with fixed $\hat{z}$ and $t$</li>
+								</ul>
+							</li>
+							<li class="fragment fade-in" style="font-size:50%;" data-fragment-index="2">Parallel gradient descent from each initialization</li>
+						</ul>
+						<!-- <p class="fragment fade-in" style="font-size: 90%;">Idea : SO(3) Local Minima</p>
+						<div class="container">
+							<div class="col" style="flex: 0 0 70%;">
+								<ul style="list-style-type: circle">
+									<li class="fragment fade-in" style="font-size:50%;">S0(3) geodesic distance : $\angle(R_1, R_2) = \arccos\frac{\operatorname{Tr}(R_1 R_2^\top) - 1}{2}$</li>
+									<li class="fragment fade-in" style="font-size:50%;">SO(3) uniform sampling : Super-Fibonacci Spirals</li>
+								</ul>
+							</div>
+							<div class="col fragment fade-in" style="flex: 0 0 30%">
+								<p style="font-size:70%;">➡️ k-NN SO(3) graph</p>
+							</div>
+						</div>
+						<ul style="list-style-type: circle">
+							<li style="font-size:30%; opacity: 0; visibility: hidden;">pad</li>
+							<li class="fragment fade-in" style="font-size:60%;">Compute loss for each graph's node</li>
+							<li class="fragment fade-in" style="font-size:60%;">Local Minimum = node whose error is smaller than those of all its neighbors</li>
+						</ul> -->
+						<img
+							class="fragment fade-in"
+							style="display: block; margin: auto; max-width: 70%; max-height: auto;" src="assets/images/V2/cube_local_minima.png">
+					</section>
+				</section>
+
+				<!------------------------------------------------ 5. Results ------------------------------------------------>
+				<section>
+					<h2>Results</h2>
+					<section>
+						<table style="font-size: 60%;">
+							<h2 class="fragment fade-in" style="font-size: 80%;">Contenders</h2>
+							<thead>
+							  <tr class="fragment fade-in">
+								<th scope="col">Method</th>
+								<th style="text-align: center;" scope="col">Main idea</th>
+								<th scope="col">Global</th>
+								<th scope="col">Multiview</th>
+								<th scope="col">Generative</th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr class="fragment fade-in">
+								<th scope="row">RPM-Net</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">learnable Sinkhorn</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">🚫</td>
+								<td style="text-align: center">🚫</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">DeepGMR</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">latent GMM</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">🚫</td>
+								<td style="text-align: center">✅</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">JRMPC</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">EM-GMM</th>
+								<td style="text-align: center">🚫</td>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">SGHR</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">sparse & reliable pose graph</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">🚫</td>
+							  </tr>
+							  <tr class="fragment fade-in">
+								<th scope="row">POLAR</th>
+								<th style="text-align: center; font-size: 60%;" scope="row">generative latent registration</th>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+								<td style="text-align: center">✅</td>
+							  </tr>
+							</tbody>
+							</tfoot>
+						  </table>
+					</section>
+					<section>
+					<table style="font-size: 60%;">
+						<h2 style="font-size: 80%;">Success rate by initial angle (threshold = 15°)</h2>
+						<thead>
+						  <tr>
+							<th scope="col">Method</th>
+							<th scope="col">$\le 45°$</th>
+							<th scope="col">$\in [45°, 90°]$</th>
+							<th scope="col">$\in [90°, 135]$</th>
+							<th scope="col">$\in [135, 180]$</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr class="fragment fade-in">
+							<th scope="row">RPM-Net</th>
+							<td style="text-align: right">99.83 %</td>
+							<td style="text-align: right">99.70 %</td>
+							<td style="text-align: right">99.43 %</td>
+							<td style="text-align: right">99.32 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">DeepGMR</th>
+							<td style="text-align: right">99.44 %</td>
+							<td style="text-align: right">98.11 %</td>
+							<td style="text-align: right">97.35 %</td>
+							<td style="text-align: right">98.54 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">JRMPC</th>
+							<td style="text-align: right">95.65 %</td>
+							<td style="text-align: right">78.97 %</td>
+							<td style="text-align: right">54.62 %</td>
+							<td style="text-align: right">35.17 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">SGHR</th>
+							<td style="text-align: right">100.0 %</td>
+							<td style="text-align: right">100.0 %</td>
+							<td style="text-align: right">100.0 %</td>
+							<td style="text-align: right">100.0 %</td>
+						  </tr>
+						  <tr class="fragment fade-in">
+							<th scope="row">POLAR</th>
+							<td style="text-align: right">99.69 %</td>
+							<td style="text-align: right">99.82 %</td>
+							<td style="text-align: right">99.81 %</td>
+							<td style="text-align: right">99.91 %</td>
+						  </tr>
+						</tbody>
+						</tfoot>
+					  </table>
+					  <p style="font-size:40%;">Synchronization method (RPM-Net & DeepGMR):</p>
+					  <p style="font-size:30%;">Yunpeng Shi and Gilad Lerman, "Message Passing Least Squares Algorithm for Rotation Averaging " (ICML 2020)</p>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to isotropic noise</h2>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_isotropic_noise.html">
+						</iframe>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to anisotropic noise</h2>
+						<p style="font-size:40%;">$\varepsilon \sim \mathcal{N}(0, \Sigma = \operatorname{diag}(0.03, 0.03, 0.15))$</p>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_anisotropic_noise.html">
+						</iframe>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to partial visibility</h2>
+						<h3 style="font-size: 60%; opacity: 0; visibility: hidden;">Impact of the number of views : SGHR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_cropped_noisy.html">
+						</iframe>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to outliers</h2>
+						<h3 style="font-size: 60%; opacity: 0; visibility: hidden;">Impact of the number of views : SGHR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_outliers.html">
+						</iframe>
+					</section>
+					<!-- <section data-transition="none">
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to partial visibility</h2>
+						<h3 style="font-size: 60%">Impact of the number of views : SGHR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_cropped_noisy_num_views_SGHR.html">
+						</iframe>
+					</section>
+					<section data-transition="none">
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to partial visibility</h2>
+						<h3 style="font-size: 60%">Impact of the number of views : POLAR</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_cropped_noisy_num_views_POLAR.html">
+						</iframe>
+					</section> -->
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Robustness to points density</h2>
+						<h3 style="font-size: 60%">Uniform sampling : number of points $\in [205, 1024]$</h3>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_point_density.html">
+						</iframe>
+					</section>
+					<section>
+						<h2 style="font-size: 80%; padding-top: 10%;">Varying noise level per object</h2>
+						<p style="font-size: 60%">$\varepsilon \sim \mathcal{N}(0, \sigma)\,,\quad \sigma \sim \mathcal{U}(0.01, 0.20)$</p>
+						<iframe
+							class="r-stretch" frameborder="0" seamless='seamless' scrolling=no
+							data-src="assets/plotly/results_varying_noise_per_object.html">
+						</iframe>	
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">Anisotropic noise</p>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_view2.html">
+							</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/anisotropic_template.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">Partial visibility</p>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view1.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_view2.html">
+							</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/crop_template.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section data-transition="none">
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">Outliers</p>
+						<div class="container">
+							<div class="col" style='height:100%;width:100%'>
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/outliers.html">
+								</iframe>
+							</div>
+							<div class="col">
+								<iframe
+									width="500" height="500" frameborder="0" seamless='seamless' scrolling=no
+									data-src="assets/plotly/pointclouds/outliers_template.html">
+							</iframe>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 style="padding-top: 6%">Visual results</h4>
+						<p style="font-size:50%;">SMLM data</p>
+						<img style="display: block; margin: auto; max-width: 100%; max-height: auto;" src="assets/images/V2/viz_dstorm.png">
+						<p class="r-fit-text" style="font-size:60%; opacity: 0; visibility: hidden;">pad</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>In practice</h2>
+					<p>pypolar.github.io/polar</p>
+					<p style="font-size:60%;">$\texttt{pip install polaregistration}$</p>
+					<img class="fragment" src="assets/images/V2/polar_code_sample.png">
+				</section>
+
+				<!-- <section>
+					<h2>Perspectives</h2>
+					<ul style="list-style-type: circle"> -->
+						<!-- <li class="fragment" style="font-size:80%;">Critère ambiant plutôt que latent ?</li>
+							<ul style="list-style-type: disc">
+								<li class="fragment fade-in" style="font-size:80%;">$\mathcal{L}_{\text{latent}} = \sum_i \lVert e(\textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}) ) - e(x_i) \rVert_{_{_2}}$</li>
+								<li class="fragment fade-in" style="font-size:80%;">$\mathcal{L}_{\text{ambient}} = \sum_i d_C \left[ \textcolor{007BFF}{\hat{\rho}_i} d(\textcolor{007BFF}{\hat{z}}), x_i \right]$</li>
+							</ul>
+						<li style="font-size: 60%; opacity: 0; visibility: hidden;"></li>
+						<li class="fragment" style="font-size:80%;">Latent Diffusion Model</li>
+						<ul style="list-style-type: disc">
+							<li class="fragment fade-in" style="font-size:60%;">Template & motions estimated by diffusion process within a VAE latent space</li>
+						</ul>
+					</ul>
+				</section> -->
+
+				<!-- <section>
+					<h2>Développements open-source</h2>
+					<ul style="list-style-type: none; padding-left: 25%" id="botoes">
+						<li style="opacity: 0; visibility: hidden;"></li>
+						<li class="fragment"><img style="width: 10%;" src="assets/images/V2/pytorch3dfavicon.png">PyTorch 3d</li>
+						<li class="fragment"><img style="width: 10%;" src="assets/images/V2/streamlit_logo.png">Streamlit ecosystem</li>
+					</ul>
+				</section> -->
+
+				<!-- <section>
+					<h2>Publications</h2>
+					<ul style="list-style-type: circle">
+						<li class="fragment" style="font-size:50%;"><i style="font-style: italic !important">POLAR</i>: IEEE Image processing (pour mi-juillet)</li>
+						<li style="font-size: 60%; opacity: 0; visibility: hidden;"></li>
+						<li class="fragment" style="font-size:50%;"><i style="font-style: italic !important">Particle detection based on few shot learning in 3D fluorescence microscopy</i>, ISBI</li>
+						<li class="fragment" style="font-size:50%;"><i style="font-style: italic !important">Optimizing failure mode analysis of dental restorative materials: balancing efficiency and accuracy</i>, ISBI</li>
+					</ul>
+				</section> -->
+
+				<!-- <section>
+					<h2>Enseignements</h2>
+					<p>Télécom Physique Strasbourg</p>
+					<ul style="list-style-type: circle">
+						<li style="font-size: 60%; opacity: 0; visibility: hidden;"></li>
+						<li style="font-size: 60%">Basics of Image Processing (24h)</li>
+						<li style="font-size: 60%">Traitement des signaux aléatoires (18h)</li>
+						<li style="font-size: 60%">Traitement de signaux 2D (16h)</li>
+					</ul>
+				</section> -->
+
+				<section>
+					<h1 class="r-fit-text">Thank you for your attention !</h1>
+				</section>
+
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				preloadIframes: true,
+				viewDistance: 30,
+				margin: 0.02,
+				width: 1060,
+  				height: 700,
+				// highlight: {
+				// 	beforeHighlight: (hljs) => hljs.registerLanguage("python", require('plugin/highlight/languages/python')),
+  				// },
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+	</body>
+	<!-- <script type="text/javascript">
+		Reveal.addEventListener('slidechanged', (event) => {
+		  const isSnOn = (event.currentSlide.dataset.hideSlideNumber !== 'true');
+		  Reveal.configure({ slideNumber: isSnOn });
+		});
+	</script> -->
+</html>
+
+          </article>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-3">
+        <div id="stickySideBar" class="sticky-sidebar">
+          
+          <aside class="toc">
+              <h5>
+                Table Of Contents
+              </h5>
+              <div class="toc-content">
+                
+              </div>
+          </aside>
+          
+
+          
+
+          
+          <aside class="social">
+            <h5>Social</h5>
+            <div class="social-content">
+              <ul class="list-inline">
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href="https://www.linkedin.com/feed/?shareActive=true&text= http%3a%2f%2flocalhost%3a1313%2fpolar%2f">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href='https://twitter.com/share?text=&url=http%3a%2f%2flocalhost%3a1313%2fpolar%2f&hashtags='>
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href="https://api.whatsapp.com/send?text=: http%3a%2f%2flocalhost%3a1313%2fpolar%2f">
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href='mailto:?subject=&amp;body=Check%20out%20this%20site http%3a%2f%2flocalhost%3a1313%2fpolar%2f'>
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+          
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-9 p-4">
+        
+      </div>
+    </div>
+  </div>
+  <button class="p-2 px-3" onclick="topFunction()" id="topScroll">
+    <i class="fas fa-angle-up"></i>
+  </button>
+</section>
+
+
+<div class="progress">
+  <div id="scroll-progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<Script src="/js/scrollProgressBar.js"></script>
+
+
+<script>
+  var topScroll = document.getElementById("topScroll");
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      topScroll.style.display = "block";
+    } else {
+      topScroll.style.display = "none";
+    }
+  }
+
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  
+  let stickySideBarElem = document.getElementById("stickySideBar");
+  let stickyNavBar =  false ;
+  if(stickyNavBar) {
+    let headerElem = document.getElementById("profileHeader");
+    let headerHeight = headerElem.offsetHeight + 15;
+    stickySideBarElem.style.top = headerHeight + "px";
+  } else {
+    stickySideBarElem.style.top = "50px";
+  }
+</script>
+
+
+<script src="/js/readingTime.js"></script>
+
+
+
+  </div><footer>
+    
+ 
+
+<div class="text-center pt-2">
+    
+
+    
+
+    
+
+    
+
+    
+</div><div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-center">
+            
+                <div class="pb-2">
+                    <a href="http://localhost:1313/" title="Luc Vedrenne">
+                        <img alt="Footer logo" src="/images/logo_icube_short.svg"
+                            height="40px" width="40px">
+                    </a>
+                </div>
+            
+            &copy; 2026  All rights reserved
+            <div class="text-secondary">
+                Made with
+                <span class="text-danger">
+                    &#10084;
+                </span>
+                and
+                <a href="https://github.com/gurusabarish/hugo-profile" target="_blank"
+                    title="Designed and developed by gurusabarish">
+                    Hugo Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</footer><script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+<script>
+    if (document.body.className.includes("dark")) {
+        document.body.classList.remove('dark');
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem("pref-theme", 'light');
+    }
+</script>
+
+
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+</script>
+
+
+    <script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  <section id="search-content" class="py-2">
+    <div class="container" id="search-results"></div>
+  </section>
+</body>
+
+</html>

@@ -2,34 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://example.org/tags/example/</loc>
+    <loc>http://localhost:1313/tags/example/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/tags/placeholder-text/</loc>
+    <loc>http://localhost:1313/tags/placeholder-text/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/resume/</loc>
+    <loc>http://localhost:1313/resume/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/tags/sample/</loc>
+    <loc>http://localhost:1313/tags/sample/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/polar/css/theme/readme/</loc>
+    <loc>http://localhost:1313/pfgm/</loc>
   </url><url>
-    <loc>http://example.org/polar/examples/markdown/</loc>
+    <loc>http://localhost:1313/polar/</loc>
   </url><url>
-    <loc>http://example.org/polar/plugin/notes/speaker-view/</loc>
-  </url><url>
-    <loc>http://example.org/polar/test/simple/</loc>
-  </url><url>
-    <loc>http://example.org/categories/</loc>
-  </url><url>
-    <loc>http://example.org/polar/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url>
 </urlset>

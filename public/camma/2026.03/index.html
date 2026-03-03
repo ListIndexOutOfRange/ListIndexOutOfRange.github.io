@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section>
+				<h1>Meeting CAMMA 2026.03</h1>
+				<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
+			</section>
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h2>The task is hard</h2>
+				<div style="visibility: hidden; height: 1em;"></div>
+				<div class="flex-container">
+				<ol>
+					<li>Anatomical variability</li>
+					<li>Relational reasoning required</li>
+					<li>Temporal context essential</li>
+					<li>Sparse annotations (compared to raw volume)</li>
+				</ol>
+				</div>
+				<div style="visibility: hidden; height: 5em;"></div>
+				<div class="flex-container">
+				<h4>Not an object detection task, an temporal anatomy-reasoning task</h4>
+				</div>
+			</section>
+			<section class="topleft">
+				<h2>Data Opportunity</h2>
+				<div style="visibility: hidden; height: 1em;"></div>
+				<div class="flex-container">
+				<ol>
+					<li>Volume of videos</li>
+					<li>Closed environment</li>
+					<li>Smooth transitions</li>
+					<li>Redundant structure</li>
+				</ol>
+				</div>
+				<div style="visibility: hidden; height: 5em;"></div>
+				<div class="flex-container">
+				<h4>Surgical video is structured, constrained, and highly redundant.</h4>
+				</div>
+			</section>
+			<section class="topleft">
+				<h2>From Pixels to Complex Reasoning</h2>
+				<div style="visibility: hidden; height: 1em;"></div>
+				<div class="flex-container">
+				<div>
+					<p>1. Perception</p>
+					<ul>
+						<li>Segmentation</li>
+						<li>Detection</li>
+						<li>Tracking</li>
+					</ul>
+				</div>
+				<!-- <div><p style="visibility: hidden;">i</p></div> -->
+				<div style="padding-left: 1rem; padding-right: 1rem;">
+					<p>2. Scene graph</p>
+					<ul>
+						<li>Action triplet</li>
+					</ul>
+				</div>
+				<div>
+					<p>3. Spatial-temporal Reasoning</p>
+					<ul>
+						<li>GNN</li>
+					</ul>
+				</div>
+				</div>
+				<div style="visibility: hidden; height: 5em;"></div>
+				<div class="flex-container">
+				<h5>Predict how the surgical scene graph evolves. Not pixel coordinates.</h5>
+				</div>
+			</section>
+			<section class="topleft">
+				<h2>Multimodal Intelligence</h2>
+				<div style="visibility: hidden; height: 1em;"></div>
+				<p>2D visual models to 4D multimodal reasoning</p>
+				<div style="visibility: hidden; height: 1em;"></div>
+				<div class="flex-container">
+					<figure>
+						<img
+							width="400"
+							height="auto"
+							src="assets/vlam.png"
+							>
+						<figcaption>Vision-Language-Action Model (VLAM)</figcaption>
+					</figure>
+					<figure>
+						<img
+							width="400"
+							height="auto"
+							src="assets/vqa.png"
+							>
+						<figcaption>Visual Question Answering (VQA)</figcaption>
+					</figure>
+			</section>
+			<section class="topleft">
+				<h2>Multimodal Intelligence</h2>
+				<div style="visibility: hidden; height: 1em;"></div>
+				<p>2D visual models to 4D multimodal reasoning</p>
+				<div style="visibility: hidden; height: 1em;"></div>
+				<div class="flex-container">
+				<ul>
+					<li>Vision: perception of the surgical environment</li>
+					<li>Language: compression of expert knowledge (Protocol / Ontology)</li>
+					<li>Bidirectional conditioning ?
+						<ul>
+							<li>Language to vision: "Where is the cystic duct?"(Image -> Graph -> Action)</li>
+							<li>Vision to language: "What phase is this?" (Language prior -> Graph constraints -> Vision refinement)</li>
+						</ul>
+					</li>
+				</ul>
+				</div>
+			</section>
+			<section class="topleft">
+				<h2>What is a meaningful baseline?</h2>
+				<ul>
+					<li>Focus on the "reasoning" part, not the "perception" part</li>
+					<li>Naive but existing temporal reasoning structure, not multimodal
+						<ol>
+							<li>Video encoder</li>
+							<li>Temporal model (Transformer)</li>
+							<li>Structure tokens (tool, anatomy)</li>		
+						</ol>
+					</li>
+				</ul>
+			</section>
+
+
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>

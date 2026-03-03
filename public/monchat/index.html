@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Monchat Terminal</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="/monchat/monchat.css" />
+  </head>
+
+  <body>
+    <div class="frame">
+      <div class="titlebar">
+        <div class="title-left">
+          <span class="dot"></span>
+          <span class="title">RESTRICTED ACCESS TERMINAL</span>
+        </div>
+        <div class="title-right">
+          <span class="tag">ESCAPE PROTOCOL</span>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <pre id="output" class="output"></pre>
+        <div class="input-line">
+          <span class="prompt">&gt;</span>
+          <input
+            id="input"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            autofocus
+          />
+        </div>
+      </div>
+    </div>
+
+    <script src="/monchat/monchat.js"></script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+.reveal .slide-number {
+    position: absolute;
+    display: block;
+    right: 2%;
+    bottom: 90%;
+    z-index: 31;
+    font-family: Helvetica, sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    color: #fff;
+    background-color: rgba( 0, 0, 0, 0.4 );
+    padding: 5pt;
+    margin: auto;
+}
+
+.container{
+    display: flex;
+}
+.col{
+    flex: 1;
+}
+
+
+.fragment.current-visible-highlight-span-red {
+	opacity: 0;
+	visibility: hidden;
+  }
+.fragment.current-visible-highlight-span-red.current-fragment {
+    opacity: 1;
+    visibility: inherit;
+    span{color:red}
+}
+
+
+.overlay-container {
+    position: relative;
+}
+
+.overlay-contained{
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
+
+#botoes li{
+    display: inline-block; /* changed */ 
+    list-style-type: none;
+    padding-right: 20px;
+    vertical-align: middle;  /* changed */ 
+}
