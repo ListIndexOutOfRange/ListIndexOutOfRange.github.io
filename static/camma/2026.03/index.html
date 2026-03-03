@@ -138,9 +138,21 @@
 					<li>Focus on the "reasoning" part, not the "perception" part</li>
 					<li>Naive but existing temporal reasoning structure, not multimodal
 						<ol>
-							<li>Video encoder</li>
-							<li>Temporal model (Transformer)</li>
-							<li>Structure tokens (tool, anatomy)</li>		
+							<li>Video encoder
+								<ul>
+									<li>per frame Dino or TimeSformer / VideoMAE-like family</li>
+								</ul>
+							</li>
+							<li>Temporal model (Transformer)
+								<ul>
+									<li>spatial-temporal attention</li>
+								</ul>
+							</li>
+							<li>Structure tokens (tool, anatomy)
+								<ul>
+									<li>Learned tool queries, no external detector (DETR-like queries) </li>
+								</ul>
+							</li>		
 						</ol>
 					</li>
 				</ul>
