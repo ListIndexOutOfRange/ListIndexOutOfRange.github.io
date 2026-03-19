@@ -22,142 +22,67 @@
 			<!--                                                   SLIDES                                                   -->
 			<!---------------------------------------------------------------------------------------------------------------->
 			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
 			<!---------------------------------------------------- TITLE ----------------------------------------------------->
 			<section>
-				<h1>Meeting CAMMA 2026.03</h1>
+				<h1>Meeting CAMMA 2026.03.19</h1>
 				<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
 			</section>
 			<section data-auto-animate data-start-from="1" class="topleft">
-				<h2>The task is hard</h2>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<div class="flex-container">
-				<ol>
-					<li>Anatomical variability</li>
-					<li>Relational reasoning required</li>
-					<li>Temporal context essential</li>
-					<li>Sparse annotations (compared to raw volume)</li>
+				<h2>Agenda</h2>
+				<ol style="margin-top: 3em;">
+					<li style="font-size: 150%;">Annotator's concordance</li>
+					<li style="font-size: 150%;">Planning for next steps</li>
 				</ol>
-				</div>
-				<div style="visibility: hidden; height: 5em;"></div>
-				<div class="flex-container">
-				<h4>Not an object detection task, an temporal anatomy-reasoning task</h4>
-				</div>
 			</section>
-			<section class="topleft">
-				<h2>Data Opportunity</h2>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<div class="flex-container">
-				<ol>
-					<li>Volume of videos</li>
-					<li>Closed environment</li>
-					<li>Smooth transitions</li>
-					<li>Redundant structure</li>
-				</ol>
-				</div>
-				<div style="visibility: hidden; height: 5em;"></div>
-				<div class="flex-container">
-				<h4>Surgical video is structured, constrained, and highly redundant.</h4>
-				</div>
-			</section>
-			<section class="topleft">
-				<h2>From Pixels to Complex Reasoning</h2>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<div class="flex-container">
-				<div>
-					<p>1. Perception</p>
-					<ul>
-						<li>Segmentation</li>
-						<li>Detection</li>
-						<li>Tracking</li>
-					</ul>
-				</div>
-				<!-- <div><p style="visibility: hidden;">i</p></div> -->
-				<div style="padding-left: 1rem; padding-right: 1rem;">
-					<p>2. Scene graph</p>
-					<ul>
-						<li>Action triplet</li>
-					</ul>
-				</div>
-				<div>
-					<p>3. Spatial-temporal Reasoning</p>
-					<ul>
-						<li>GNN</li>
-					</ul>
-				</div>
-				</div>
-				<div style="visibility: hidden; height: 5em;"></div>
-				<div class="flex-container">
-				<h5>Predict how the surgical scene graph evolves. Not pixel coordinates.</h5>
-				</div>
-			</section>
-			<section class="topleft">
-				<h2>Multimodal Intelligence</h2>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<p>2D visual models to 4D multimodal reasoning</p>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<div class="flex-container">
-					<figure>
-						<img
-							width="400"
-							height="auto"
-							src="assets/vlam.png"
-							>
-						<figcaption>Vision-Language-Action Model (VLAM)</figcaption>
-					</figure>
-					<figure>
-						<img
-							width="400"
-							height="auto"
-							src="assets/vqa.png"
-							>
-						<figcaption>Visual Question Answering (VQA)</figcaption>
-					</figure>
-			</section>
-			<section class="topleft">
-				<h2>Multimodal Intelligence</h2>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<p>2D visual models to 4D multimodal reasoning</p>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<div class="flex-container">
-				<ul>
-					<li>Vision: perception of the surgical environment</li>
-					<li>Language: compression of expert knowledge (Protocol / Ontology)</li>
-					<li>Bidirectional conditioning ?
-						<ul>
-							<li>Language to vision: Image -> Graph -> Action</li>
-							<li>Vision to language: Language prior -> Graph constraints -> Vision refinement</li>
-						</ul>
-					</li>
-				</ul>
-				</div>
-			</section>
-			<section class="topleft">
-				<h2>What is a meaningful baseline?</h2>
-				<div style="visibility: hidden; height: 1em;"></div>
-				<ul>
-					<li>Focus on the "reasoning" part, not the "perception" part</li>
-					<li>Naive but existing temporal reasoning structure, not multimodal
-						<ol>
-							<li>Video encoder
-								<ul>
-									<li>per frame Dino or TimeSformer / VideoMAE-like family</li>
-								</ul>
+				<section data-auto-animate class="topleft">
+					<h2>Planning</h2>
+					<div class="flex-container planning-row" style="margin-top: 3em;">
+						<div>
+							<p class="fragment fade-in" data-fragment-index="9" style="margin-top: 2.1em; margin-bottom: 0;">Not so time dependent</p>
+							<p class="fragment fade-in" data-fragment-index="10" style="margin-top: 1.4em; margin-bottom: 0;">Very time dependent</p>
+							<p class="fragment fade-in" data-fragment-index="11" style="margin-top: 4.65em; margin-bottom: 0;">Not so time dependent</p>
+							<p class="fragment fade-in" data-fragment-index="12" style="margin-top: 0;">Not so time dependent</p>
+						</div>
+						<ol style="margin: 10px 0;">
+							<li class="fragment fade-in" data-fragment-index="2" style="margin: 10px 0;">Detect anatomical structures
+								<ol>
+									<li>Easy ones (Liver, Gallbladder)
+										<ul>
+											<li>Preliminary YOLO results</li>
+										</ul>
+									</li>
+									<li>From easy ones, detect CBD</li>
+								</ol>
 							</li>
-							<li>Temporal model (Transformer)
-								<ul>
-									<li>spatial-temporal attention</li>
-								</ul>
+							<li class="fragment fade-in" data-fragment-index="1" style="margin: 2em 0;">Predict Surgical Incision Line <br>from anatomical structure detections
+								<ol>
+									<li>Detect ROI</li>
+									<li>Predict line within ROI</li>
+								</ol>
 							</li>
-							<li>Structure tokens (tool, anatomy)
-								<ul>
-									<li>Learned tool queries, no external detector (DETR-like queries) </li>
-								</ul>
-							</li>		
 						</ol>
-					</li>
-				</ul>
+						<div class="planning-notes">
+							<p class="fragment fade-in" data-fragment-index="6" style="margin-top: 2.1em; margin-bottom: 0;">Super ICG dependent</p>
+							<p class="fragment fade-in" data-fragment-index="5" style="margin-top: 1.4em; margin-bottom: 0;">A bit ICG dependent if good detections</p>
+							<p class="fragment fade-in" data-fragment-index="4" style="margin-top: 4.7em; margin-bottom: 0;">Not so ICG dependent if good detections (mostly CBD)</p>
+							<p class="fragment fade-in" data-fragment-index="3" style="margin-top: 0;">Not ICG dependent if good ROI</p>
+						</div>
+				</div>
+				<div class="flex-container" style="margin-top: 3em;">
+					<ul>
+						<li class="fragment fade-in" data-fragment-index="7">Tackle tasks independently</li>
+						<li class="fragment fade-in" data-fragment-index="8">Leverage temporal information</li>
+					</ul>
+				</div>
 			</section>
-
 
 
 			<!---------------------------------------------------------------------------------------------------------------->
@@ -177,6 +102,17 @@
 				slideNumber: false,
 				progress: true,
 				center: true,
+				// The "normal" size of the presentation, aspect ratio will
+				// be preserved when the presentation is scaled to fit different
+				// resolutions. Can be specified using percentage units.
+				width: '70%',
+				height: '90%',
+				// Factor of the display size that should remain empty around
+				// the content
+				margin: 0.04,
+				// Bounds for smallest/largest possible scale to apply to content
+				// minScale: 0.2,
+				// maxScale: 2.0,
 				// preloadIframes: true,
 				// viewDistance: 30,
 				// Learn about plugins: https://revealjs.com/plugins/
