@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section>
+				<h1>Meeting CAMMA 2026.03.21</h1>
+				<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h2>Agenda</h2>
+				<ol style="margin-top: 3em;">
+					<li style="font-size: 150%;">New annotator's concordance</li>
+					<li style="font-size: 150%;">Endoscapes</li>
+					<li style="font-size: 150%;">First stage of pipeline</li>
+					<li style="font-size: 150%;">Some tooling</li>
+				</ol>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>New annotator's concordance</h2>
+				<h3>CBD Bounding Boxes</h3>
+				<div class="flex-container planning-row" style="margin-top: 3em;">
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/old/iou_violinplots.png"
+							>
+						<figcaption style="text-align: center;">Old</figcaption>
+					</figure>
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/new/iou_violinplots.png"
+							>
+						<figcaption style="text-align: center;">New</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>New annotator's concordance</h2>
+				<h3>CBD Bounding Boxes</h3>
+				<div class="flex-container planning-row" style="margin-top: 3em;">
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/old/12_violinplots.png"
+							>
+						<figcaption style="text-align: center;">Old</figcaption>
+					</figure>
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/new/12_violinplots.png"
+							>
+						<figcaption style="text-align: center;">New</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>New annotator's concordance</h2>
+				<h3>Lines</h3>
+				<div class="flex-container planning-row">
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/old/line_distances_histograms.png"
+							>
+						<figcaption style="text-align: center;">Old</figcaption>
+					</figure>
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/new/line_distances_histograms.png"
+							>
+						<figcaption style="text-align: center;">New</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>New annotator's concordance</h2>
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/viz_new_concordance_lines.png"
+							>
+						<figcaption></figcaption>
+					</figure>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Endoscapes</h2>
+				<h3>Private version - Seg201</h3>
+				<div class="flex-container planning-row" style="margin-left: 5em;">
+					<ul>
+						<li>Re-encoded</li>
+						<li>Match and rescale annotations</li>
+						<li>Clip out out-of-body frames</li>
+						<li>Upload everything to MOSaiC</li>
+					</ul>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Planning</h2>
+				<div class="flex-container planning-row" style="margin-top: 3em;">
+					<div>
+						<p style="opacity: 0; margin-top: 2.1em; margin-bottom: 0;">Not so time dependent</p>
+						<p style="opacity: 0; margin-top: 1.4em; margin-bottom: 0;">Very time dependent</p>
+						<p style="opacity: 0; margin-top: 4.65em; margin-bottom: 0;">Not so time dependent</p>
+						<p style="opacity: 0; margin-top: 0;">Not so time dependent</p>
+					</div>
+					<ol style="margin: 10px 0;">
+						<li style="margin: 10px 0;">Detect anatomical structures
+							<ol>
+								<li>Easy ones (Liver, Gallbladder)
+									<ul>
+										<li>Preliminary YOLO results</li>
+									</ul>
+								</li>
+								<li>From easy ones, detect CBD</li>
+							</ol>
+						</li>
+						<li style="margin: 2em 0;">Predict Surgical Incision Line <br>from anatomical structure detections
+							<ol>
+								<li>Detect ROI</li>
+								<li>Predict line within ROI</li>
+							</ol>
+						</li>
+					</ol>
+					<div class="planning-notes">
+						<p style=" opacity: 0; margin-top: 2.1em; margin-bottom: 0;">Super ICG dependent</p>
+						<p style=" opacity: 0; margin-top: 1.4em; margin-bottom: 0;">A bit ICG dependent if good detections</p>
+						<p style=" opacity: 0; margin-top: 4.7em; margin-bottom: 0;">Not so ICG dependent if good detections (mostly CBD)</p>
+						<p style=" opacity: 0; margin-top: 0;">Not ICG dependent if good ROI</p>
+						</div>
+				</div>
+				<div class="flex-container" style="margin-top: 3em;">
+					<ul>
+						<li>Tackle tasks independently</li>
+						<li>Leverage temporal information</li>
+					</ul>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<ul>
+					<li>LoRA fine-tuning of SAM3: gallbladder and liver</li>
+					<li>Metrics not so impressive, but unreliable ground truth</li>
+				</ul>
+				<div class="flex-container planning-row">
+					<figure>
+						<img
+							width="600em"
+							height="auto"
+							src="assets/sam3/example_gt.png"
+							>
+						<figcaption style="text-align: center;">GT</figcaption>
+					</figure>
+					<figure>
+						<img
+							width="600em"
+							height="auto"
+							src="assets/sam3/example_pred.png"
+							>
+						<figcaption style="text-align: center;">Pred</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<ul>
+					<li>LoRA fine-tuning of SAM3: gallbladder and liver</li>
+					<li>Metrics not so impressive, but unreliable ground truth</li>
+				</ul>
+				<div class="flex-container planning-row">
+					<figure>
+						<img
+							width="600em"
+							height="auto"
+							src="assets/sam3/2023-10-04_CMRP83_001_gt.png"
+							>
+						<figcaption style="text-align: center;">GT</figcaption>
+					</figure>
+					<figure>
+						<img
+							width="600em"
+							height="auto"
+							src="assets/sam3/2023-10-04_CMRP83_001_pred.png"
+							>
+						<figcaption style="text-align: center;">Pred</figcaption>
+					</figure>
+				</div>
+			</section>
+
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<video class="slide-video" controls data-autoplay muted loop playsinline>
+					<source src="assets/sam3/overlay_h264.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Some tooling</h2>
+				<h3>Package for annotated video dataset management</h3>
+				<ul>
+					<li>Parse and manage annotations</li>
+					<li>Handle video loading and frame extraction</li>
+					<li>Utilities for visualization and sanity checks</li>
+					<li>Strong integration with MOSaiC</li>
+					<li>Designed for CAMMA but potentially reusable for other datasets</li>
+				</ul>
+			</section>
+
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// The "normal" size of the presentation, aspect ratio will
+				// be preserved when the presentation is scaled to fit different
+				// resolutions. Can be specified using percentage units.
+				width: '70%',
+				height: '90%',
+				// Factor of the display size that should remain empty around
+				// the content
+				margin: 0.04,
+				// Bounds for smallest/largest possible scale to apply to content
+				// minScale: 0.2,
+				// maxScale: 2.0,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>
