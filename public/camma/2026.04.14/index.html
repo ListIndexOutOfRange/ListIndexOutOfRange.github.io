@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section>
+				<h1>Meeting CAMMA 2026.04.14</h1>
+				<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h2>Agenda</h2>
+				<div class="flex-container" style="margin-top: 3em;">
+					<ol style="font-size: 150%;">
+						<li>Metrics for annotator's concordance</li>
+						<li>CBD detection</li>
+						<li>Some tooling</li>
+					</ol>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Metrics for annotator's concordance</h2>
+				<h3>1. Feasability (pre-HCT only, 508 frames)</h3>
+				<table style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+					<thead>
+						<tr>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;"></th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">S4b</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">RS</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">R4U</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Surg Incision Line</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">No Go Line</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Annotator 1</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">94.09%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">44.49%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">40.55%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>76.77%</b></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">91.34%</td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Annotator 2</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">94.09%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">44.49%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">38.98%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>91.73%</b></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+					<thead>
+						<tr>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">CBD</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">soft</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">hard</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Annotator 1</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>36.93%</b></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">56.16%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">93.09%</td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Annotator 2</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>46.39%</b></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">52.10%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">98.48%</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3 class="fragment" style="margin-top: 2em;">2. CBD Bbox agreement</h3>
+				<div class="flex-container">
+				<ul class="fragment" style="font-size: 120%;">
+					<li>Mean IoU: 0.592</li>
+					<li>>= 0.5: 72.61%</li>
+				</ul>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Metrics for annotator's concordance</h2>
+				<h3>3. R4U line and Surgical incision line Agreement </h3>
+				<div class="flex-container">
+					<figure>
+						<img
+							width="100%"
+							height="auto"
+							src="assets/annot/viz_new_concordance_lines.png"
+							>
+						<figcaption></figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Metrics for annotator's concordance</h2>
+				<h3>3. R4U line and Surgical incision line Agreement </h3>
+				<h4 style="margin-top: 2em;">Line Distance</h4>
+				<div style="margin-left: 2em;">
+				<ol>
+					<li class="fragment">Densify the two lines and normalize by length: ($\gamma_1, \gamma_2$)</li>
+					<li class="fragment">Compute optimal transport cost: $\pi_\varepsilon^\star(s,t)$</li>
+					<li class="fragment">Compute image diagonal (without black borders): $D(I)$</li>
+					<li class="fragment">Normalize cost by diagonal and amortize with exponential decay</li>
+				</ol>
+				</div>
+				<div class="fragment" style="margin-top: 2em;">
+				Pompous formula:
+				$$
+				\mathrm{score}
+				=
+				\exp\!\left(
+				-\frac{1}{\alpha D(I)}
+				\iint \|\gamma_1(s)-\gamma_2(t)\|\, d\pi_\varepsilon^\star(s,t)
+				\right)
+				$$
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Metrics for annotator's concordance</h2>
+				<h3>3. R4U line and Surgical incision line Agreement </h3>
+				<h4 style="margin-top: 2em;">Line Distance</h4>
+				<table style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+					<thead>
+						<tr>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;"></th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Mean</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Std</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Min</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Max</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">R4U</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.83</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.11</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.56</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.99</td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Surgical Incision Line</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.81</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.13</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.32</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.99</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Metrics for annotator's concordance</h2>
+				<h3>3. R4U line and Surgical incision line Agreement </h3>
+				<h4 style="margin-top: 2em;">Line Distance</h4>
+				<div class="flex-container planning-row">
+					<figure>
+						<img
+							width="600em"
+							height="auto"
+							src="assets/annot/line_distance_low.png"
+							>
+						<figcaption style="text-align: center;">High score</figcaption>
+					</figure>
+					<figure>
+						<img
+							width="600em"
+							height="auto"
+							src="assets/annot/line_distance_high.png"
+							>
+						<figcaption style="text-align: center;">Low score</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Metrics for annotator's concordance</h2>
+				<h3>4. Geometric safety </h3>
+				<h4>CBD crossing rate & line-bbox distance</h4>
+				<p>min distance expressed in pixels for now</p>
+					<h5>a. Surgical Incision Line</h5>
+					<table style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+						<thead>
+							<tr>
+								<th rowspan="2" style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;"></th>
+								<th rowspan="2" style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Cross-rate</th>
+								<th colspan="4" style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Min distance</th>
+							</tr>
+							<tr>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Mean</th>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Std</th>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Min</th>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Max</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L1 - B1</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">4.82%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">67.16</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">56.99</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">291.25</td>
+						</tr>
+							<tr>
+								<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L2 - B2</th>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">18.67%</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">51.49</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">57.11</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">291.25</td>
+							</tr>
+							<tr>
+								<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L1 - B2</th>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">22.89%</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">50.93</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">57.23</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">386.30</td>
+							</tr>
+							<tr>
+								<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L2 - B1</th>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">13.25%</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">70.15</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">65.18</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">300.56</td>
+							</tr>
+						</tbody>
+					</table>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Metrics for annotator's concordance</h2>
+				<h3>4. Geometric safety </h3>
+				<h4>CBD crossing rate & line-bbox distance</h4>
+				<p>min distance expressed in pixels for now</p>
+					<h5>b. R4U Line</h5>
+					<table style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+						<thead>
+							<tr>
+								<th rowspan="2" style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;"></th>
+								<th rowspan="2" style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Cross-rate</th>
+								<th colspan="4" style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Min distance</th>
+							</tr>
+							<tr>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Mean</th>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Std</th>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Min</th>
+								<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Max</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L1 - B1</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">79.07%</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">5.61</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">14.63</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">77.07</td>
+						</tr>
+							<tr>
+								<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L2 - B2</th>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">69.77%</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">7.12</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">22.52</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">101.67</td>
+							</tr>
+							<tr>
+								<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L1 - B2</th>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">90.70%</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">2.01</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">8.35</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">62.39</td>
+							</tr>
+							<tr>
+								<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">L2 - B1</th>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">52.33%</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">23.01</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">34.40</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">0.00</td>
+								<td style="border: 1px solid #999; padding: 0.35em 0.6em;">132.76</td>
+							</tr>
+						</tbody>
+					</table>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<div class="flex-container" style="margin-top: 2em; font-size: 120%;">
+				<ul>
+					<li>SAM3 LoRA finetuning (class name as prompt)</li>
+					<li>Use SAM3 video masks as prior for CBD detection</li>
+					<li>Small RGB + mask fusion</li>
+					<li>Lightweight temporal Transformer</li>
+				</ul>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<h4>High level architecture</h4>
+				<h5>Input</h5>
+				<div class="flex-container" style="margin-top: 2em; font-size: 120%;">
+				<ul>
+					<li>5 seconds leading to the frame with CBD gt</li>
+					<li>5 fps (25 frames total)</li>
+					<li>RGB frames + SAM3 masks with tracking module</li>
+				</ul>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<h4>High level architecture</h4>
+				<h5>Model</h5>
+				<div class="flex-container" style="margin-top: 2em; font-size: 120%;">
+				<ul>
+					<li class="fragment">RGB frames encoded by convnext-small pretrained (unfreeze last stage): 16x16 features grid </li>
+					<li class="fragment">two masks from SAM3 into a shallow dedicated convnet to project on the same grid</li>
+					<li class="fragment">fuse RGB and mask features early fusion: concatenation, 1x1 conv projection: $(25, 16, 16, d)$ </li>
+					<li class="fragment">Bidirectional Transformer (each location in the final grid attends to both earlier frames and other spatial regions)</li>
+					<li class="fragment">clip token: predicts soft vs hard (small classification head)</li>
+					<li class="fragment">learned box query attempts to the last frame tokens only predicts bbox (small regression head)</li>
+				</ul>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<div class="flex-container" style="margin-top: 3em">
+				<figure>
+					<img
+						width="100%"
+						height="auto"
+						src="assets/sam3/6_24304_overlay.png"
+						>
+					<figcaption style="text-align: center;">Hard</figcaption>
+				</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>First stage of pipeline</h2>
+				<h3>CBD detection (ICG only)</h3>
+				<div class="flex-container" style="margin-top: 3em">
+				<figure>
+					<img
+						width="100%"
+						height="auto"
+						src="assets/sam3/44_5815_overlay.png"
+						>
+					<figcaption style="text-align: center;">Soft</figcaption>
+				</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Some tooling</h2>
+				<h3>Package for annotated video dataset management</h3>
+				<p>Splitted into two smaller, cleaner packages</p>
+				<ul>
+					<li>pymosaic: python MOSaiC interface <br> <a href="https://pymosaic.icube.unistra.fr/">Internal online documentation</a></li>
+					<li>dave: dataset annotation and visualization tool</li>
+				</ul>
+			</section>
+
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// The "normal" size of the presentation, aspect ratio will
+				// be preserved when the presentation is scaled to fit different
+				// resolutions. Can be specified using percentage units.
+				width: '70%',
+				height: '90%',
+				// Factor of the display size that should remain empty around
+				// the content
+				margin: 0.04,
+				// Bounds for smallest/largest possible scale to apply to content
+				// minScale: 0.2,
+				// maxScale: 2.0,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>
