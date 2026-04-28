@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section>
+				<h1>Meeting CAMMA 2026.04.28</h1>
+				<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h2>Agenda</h2>
+				<div class="flex-container" style="margin-top: 3em;">
+					<ol style="font-size: 150%;">
+						<li>CBD detection results</li>
+						<li>Two other directions</li>
+					</ol>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>CBD Detection results</h2>
+				<!-- <h3>1. Feasability (pre-HCT only, 508 frames)</h3> -->
+				<table style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+					<thead>
+						<tr>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">YOLOv11</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">P</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">R</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">map@0.5</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">map@0.5..0.95</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">All</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">66.0</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">56.6</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">61.5</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">27.1</td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Hard</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">87.3</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">79.2</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">86.1</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">41.0</td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Soft</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">50.8</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">46.0</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">44.3</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">16.8</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="fragment"style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+					<thead>
+						<tr>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">YOLOv7</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">P</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">R</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">map@0.5</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">map@0.5..0.95</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">All</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">74.6</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">61.4</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">67.3</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>30.3</b></td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Hard</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">91.2</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">88.1</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>91.3</b></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>45.8</b></td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Soft</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">56.2</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">54.4</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">48.9</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">17.6</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="fragment" style="width: 100%; margin-top: 1.5em; border-collapse: collapse; font-size: 0.8em; text-align: center;">
+					<thead>
+						<tr>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">Ours</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">P</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">R</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">map@0.5</th>
+							<th style="background-color: #f2f2f2; border: 1px solid #999; padding: 0.35em 0.6em;">map@0.5..0.95</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">All</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>69.0</b></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">29.9</td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Hard</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">90.7</td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;">42.4</td>
+						</tr>
+						<tr>
+							<th style="border: 1px solid #999; padding: 0.35em 0.6em; text-align: left;">Soft</th>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>53.7</b></td>
+							<td style="border: 1px solid #999; padding: 0.35em 0.6em;"><b>21.1</b></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Yolov7 visual results</h2>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/yolov7_bsafe_test/test_batch0_pred.jpg" alt="Image 1">
+				</div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Yolov7 visual results</h2>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/yolov7_bsafe_test/test_batch0_labels.jpg" alt="Image 1">
+				</div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Yolov7 visual results</h2>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/yolov7_bsafe_test/test_batch1_pred.jpg" alt="Image 1">
+				</div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Yolov7 visual results</h2>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/yolov7_bsafe_test/test_batch1_labels.jpg" alt="Image 1">
+				</div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Yolov7 visual results</h2>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/yolov7_bsafe_test/test_batch2_pred.jpg" alt="Image 1">
+				</div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Yolov7 visual results</h2>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/yolov7_bsafe_test/test_batch2_labels.jpg" alt="Image 1">
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Two other directions</h2>
+				<h3>1. Yet again, leverage foundation models</h3>
+				<h4>RT-DETRv4: Painlessly Furthering Real-Time Object Detection with Vision Foundation Models</h4>
+				<h4>DEIMv2: Real Time Object Detection Meets DINOv3 </h4>
+				<ul style="font-size: 120%; margin-top: 1.5em;">
+					<li class="fragment">Key idea: use a frozen DINOv3 as a semantic teacher: align detector's deep features with the teacher's representations</li>
+					<li class="fragment">Why not use our custom DINOv3 ?</li>
+					<li class="fragment">Preliminary results: seems to reach current performance levels without mask priors</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Two other directions</h2>
+				<h3>2. Factorized posterior inference</h3>
+				<ul style="font-size: 120%; margin-top: 1.5em;">
+					<li class="fragment" data-fragment-index="1">
+						CBD localization = posterior inference: $$p(c | x, m_G, m_L) \propto p(x | c, m_G, m_L) p(c | m_G, m_L)$$
+					</li>
+					<li class="fragment">Context prior: $p(c | m_G, m_L)$
+						<p>Where is the CBD likely to be given the two masks?</p>
+					</li>
+					<li class="fragment">Image based likelihood: $p(x | c, m_G, m_L)$
+						<p>Does the image support the presence of the CBD at location $c$ given the two masks?</p>
+					</li>
+				</ul>
+				
+				<ul class="fragment" data-fragment-index="2" style="font-size: 120%; margin-top: 1.5em;">
+					where:
+					<li>$c$ : CBD location</li>
+					<li>$x$ : image</li>
+					<li>$m_G$ : gallbladder map</li>
+					<li>$m_L$ : liver map</li>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Two other directions</h2>
+				<h3>2. Factorized posterior inference</h3>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/cbd_bayes/local_frame.png" alt="Image 1">
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Two other directions</h2>
+				<h3>2. Factorized posterior inference</h3>
+				<div class="image-row" style="margin-top: 2em;">
+					<img src="assets/cbd_bayes/gt_gaussian.png" alt="Image 1">
+				</div>
+			</section>
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// The "normal" size of the presentation, aspect ratio will
+				// be preserved when the presentation is scaled to fit different
+				// resolutions. Can be specified using percentage units.
+				width: '70%',
+				height: '90%',
+				// Factor of the display size that should remain empty around
+				// the content
+				margin: 0.04,
+				// Bounds for smallest/largest possible scale to apply to content
+				// minScale: 0.2,
+				// maxScale: 2.0,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>
