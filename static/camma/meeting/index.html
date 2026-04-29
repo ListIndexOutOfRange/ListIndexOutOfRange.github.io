@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+
+			<section data-auto-animate data-no-number>
+				<p style="opacity: 0;">PAD</p>
+				<div>
+					<h1 class="r-fit-text r-fit-page-width" data-fit-page-width="60">Exploring IBSAFE</h1>
+					<h1 class="r-fit-text r-fit-page-width" data-fit-page-width="60">initial attempts and directions</h1>
+				</div>
+				<div class="flex-container" style="padding-top: 5%;">
+					<div class="partial-border" style="text-align: left;">
+						<p style="margin: 0.2em 0; font-size: 70%;"><b>Luc Vedrenne</b></p>
+						<p style="margin: 0.1em 0; font-size: 60%;">30.04.2026</p>
+					</div>
+				</div>
+				<div class="image-row" style="padding-top: 2%;">
+					<img src="assets/logo/unistra.png" alt="Unistra" style="height: 60px; width: auto; margin-top: 5%;">
+					<img src="assets/logo/logo_cnrs.png" alt="CNRS" style="height: 60px; width: auto; margin-top: 5%;">
+					<img src="assets/logo/logo_icube.png" alt="Inria" style="height: 60px; width: auto; margin-top: 5%;">
+					<img src="assets/logo/logo_camma.jpg" alt="Inria" style="height: 60px; width: auto; margin-top: 5%;">
+				</div>
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h3>Divide and Conquer </h3>
+				<div class="challenge-row" style="margin-top: 25%;">
+					<div class="fragment challenge-item" data-fragment-index="0">
+						<p class="challenge-input">Input</p>
+						<p class="challenge-label">Frame(s)</p>
+					</div>
+					<div class="fragment custom challenge-arrow" data-fragment-index="1">
+						<span class="challenge-arrow-line"></span>
+					</div>
+					<div class="fragment fade-left challenge-item" data-fragment-index="1">
+						<p class="challenge-circle">1</p>
+						<p class="challenge-label">Anatomical<br>context</p>
+						<!-- <p class="challenge-label">context</p> -->
+					</div>
+					<div class="fragment custom challenge-arrow" data-fragment-index="2">
+						<span class="challenge-arrow-line"></span>
+					</div>
+					<div class="fragment fade-left challenge-item" data-fragment-index="2">
+						<p class="challenge-circle">2</p>
+						<p class="challenge-label">CBD<br>location</p>
+						<p class="challenge-label"></p>
+					</div>
+					<div class="fragment custom challenge-arrow" data-fragment-index="3">
+						<span class="challenge-arrow-line"></span>
+					</div>
+					<div class="fragment fade-left challenge-item" data-fragment-index="3">
+						<p class="challenge-circle">3</p>
+						<p class="challenge-label">Safe zone<br>prediction</p>
+						<p class="challenge-label"></p>
+					</div>
+			</div>
+			</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span data-id="context-section-number" style="color: royalblue;">I</span>
+						<span data-id="context-title">Anatomical Context</span>
+					</h3>
+					<h4 class="fragment sam3-heading-row" data-fragment-index="0">
+						<span>Segment <span class="fragment custom sam3-word-highlight" data-fragment-index="1">gallbladder</span> and <span class="fragment custom sam3-word-highlight" data-fragment-index="1">liver</span></span>
+						<span class="fragment fade-left sam3-side-comment" data-fragment-index="1">easy and informative</span>
+					</h4>
+					<h5 class="fragment sam3-subtitle-row" data-fragment-index="2">
+						<span>Yet again, leveraging SAM3</span>
+						<span class="fragment fade-left sam3-lora-comment" data-fragment-index="4">LoRA</span>
+					</h5>
+					<div class="flex-container" style="align-items: center; padding-top: 2%;">
+						<div class="sam3-image-wrap">
+							<img class="fragment fade-in" data-fragment-index="3" src="assets/sam3.png">
+							<div style="left: 4.4%; top: 43%; width: 10%; height: 10%;" class="fragment fade-in sam3-image-box" data-fragment-index="5"></div>
+							<div style="left: 61.5%; top: 62.5%; width: 11%; height: 10%;" class="fragment fade-in sam3-image-box" data-fragment-index="6"></div>
+							<div style="left: 80.75%; top: 29.5%; width: 14%; height: 14%;" class="fragment fade-in sam3-image-box" data-fragment-index="7"></div>
+						</div>
+					</div>
+					<div class="flex-container" style="align-items: center;">
+						<p class="fragment">Box to Mask is ~ object agnostic</p>
+						<p class="fragment fade-left">Mask from Box supervision</p>
+					</div>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span data-id="context-section-number" style="color: royalblue;">I</span>
+						<span data-id="context-title">Anatomical Context</span>
+					</h3>
+					<h4 class="sam3-heading-row">
+						<span>Segment <span style="color: royalblue;" class="sam3-word-highlight">gallbladder</span> and <span style="color: royalblue;" class="sam3-word-highlight">liver</span></span>
+						<span class="fade-left sam3-side-comment">easy and informative</span>
+					</h4>
+					<h5 class="sam3-subtitle-row" data-id="method-subtitle">
+						<span>Yet again, leveraging SAM3</span>
+						<span class="sam3-lora-comment">LoRA</span>
+					</h5>
+					<h1>Placeholder video results</h1>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span data-id="context-section-number" style="color: royalblue;">II</span>
+						<span class="section-question-prefix">From</span>
+						<span data-id="context-title">Anatomical Context</span>
+						<span class="section-question-suffix">to CBD detection</span>
+					</h3>
+						<div class="cbd-pipeline">
+							<div class="cbd-top-row">
+								<div class="fragment fade-in cbd-box cbd-top-box" data-fragment-index="0">for each<br>target frame</div>
+								<div class="fragment custom cbd-arrow" data-fragment-index="1">
+									<span class="cbd-arrow-line"></span>
+								</div>
+								<div class="fragment fade-left cbd-box cbd-top-box" data-fragment-index="1">preceding 5s clip<br>sampled at 5 fps</div>
+								<div class="fragment custom cbd-arrow" data-fragment-index="2">
+									<span class="cbd-arrow-line"></span>
+								</div>
+								<div class="fragment fade-left cbd-box cbd-top-box cbd-box-wide" data-fragment-index="2">25 RGB frames<br>+ corresponding SAM3 masks</div>
+							</div>
+
+						<div class="cbd-branch-stage">
+							<svg class="cbd-branch-links" viewBox="0 0 1000 130" preserveAspectRatio="none" aria-hidden="true">
+								<defs>
+									<marker id="cbd-arrowhead" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+										<path d="M0,0 L9,4.5 L0,9 Z"></path>
+									</marker>
+								</defs>
+								<path class="fragment custom cbd-branch-link" data-fragment-index="3" pathLength="1" d="M820 0 V42 H270 V105"></path>
+								<path class="fragment custom cbd-branch-link" data-fragment-index="3" pathLength="1" d="M820 0 V42 H730 V105"></path>
+							</svg>
+						</div>
+
+						<div class="cbd-feature-row">
+							<div class="fragment fade-in cbd-feature-block cbd-rgb-block" data-fragment-index="4">
+								<div class="fragment fade-in cbd-box cbd-model-box cbd-rgb-box" data-fragment-index="4">convnext small<br>backbone</div>
+								<div class="fragment custom cbd-arrow cbd-arrow-compact" data-fragment-index="5">
+									<span class="cbd-arrow-line"></span>
+								</div>
+								<div class="fragment fade-left cbd-box cbd-feature-box cbd-rgb-box" data-fragment-index="5">RGB<br>features</div>
+							</div>
+
+							<div class="fragment fade-in cbd-feature-block cbd-mask-block" data-fragment-index="4">
+								<div class="fragment fade-in cbd-box cbd-model-box cbd-mask-box" data-fragment-index="4">shallow convolutional<br>branch</div>
+								<div class="fragment custom cbd-arrow cbd-arrow-compact" data-fragment-index="5">
+									<span class="cbd-arrow-line"></span>
+								</div>
+								<div class="fragment fade-left cbd-box cbd-feature-box cbd-mask-box" data-fragment-index="5">mask<br>features</div>
+							</div>
+						</div>
+
+						<div class="cbd-fusion-merge-stage">
+							<svg class="cbd-fusion-merge-links" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
+								<path class="fragment custom cbd-branch-link" data-fragment-index="6" pathLength="1" d="M330 0 V32 H500 V82"></path>
+								<path class="fragment custom cbd-branch-link" data-fragment-index="6" pathLength="1" d="M670 0 V32 H500 V82"></path>
+							</svg>
+						</div>
+
+						<div class="cbd-fusion-stack">
+							<div class="fragment fade-in cbd-box cbd-fusion-box" data-fragment-index="6">fused spatio-temporal<br>features</div>
+							<div class="fragment custom cbd-down-arrow" data-fragment-index="7">
+								<span class="cbd-down-arrow-line"></span>
+							</div>
+							<div class="fragment fade-in cbd-box cbd-transformer-box" data-fragment-index="7">spatio-temporal<br>Transformer</div>
+							<div class="fragment custom cbd-down-arrow" data-fragment-index="8">
+								<span class="cbd-down-arrow-line"></span>
+							</div>
+							<div class="fragment fade-in cbd-box cbd-prediction-box" data-fragment-index="8">target-frame<br>prediction</div>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span data-id="context-section-number" style="color: royalblue;">II</span>
+						<span class="section-question-prefix">Do we really need</span>
+						<span data-id="context-title">Anatomical Context</span>
+						<span class="section-question-suffix">for CBD detection?</span>
+					</h3>
+					<h5 class="fragment sam3-subtitle-row" data-id="method-subtitle">
+						<span>Yet again, leveraging SAM3</span>
+						<!-- <span class="sam3-lora-comment">LoRA</span> -->
+					</h5>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">II</span>
+						<span class="section-question-prefix">Do we really need</span>
+						<span>Anatomical Context</span>
+						<span class="section-question-suffix">for CBD detection?</span>
+					</h3>
+					<h5 class="sam3-subtitle-row" data-id="method-subtitle">
+						<span>Leveraging a dedicated VFM</span>
+					</h5>
+					<p class="fragment" data-fragment-index="3">Use Florian's SDINO as a teacher for object detection</p>
+					<div class="flex-container" style="align-items: center; padding-top: 2%;">
+						<div class="sam3-image-wrap">
+							<img class="fragment fade-in" data-fragment-index="4" src="assets/rtdetrv4.png">
+						</div>
+					</div>
+					<div class="flex-container" style="align-items: center; padding-top: 0%;">
+						<p class="fragment" data-fragment-index="4" style="text-align: center; color: #777; font-size: 60%; margin: 0.1em">Liao et al. <span style="font-style: italic;">RT-DETRv4: Painlessly Furthering Real-Time Object Detection with Vision Foundation Models </span></p>
+					</div>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">II</span>
+						<span class="section-question-prefix">Do we really need</span>
+						<span>Anatomical Context</span>
+						<span class="section-question-suffix">for CBD detection?</span>
+					</h3>
+					<h1>Placeholder results</h1>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">II</span>
+						<span>Anatomical Context for CBD detection</span>
+						<span class="section-question-suffix">a principled approach</span>
+					</h3>
+					<div class="bayes-slide">
+						<div class="fragment fade-in bayes-legend" data-fragment-index="0">
+							<div class="bayes-legend-item"><span class="bayes-symbol">x</span><span>frame</span></div>
+							<div class="bayes-legend-item"><span class="bayes-symbol">m</span><span>masks<br><em>anatomical context</em></span></div>
+							<div class="bayes-legend-item"><span class="bayes-symbol">c</span><span>CBD<br>location</span></div>
+						</div>
+
+						<div class="fragment fade-in bayes-card bayes-goal" data-fragment-index="1">
+							<div class="bayes-card-label">goal</div>
+							<div class="bayes-formula">\(p(c \mid x, m)\)</div>
+						</div>
+
+						<div class="fragment fade-up bayes-card bayes-factorization" data-fragment-index="2">
+							<div class="bayes-card-label">factorized posterior inference</div>
+							<div class="bayes-formula">\(p(c \mid x, m) \propto p(x \mid c, m)\,p(c \mid m)\)</div>
+							<div class="bayes-terms">
+								<span>likelihood</span>
+								<span>anatomical prior</span>
+							</div>
+						</div>
+
+						<div class="fragment fade-in bayes-note" data-fragment-index="3">
+							Bayes rule gives \(p(c \mid x,m)=\frac{p(x \mid c,m)p(c \mid m)}{p(x \mid m)}\); \(p(x \mid m)\) is constant with respect to \(c\).
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">II</span>
+						<span>Anatomical Context for CBD detection</span>
+						<span>a principled approach</span>
+					</h3>
+					<h1>Placeholder visual results</h1>
+				</section>
+
+				<section data-no-number>
+					<h1 class="fragment">Some cool tooling</h1>
+				</section>
+
+				<section class="topleft" data-start-from="1">
+					<h1>Pymosaic</h1>
+				</section>
+
+				<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			function fitPageWidthText() {
+				const scale = Reveal.getScale ? Reveal.getScale() : 1;
+				const viewport = Reveal.getViewportElement ? Reveal.getViewportElement() : document.documentElement;
+				const viewportWidth = viewport.clientWidth || window.innerWidth;
+
+				document.querySelectorAll('.r-fit-page-width, [data-fit-page-width]').forEach(el => {
+					const percentage = parseFloat(el.dataset.fitPageWidth || '100');
+					if (!Number.isFinite(percentage) || percentage <= 0) return;
+
+					const style = window.getComputedStyle(el);
+					const currentFontSize = parseFloat(style.fontSize);
+					const currentWidth = el.scrollWidth;
+					if (!currentFontSize || !currentWidth || !scale) return;
+
+					const targetWidth = viewportWidth * (percentage / 100) / scale;
+					el.style.fontSize = `${currentFontSize * targetWidth / currentWidth}px`;
+				});
+			}
+
+			function scheduleFitPageWidthText() {
+				requestAnimationFrame(() => requestAnimationFrame(fitPageWidthText));
+			}
+
+			Reveal.on('ready', scheduleFitPageWidthText);
+			Reveal.on('slidechanged', scheduleFitPageWidthText);
+			Reveal.on('resize', scheduleFitPageWidthText);
+			window.addEventListener('load', scheduleFitPageWidthText);
+			window.addEventListener('resize', scheduleFitPageWidthText);
+		})();
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>
