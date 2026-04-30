@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="../_reveal/dist/reset.css">
 		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
 		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
-		<link rel="stylesheet" href="css/custom.css?v=20260430-16">
+		<link rel="stylesheet" href="css/custom.css?v=20260430-18">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
@@ -338,6 +338,45 @@
 					<h3 class="section-question-title">
 						<span style="color: royalblue;">II</span>
 						<span>Anatomical Context for CBD detection</span>
+						<span class="section-question-suffix">a principled approach</span>
+					</h3>
+					<div class="bayes-slide bayes-slide-marginal">
+						<div class="fragment fade-in bayes-legend" data-fragment-index="0">
+							<div class="bayes-legend-item"><span class="bayes-symbol">x</span><span>frame</span></div>
+							<div class="bayes-legend-item"><span class="bayes-symbol">m</span><span>masks<br><em>anatomical context</em></span></div>
+							<div class="bayes-legend-item"><span class="bayes-symbol">c</span><span>CBD<br>location</span></div>
+							<div class="bayes-legend-item"><span class="bayes-symbol">z</span><span>safe zone</span></div>
+						</div>
+
+						<div class="fragment fade-in bayes-card bayes-goal bayes-cbd-posterior" data-fragment-index="1">
+							<div class="bayes-card-label">available posterior</div>
+							<div class="bayes-formula">\(p(c \mid x, m)\)</div>
+						</div>
+
+						<div class="fragment fade-up bayes-card bayes-detector" data-fragment-index="2">
+							<div class="bayes-card-label">conditional detector</div>
+							<div class="bayes-formula">\(p(z \mid c, x, m)\)</div>
+						</div>
+
+						<div class="fragment fade-up bayes-card bayes-marginalization" data-fragment-index="3">
+							<div class="bayes-card-label">marginalize CBD uncertainty</div>
+							<div class="bayes-formula">\(p(z \mid x, m)=\int p(z \mid c, x, m)\,p(c \mid x, m)\,dc\)</div>
+							<div class="bayes-terms bayes-marginal-terms">
+								<span>safe zone likelihood <br>conditioned on CBD</span>
+								<span>CBD posterior</span>
+							</div>
+						</div>
+
+						<div class="fragment fade-in bayes-note" data-fragment-index="4">
+							The CBD posterior becomes a distribution over possible contexts, so the final prediction for \(z\) averages over plausible CBD locations.
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">II</span>
+						<span>Anatomical Context for CBD detection</span>
 						<span>a principled approach</span>
 					</h3>
 					<div class="prior-slide">
@@ -420,12 +459,138 @@
 				</section>
 
 				<section data-no-number>
-					<h1 class="fragment">Some cool tooling</h1>
+					<h1 class="fragment">A tool (hopefully) useful for all of you</h1>
 				</section>
 
 				<section class="topleft" data-start-from="1">
-					<h1>Pymosaic</h1>
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">III</span>
+						<span>Pymosaic</span>
+						<!-- <span class="section-question-suffix">Mosaic from Python</span> -->
+					</h3>
+					<div class="pymosaic-slide">
+						<div class="fragment fade-in pymosaic-card pymosaic-interface" data-fragment-index="0">
+							<div class="pymosaic-card-label">basic interface</div>
+							<div class="pymosaic-bridge">
+								<span>mosaic</span>
+								<span class="pymosaic-bridge-line"></span>
+								<span>python</span>
+							</div>
+						</div>
+
+						<div class="fragment fade-up pymosaic-card pymosaic-structures" data-fragment-index="1">
+							<div class="pymosaic-card-label">three structures</div>
+							<div class="pymosaic-hierarchy">
+								<div class="pymosaic-node pymosaic-node-main">Group</div>
+								<div class="pymosaic-relation">has many</div>
+								<div class="pymosaic-node">Videos</div>
+								<div class="pymosaic-relation">each video has many</div>
+								<div class="pymosaic-node">Annotations</div>
+							</div>
+						</div>
+
+						<div class="fragment fade-left pymosaic-card pymosaic-functions" data-fragment-index="2">
+							<div class="pymosaic-card-label">core functionalities</div>
+							<ol>
+								<li>create and delete group</li>
+								<li>upload and download video</li>
+								<li>upload and download annotations</li>
+								<li>Mosaic / COCO conversion</li>
+							</ol>
+						</div>
+					</div>
 				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">III</span>
+						<span>Pymosaic</span>
+						<!-- <span class="section-question-suffix">connect to Mosaic</span> -->
+					</h3>
+					<h4 class="pymosaic-code-title">Connection</h4>
+					<pre class="pymosaic-code-block" data-id="pymosaic-connect-code"><code class="language-python" data-trim data-line-numbers>
+						from mosaic import Group, MosaicAPI
+
+						api = MosaicAPI(
+						    base_url="https://api.example.mosaic",
+						    token="your-token",
+						)
+					</code></pre>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">III</span>
+						<span>Pymosaic</span>
+						<!-- <span class="section-question-suffix">connect to Mosaic</span> -->
+					</h3>
+					<h4 class="pymosaic-code-title">Connection</h4>
+					<pre class="pymosaic-code-block" data-id="pymosaic-connect-code"><code class="language-python" data-trim data-line-numbers>
+						from mosaic import Group, MosaicAPI
+
+						api = MosaicAPI.from_env()
+					</code></pre>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">III</span>
+						<span>Pymosaic</span>
+						<!-- <span class="section-question-suffix">Mosaic to Python</span> -->
+					</h3>
+					<h4 class="pymosaic-code-title">Mosaic to Python</h4>
+					<h5 class="pymosaic-code-subtitle">Get annotations</h5>
+					<pre class="pymosaic-code-block" data-id="pymosaic-connect-code"><code class="language-python" data-trim data-line-numbers>
+						(
+						    Group.from_mosaic(api, group_name="endoscapes")
+						    .get_video(video_name="train_10")
+						    .get_annotations()
+						    .to_coco()
+						    .save_annotations("train_10_annotations.json")
+						)
+					</code></pre>
+					<h5 class="pymosaic-code-subtitle">Get media</h5>
+					<pre class="pymosaic-code-block"><code class="language-python" data-trim data-line-numbers>
+						from mosaic import Group, MosaicAPI
+
+						(
+						    Group.from_mosaic(api, group_name="endoscapes")
+						    .get_video(video_name="train_10")
+						    .download("train_10.mp4")
+						)
+					</code></pre>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">III</span>
+						<span>Pymosaic</span>
+						<!-- <span class="section-question-suffix">Python to Mosaic</span> -->
+					</h3>
+					<h4 class="pymosaic-code-title">Python to Mosaic</h4>
+					<pre class="pymosaic-code-block"><code class="language-python" data-trim data-line-numbers>
+						Group.create(name="Test Group", description="This is a test group.")
+
+						(
+						    Video
+						    .from_dict(...)
+						    .attach_to_group(group)
+						    .add_annotations(...)
+						    .upload()
+						)
+					</code></pre>
+				</section>
+
+				<section class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">III</span>
+						<span>Pymosaic</span>
+					</h3>
+					<div class="pymosaic-final-link">
+						<a href="https://pymosaic.icube.unistra.fr/">pymosaic.icube.unistra.fr</a>
+					</div>
+				</section>
+
 
 				<!---------------------------------------------------------------------------------------------------------------->
 		</div>
