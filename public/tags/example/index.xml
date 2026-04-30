@@ -4,7 +4,7 @@
     <title>Example on Luc Vedrenne</title>
     <link>http://localhost:1313/tags/example/</link>
     <description>Recent content in Example on Luc Vedrenne</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 03 Apr 2021 22:41:10 +0530</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/example/index.xml" rel="self" type="application/rss+xml" />

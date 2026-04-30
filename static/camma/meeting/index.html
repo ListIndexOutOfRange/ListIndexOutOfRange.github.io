@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="../_reveal/dist/reset.css">
 		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
 		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
-		<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="css/custom.css?v=20260430-16">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
@@ -99,7 +99,7 @@
 						<span>Yet again, leveraging SAM3</span>
 						<span class="fragment fade-left sam3-lora-comment" data-fragment-index="4">LoRA</span>
 					</h5>
-					<div class="flex-container" style="align-items: center; padding-top: 2%;">
+					<div class="flex-container" style="align-items: center; padding-top: 0%;">
 						<div class="sam3-image-wrap">
 							<img class="fragment fade-in" data-fragment-index="3" src="assets/sam3.png">
 							<div style="left: 4.4%; top: 43%; width: 10%; height: 10%;" class="fragment fade-in sam3-image-box" data-fragment-index="5"></div>
@@ -107,9 +107,12 @@
 							<div style="left: 80.75%; top: 29.5%; width: 14%; height: 14%;" class="fragment fade-in sam3-image-box" data-fragment-index="7"></div>
 						</div>
 					</div>
-					<div class="flex-container" style="align-items: center;">
-						<p class="fragment">Box to Mask is ~ object agnostic</p>
-						<p class="fragment fade-left">Mask from Box supervision</p>
+					<div class="sam3-note-flow">
+						<div class="fragment fade-in sam3-note-block" data-fragment-index="8">Box to Mask is ~<br>object agnostic</div>
+						<div class="fragment custom sam3-note-arrow" data-fragment-index="9">
+							<span class="sam3-note-arrow-line"></span>
+						</div>
+						<div class="fragment fade-left sam3-note-block" data-fragment-index="9">Mask from Box<br>supervision</div>
 					</div>
 				</section>
 
@@ -125,9 +128,12 @@
 					<h5 class="sam3-subtitle-row" data-id="method-subtitle">
 						<span>Yet again, leveraging SAM3</span>
 						<span class="sam3-lora-comment">LoRA</span>
-					</h5>
-					<h1>Placeholder video results</h1>
-				</section>
+						</h5>
+						<video class="slide-video" controls data-autoplay muted loop playsinline>
+							<source src="assets/overlay_h264.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+					</section>
 
 				<section data-auto-animate class="topleft">
 					<h3 class="section-question-title">
@@ -241,7 +247,58 @@
 						<span>Anatomical Context</span>
 						<span class="section-question-suffix">for CBD detection?</span>
 					</h3>
-					<h1>Placeholder results</h1>
+					<div class="results-chart fragment fade-in" data-fragment-index="0">
+						<div class="results-y-panel">
+							<div class="results-y-title">mAP@50-95</div>
+							<div class="results-y-axis">
+								<span>100</span>
+								<span>75</span>
+								<span>50</span>
+								<span>25</span>
+								<span>0</span>
+							</div>
+						</div>
+						<div class="results-plot" aria-label="Grouped bar chart of placeholder model results">
+							<div class="results-gridline" style="bottom: 100%;"></div>
+							<div class="results-gridline" style="bottom: 75%;"></div>
+							<div class="results-gridline" style="bottom: 50%;"></div>
+							<div class="results-gridline" style="bottom: 25%;"></div>
+							<div class="results-gridline" style="bottom: 0;"></div>
+
+							<div class="results-group">
+								<div class="results-bars">
+									<div class="results-bar results-model-yolo" style="--value: 17.5%;"><span>17.5</span></div>
+									<div class="results-bar results-model-context" style="--value: 21.1%;"><span>21.1</span></div>
+									<div class="results-bar results-model-rtdetr" style="--value: 20.9%;"><span>20.9</span></div>
+								</div>
+								<div class="results-model-label">weak</div>
+							</div>
+
+							<div class="results-group">
+								<div class="results-bars">
+									<div class="results-bar results-model-yolo" style="--value: 43.8%;"><span>43.8</span></div>
+									<div class="results-bar results-model-context" style="--value: 42.4%;"><span>42.4</span></div>
+									<div class="results-bar results-model-rtdetr" style="--value: 46.0%;"><span>46.0</span></div>
+								</div>
+								<div class="results-model-label">firm</div>
+							</div>
+
+							<div class="results-group">
+								<div class="results-bars">
+									<div class="results-bar results-model-yolo" style="--value: 26.9%;"><span>26.9</span></div>
+									<div class="results-bar results-model-context" style="--value: 29.9%;"><span>29.9</span></div>
+									<div class="results-bar results-model-rtdetr" style="--value: 31.2%;"><span>31.2</span></div>
+								</div>
+								<div class="results-model-label">both</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="results-legend fragment fade-in" data-fragment-index="1">
+						<span><i class="results-model-yolo"></i>YOLOv11</span>
+						<span><i class="results-model-context"></i>Spatio-temporal Transformer + context</span>
+						<span><i class="results-model-rtdetr"></i>RTDETRv4 + SDINO teacher, no context</span>
+					</div>
 				</section>
 
 				<section data-auto-animate class="topleft">
@@ -283,7 +340,83 @@
 						<span>Anatomical Context for CBD detection</span>
 						<span>a principled approach</span>
 					</h3>
-					<h1>Placeholder visual results</h1>
+					<div class="prior-slide">
+						<div class="fragment fade-in prior-card prior-network" data-fragment-index="0">
+							<div class="prior-card-label">stage 1</div>
+							<h4>prior network</h4>
+								<div class="prior-flow">
+									<div class="prior-chip">
+										<span>input</span>
+										<div class="prior-chip-math">
+											<i>m</i>
+											<span class="prior-in-symbol">&isin;</span>
+											<span class="prior-tensor-shape">2 &times; H &times; W</span>
+										</div>
+									</div>
+									<div class="prior-flow-arrow">→</div>
+									<div class="prior-chip">
+										<span>logits</span>
+										<div class="prior-chip-math">
+											<i>z</i>
+											<span class="prior-in-symbol">&isin;</span>
+											<span class="prior-tensor-shape">H &times; W</span>
+										</div>
+									</div>
+								</div>
+							<div class="prior-equation">\(p_{\theta}(c \mid m)=\operatorname{softmax}(z)\)</div>
+						</div>
+
+						<div class="fragment fade-in prior-card prior-geometry" data-fragment-index="1">
+							<div class="prior-card-label">geometry-aware target</div>
+							<div class="prior-geometry-grid">
+								<div>
+									<span class="prior-token">center</span>
+									\(\mu=(x_c,y_c)\)
+									</div>
+									<div>
+										<span class="prior-token">directions</span>
+										<span class="prior-inline-math">\(e_y\): toward gallbladder, \(e_x \perp e_y\): toward liver</span>
+									</div>
+									<div>
+										<span class="prior-token">scales</span>
+										<span class="prior-inline-math">\(s_x,s_y\): distances to liver and gallbladder</span>
+									</div>
+							</div>
+							<div class="prior-equation">
+								\(q(c \mid m)=\mathcal{N}\!\left(\mu,\;R_{\theta}\operatorname{diag}(s_x^2,s_y^2)R_{\theta}^{\top}\right)\)
+							</div>
+						</div>
+
+						<div class="fragment fade-up prior-card prior-loss" data-fragment-index="2">
+							<div class="prior-card-label">training objective</div>
+							<div class="prior-equation">
+								\(\mathcal{L}_{\mathrm{prior}}=\mathrm{KL}\!\left(q(c \mid m)\;\|\;p_{\theta}(c \mid m)\right)\)
+							</div>
+							<p>Teach the network to predict an anatomical prior over the CBD location.</p>
+						</div>
+					</div>
+				</section>
+
+				<section data-auto-animate class="topleft">
+					<h3 class="section-question-title">
+						<span style="color: royalblue;">II</span>
+						<span>Anatomical Context for CBD detection</span>
+						<span>a principled approach</span>
+					</h3>
+						<div class="bayes-visual-results">
+							<figure class="fragment fade-in bayes-result-panel" data-fragment-index="0">
+								<div class="bayes-result-image-frame">
+									<img src="assets/cbd_bayes/local_frame.png" alt="Local frame">
+								</div>
+								<figcaption>local frame</figcaption>
+							</figure>
+							<figure class="fragment fade-in bayes-result-panel" data-fragment-index="1">
+								<div class="bayes-result-image-frame">
+									<img src="assets/cbd_bayes/gt_gaussian.png" alt="CBD target distribution">
+								</div>
+								<figcaption>target distribution</figcaption>
+							</figure>
+						</div>
 				</section>
 
 				<section data-no-number>
