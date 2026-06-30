@@ -24,7 +24,7 @@ markup:
 
 security:
   allowContent:
-    - "^text/html$"
+    - ".*"
 
 # Menus:
 #   main:
