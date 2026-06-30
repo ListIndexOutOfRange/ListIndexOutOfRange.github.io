@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css?v=20260630-rdh-1">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+
+			<section data-auto-animate data-no-number>
+				<p style="opacity: 0;">PAD</p>
+				<div>
+					<h1 class="r-fit-text r-fit-page-width" data-fit-page-width="60">Drawing the Safe Line</h1>
+					<h1 class="r-fit-text r-fit-page-width" data-fit-page-width="60">AI for Surgical Guidance</h1>
+				</div>
+				<div class="flex-container" style="padding-top: 5%;">
+					<div class="partial-border" style="text-align: left;">
+						<p style="margin: 0.2em 0; font-size: 70%;"><b>Luc Vedrenne</b></p>
+						<p style="margin: 0.1em 0; font-size: 60%;">01.07.2026</p>
+					</div>
+				</div>
+				<div class="image-row" style="padding-top: 2%;">
+					<img src="assets/logo/unistra.png" alt="Unistra" style="height: 60px; width: auto; margin-top: 5%;">
+					<img src="assets/logo/logo_cnrs.png" alt="CNRS" style="height: 60px; width: auto; margin-top: 5%;">
+					<img src="assets/logo/logo_icube.png" alt="Inria" style="height: 60px; width: auto; margin-top: 5%;">
+					<img src="assets/logo/logo_camma.jpg" alt="Inria" style="height: 60px; width: auto; margin-top: 5%;">
+				</div>
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h3 class="rdh-slide-title">Overview</h3>
+				<div class="rdh-summary">
+					<div class="rdh-summary-item fragment fade-up" data-fragment-index="0">
+						<span class="rdh-summary-number">1</span>
+						<div>
+							<h4>Who am I?</h4>
+							<p>A quick informal introduction for new colleagues.</p>
+						</div>
+					</div>
+					<div class="rdh-summary-item fragment fade-up" data-fragment-index="1">
+						<span class="rdh-summary-number">2</span>
+						<div>
+							<h4>What I am working on</h4>
+							<p>Safe Dissection Line prediction during laparoscopic cholecystectomy.</p>
+						</div>
+					</div>
+					<div class="rdh-summary-item fragment fade-up" data-fragment-index="2">
+						<span class="rdh-summary-number">3</span>
+						<div>
+							<h4>How I am doing it</h4>
+							<p>The methodology behind the prediction pipeline.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">I</span>
+					<span>Who am I?</span>
+				</h3>
+				<div class="rdh-horizontal-timeline">
+					<div class="rdh-timeline-line"></div>
+					<div class="rdh-timeline-item fragment fade-up" data-fragment-index="0">
+						<div class="rdh-timeline-year">2022</div>
+						<div class="rdh-timeline-card">
+							<h4>IMT Atlantique</h4>
+							<p>Graduated after working on tumor classification from SpyGlass video with AP-HP.</p>
+						</div>
+					</div>
+					<div class="rdh-timeline-item fragment fade-up" data-fragment-index="1">
+						<div class="rdh-timeline-year">2025</div>
+						<div class="rdh-timeline-card">
+							<h4>PhD defense</h4>
+							<p>Under the supervision of S. Faisan and D. Fortun: joint registration of multiple point clouds in fluorescence microscopy.</p>
+						</div>
+					</div>
+					<div class="rdh-timeline-item fragment fade-up" data-fragment-index="2">
+						<div class="rdh-timeline-year">2026</div>
+						<div class="rdh-timeline-card">
+							<h4>CAMMA</h4>
+							<p>Started a postdoc in the CAMMA team.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="rdh-section-cover">
+				<h2>Safe Dissection Line Prediction</h2>
+				<h3>during Laparoscopic Cholecystectomy</h3>
+				<p>Current postdoctoral work in the CAMMA team</p>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">II</span>
+					<span>Context</span>
+				</h3>
+				<div class="rdh-context-layout">
+					<div class="rdh-context-text">
+						<div class="rdh-context-point fragment fade-right" data-fragment-index="0">
+							<h4>Most common surgery</h4>
+							<p>Laparoscopic cholecystectomy is the standard treatment for gallbladder disease.</p>
+						</div>
+						<div class="rdh-context-point fragment fade-right" data-fragment-index="1">
+							<h4>Major complication</h4>
+							<p>Bile duct injury remains a rare but severe adverse event.</p>
+						</div>
+					</div>
+					<figure class="rdh-anatomy-figure fragment fade-left" data-fragment-index="0">
+						<img src="assets/anatomy_scheme.png" alt="Anatomical scheme of the gallbladder and bile ducts">
+					</figure>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">II</span>
+					<span>Simple Phase Classification</span>
+				</h3>
+				<div class="rdh-phase-timeline">
+					<div class="rdh-phase-item fragment fade-up" data-fragment-index="0">
+						<span>Trocar<br>insertion</span>
+					</div>
+					<div class="rdh-phase-arrow fragment fade-in" data-fragment-index="1"></div>
+					<div class="rdh-phase-item fragment fade-up" data-fragment-index="1">
+						<span>Pre-HCT<br>dissection</span>
+					</div>
+					<div class="rdh-phase-arrow fragment fade-in" data-fragment-index="2"></div>
+					<div class="rdh-phase-item rdh-phase-active fragment fade-up" data-fragment-index="2">
+						<span>HCT<br>dissection</span>
+					</div>
+					<div class="rdh-phase-arrow fragment fade-in" data-fragment-index="3"></div>
+					<div class="rdh-phase-item fragment fade-up" data-fragment-index="3">
+						<span>Cutting /<br>Clipping</span>
+					</div>
+					<div class="rdh-phase-arrow fragment fade-in" data-fragment-index="4"></div>
+					<div class="rdh-phase-item fragment fade-up" data-fragment-index="4">
+						<span>GB<br>dissection</span>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">II</span>
+					<span>What data do we have?</span>
+				</h3>
+				<p class="rdh-placeholder-subtitle">Videos, annotations, and clinical context to be detailed.</p>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">II</span>
+					<span>Why is it hard?</span>
+				</h3>
+				<p class="rdh-placeholder-subtitle">Ambiguity, anatomy, visibility, and workflow variability to be detailed.</p>
+			</section>
+
+			<section data-auto-animate class="rdh-section-cover">
+				<h2>Methodology</h2>
+				<h3>How I am doing it</h3>
+			</section>
+
+
+				<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			function fitPageWidthText() {
+				const scale = Reveal.getScale ? Reveal.getScale() : 1;
+				const viewport = Reveal.getViewportElement ? Reveal.getViewportElement() : document.documentElement;
+				const viewportWidth = viewport.clientWidth || window.innerWidth;
+
+				document.querySelectorAll('.r-fit-page-width, [data-fit-page-width]').forEach(el => {
+					const percentage = parseFloat(el.dataset.fitPageWidth || '100');
+					if (!Number.isFinite(percentage) || percentage <= 0) return;
+
+					const style = window.getComputedStyle(el);
+					const currentFontSize = parseFloat(style.fontSize);
+					const currentWidth = el.scrollWidth;
+					if (!currentFontSize || !currentWidth || !scale) return;
+
+					const targetWidth = viewportWidth * (percentage / 100) / scale;
+					el.style.fontSize = `${currentFontSize * targetWidth / currentWidth}px`;
+				});
+			}
+
+			function scheduleFitPageWidthText() {
+				requestAnimationFrame(() => requestAnimationFrame(fitPageWidthText));
+			}
+
+			Reveal.on('ready', scheduleFitPageWidthText);
+			Reveal.on('slidechanged', scheduleFitPageWidthText);
+			Reveal.on('resize', scheduleFitPageWidthText);
+			window.addEventListener('load', scheduleFitPageWidthText);
+			window.addEventListener('resize', scheduleFitPageWidthText);
+		})();
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>
