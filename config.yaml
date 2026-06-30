@@ -22,6 +22,10 @@ markup:
     renderer:
       unsafe: true
 
+security:
+  allowContent:
+    - "^text/html$"
+
 # Menus:
 #   main:
 #     - identifier: education
