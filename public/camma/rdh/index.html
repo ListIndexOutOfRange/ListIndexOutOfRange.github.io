@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="../_reveal/dist/reset.css">
 		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
 		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
-		<link rel="stylesheet" href="css/custom.css?v=20260630-rdh-8">
+		<link rel="stylesheet" href="css/custom.css?v=20260630-rdh-19">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
@@ -58,8 +58,8 @@
 					<div class="rdh-summary-item fragment fade-up" data-fragment-index="0">
 						<span class="rdh-summary-number">1</span>
 						<div>
-							<h4>Who am I?</h4>
-							<p>A quick informal introduction for new colleagues.</p>
+							<h4>Who am I</h4>
+							<p>A very short background.</p>
 						</div>
 					</div>
 					<div class="rdh-summary-item fragment fade-up" data-fragment-index="1">
@@ -97,7 +97,7 @@
 					</div>
 					<div class="rdh-date-step fragment fade-up" data-fragment-index="1">
 						<div class="rdh-date-circle">2025</div>
-						<div class="rdh-date-card">
+						<div class="rdh-date-card rdh-date-card-wide">
 							<h4>PhD defense</h4>
 							<p>Under the supervision of S. Faisan and D. Fortun: joint registration of multiple point clouds in fluorescence microscopy.</p>
 						</div>
@@ -108,7 +108,7 @@
 					<div class="rdh-date-step fragment fade-up" data-fragment-index="2">
 						<div class="rdh-date-circle">2026</div>
 						<div class="rdh-date-card">
-							<h4>CAMMA</h4>
+							<h4>PostDoc</h4>
 							<p>Started a postdoc in the CAMMA team.</p>
 						</div>
 					</div>
@@ -129,22 +129,21 @@
 				</h3>
 				<div class="rdh-context-layout">
 					<div class="rdh-context-images">
-						<figure class="rdh-context-image-card fragment fade-up" data-fragment-index="0">
-							<div class="rdh-anatomy-stack">
-								<img class="rdh-anatomy-layer" src="assets/anatomy_scheme.png" alt="Anatomical scheme of the gallbladder and bile ducts">
-								<img class="rdh-anatomy-layer rdh-anatomy-overlay fragment fade-in" data-fragment-index="2" src="assets/anatomy_scheme_annotated.png" alt="Annotated anatomical scheme of the gallbladder and bile ducts">
-							</div>
+						<figure class="rdh-context-image-card rdh-context-image-stack">
+							<img class="rdh-context-stage-image" src="assets/anatomy_scheme.png" alt="Anatomical scheme of the gallbladder and bile ducts">
+							<img class="rdh-context-stage-image rdh-context-stage-overlay fragment fade-in" data-fragment-index="2" src="assets/anatomy_scheme_annotated.png" alt="Annotated anatomical scheme of the gallbladder and bile ducts">
 						</figure>
-						<figure class="rdh-context-image-card fragment fade-up" data-fragment-index="0">
-							<img src="assets/anatomy_real.png" alt="Real laparoscopic anatomy">
+						<figure class="rdh-context-image-card rdh-context-image-stack">
+							<img class="rdh-context-stage-image fragment current-visible" data-fragment-index="0" src="assets/laparoscopy.png" alt="Laparoscopic cholecystectomy context">
+							<img class="rdh-context-stage-image fragment fade-in" data-fragment-index="1" src="assets/anatomy_real.png" alt="Real laparoscopic anatomy">
 						</figure>
 					</div>
 					<div class="rdh-context-text">
-						<div class="rdh-context-point fragment fade-right" data-fragment-index="0">
+						<div class="rdh-context-point">
 							<h4>Most common surgery</h4>
 							<p>Laparoscopic cholecystectomy is the standard treatment for gallbladder disease.</p>
 						</div>
-						<div class="rdh-context-point fragment fade-right" data-fragment-index="1">
+						<div class="rdh-context-point fragment fade-right" data-fragment-index="3">
 							<h4>Major complication</h4>
 							<p>Bile duct injury remains a rare but severe adverse event.</p>
 						</div>
@@ -225,7 +224,78 @@
 					<span class="rdh-section-number">II</span>
 					<span>What data do we have?</span>
 				</h3>
-				<p class="rdh-placeholder-subtitle">Videos, annotations, and clinical context to be detailed.</p>
+				<div class="rdh-data-layout">
+					<div class="rdh-data-source-row">
+						<div class="rdh-data-source-card fragment fade-up" data-fragment-index="0">
+							<span class="rdh-data-number">120</span>
+							<span class="rdh-data-label">ICG videos</span>
+							<span class="rdh-data-meta">1 center</span>
+						</div>
+						<div class="rdh-data-source-card fragment fade-up" data-fragment-index="1">
+							<span class="rdh-data-number">40</span>
+							<span class="rdh-data-label">ICG &amp; non-ICG videos</span>
+							<span class="rdh-data-meta">3 other centers</span>
+						</div>
+					</div>
+					<div class="rdh-data-content-grid">
+						<div class="rdh-data-panel fragment fade-up" data-fragment-index="2">
+							<h4>Frame selection</h4>
+							<ul>
+								<li>Expert-selected keyframes</li>
+								<li>Regular sampling every 5 s pre-HCT</li>
+								<li>Regular sampling every 30 s during HCT</li>
+							</ul>
+						</div>
+						<div class="rdh-data-panel fragment fade-up" data-fragment-index="3">
+							<h4>Anatomical context boxes</h4>
+							<div class="rdh-data-tags">
+								<span>Liver</span>
+								<span>Gallbladder</span>
+								<span>Cystic duct</span>
+								<span>Cystic artery</span>
+							</div>
+						</div>
+						<div class="rdh-data-panel rdh-data-panel-wide fragment fade-up" data-fragment-index="4">
+							<h4>Task-specific annotations</h4>
+							<div class="rdh-data-tags rdh-data-tags-task">
+								<span>CBD box &amp; point</span>
+								<span>RS and S4b line</span>
+								<span>R4U line</span>
+								<span>No-go-line</span>
+								<span>No-go zone</span>
+								<span>Surgical Incision Line</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">II</span>
+					<span>Annotations</span>
+				</h3>
+				<div class="rdh-annotation-slide">
+					<div class="rdh-annotation-stage">
+						<figure class="rdh-annotation-card fragment current-visible" data-fragment-index="0">
+							<img src="assets/boxes.png" alt="Bounding box annotation examples">
+							<figcaption>Anatomical context</figcaption>
+						</figure>
+						<figure class="rdh-annotation-card fragment current-visible" data-fragment-index="1">
+							<img src="assets/lines.png" alt="Line annotation examples">
+							<figcaption>B-Safe structures</figcaption>
+						</figure>
+						<figure class="rdh-annotation-card fragment current-visible" data-fragment-index="2">
+							<img src="assets/nogozone.png" alt="No-go zone annotation example">
+							<figcaption>No-go zone</figcaption>
+						</figure>
+					</div>
+					<div class="rdh-annotation-dots">
+						<span class="fragment fade-in" data-fragment-index="0"></span>
+						<span class="fragment fade-in" data-fragment-index="1"></span>
+						<span class="fragment fade-in" data-fragment-index="2"></span>
+					</div>
+				</div>
 			</section>
 
 			<section data-auto-animate class="topleft">
@@ -233,12 +303,122 @@
 					<span class="rdh-section-number">II</span>
 					<span>Why is it hard?</span>
 				</h3>
-				<p class="rdh-placeholder-subtitle">Ambiguity, anatomy, visibility, and workflow variability to be detailed.</p>
+				<div class="rdh-hard-slide">
+					<div class="rdh-hard-heading fragment fade-up" data-fragment-index="0">
+						<span>1</span>
+						<h4>ICG variation</h4>
+					</div>
+					<div class="rdh-hard-gallery rdh-hard-gallery-four fragment fade-up" data-fragment-index="1">
+						<figure><img src="assets/cbd1.png" alt="ICG variation example 1"></figure>
+						<figure><img src="assets/cbd2.png" alt="ICG variation example 2"></figure>
+						<figure><img src="assets/cbd3.png" alt="ICG variation example 3"></figure>
+						<figure><img src="assets/cbd4.png" alt="ICG variation example 4"></figure>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">II</span>
+					<span>Why is it hard?</span>
+				</h3>
+				<div class="rdh-hard-slide rdh-hard-slide-green">
+					<div class="rdh-hard-heading fragment fade-up" data-fragment-index="0">
+						<span>2</span>
+						<h4>Patient variability</h4>
+					</div>
+					<div class="rdh-hard-gallery rdh-hard-gallery-three fragment fade-up" data-fragment-index="1">
+						<figure><img src="assets/sil1.png" alt="Patient variability example 1"></figure>
+						<figure><img src="assets/sil2.png" alt="Patient variability example 2"></figure>
+						<figure><img src="assets/sil3.png" alt="Patient variability example 3"></figure>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3 class="rdh-slide-title">
+					<span class="rdh-section-number">II</span>
+					<span>Why is it hard?</span>
+				</h3>
+				<div class="rdh-hard-slide rdh-hard-slide-orange">
+					<div class="rdh-hard-heading fragment fade-up" data-fragment-index="0">
+						<span>3</span>
+						<h4>No unique unambiguous ground truth</h4>
+					</div>
+					<div class="rdh-hard-gallery rdh-hard-gallery-two fragment fade-up" data-fragment-index="1">
+						<figure><img src="assets/sil_vs_ngl_1.png" alt="Safe incision line and no-go-line comparison 1"></figure>
+						<figure><img src="assets/sil_vs_ngl_2.png" alt="Safe incision line and no-go-line comparison 2"></figure>
+					</div>
+				</div>
 			</section>
 
 			<section data-auto-animate class="rdh-section-cover">
 				<h2>Methodology</h2>
-				<h3>How I am doing it</h3>
+				<h3>Current directions we're exploring</h3>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h3>Divide and Conquer</h3>
+				<div class="rdh-divide-slide">
+					<p class="rdh-divide-subtitle">Concept</p>
+					<div class="challenge-row rdh-divide-row">
+						<div class="fragment challenge-item" data-fragment-index="0">
+							<p class="challenge-input">Input</p>
+							<p class="challenge-label">Frame(s)</p>
+						</div>
+						<div class="fragment custom challenge-arrow" data-fragment-index="1">
+							<span class="challenge-arrow-line"></span>
+						</div>
+						<div class="fragment fade-left challenge-item" data-fragment-index="1">
+							<p class="challenge-circle">1</p>
+							<p class="challenge-label">Anatomical<br>context</p>
+						</div>
+						<div class="fragment custom challenge-arrow" data-fragment-index="2">
+							<span class="challenge-arrow-line"></span>
+						</div>
+						<div class="fragment fade-left challenge-item" data-fragment-index="2">
+							<p class="challenge-circle">2</p>
+							<p class="challenge-label">B-SAFE<br>lines</p>
+						</div>
+						<div class="fragment custom challenge-arrow" data-fragment-index="3">
+							<span class="challenge-arrow-line"></span>
+						</div>
+						<div class="fragment fade-left challenge-item" data-fragment-index="3">
+							<p class="challenge-circle">3</p>
+							<p class="challenge-label">CBD<br>location</p>
+						</div>
+						<div class="fragment custom challenge-arrow" data-fragment-index="4">
+							<span class="challenge-arrow-line"></span>
+						</div>
+						<div class="fragment fade-left challenge-item" data-fragment-index="4">
+							<p class="challenge-circle">4</p>
+							<p class="challenge-label">Safe zone<br>prediction</p>
+						</div>
+					</div>
+					<div class="rdh-divide-how">
+						<p class="rdh-divide-subtitle fragment fade-up" data-fragment-index="5">How ?</p>
+						<div class="rdh-divide-how-grid">
+							<div class="rdh-divide-how-card fragment fade-up" data-fragment-index="6">
+								<h4>Lightweight fine-tuning</h4>
+								<p>Low Rank Adaptation of SAM3 foundation models.</p>
+							</div>
+							<div class="rdh-divide-how-card fragment fade-up" data-fragment-index="7">
+								<h4>Incremental self-improvement</h4>
+								<p>Each stage is tuned using the previous one as prior.</p>
+							</div>
+							<div class="rdh-divide-how-card fragment fade-up" data-fragment-index="8">
+								<h4>Consistency</h4>
+								<p>Ensure spatial, temporal, and anatomical consistency.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="rdh-section-cover">
+				<h2>Thank you</h2>
+				<h3>Questions?</h3>
+				<p>Safe dissection line prediction through anatomical context, B-SAFE cues, CBD localization, and consistency-aware guidance.</p>
 			</section>
 
 
