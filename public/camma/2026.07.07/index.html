@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Meeting CAMMA 2026.07.07</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section class="title-slide">
+				<h1>Meeting CAMMA 2026.07.07</h1>
+				<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h2>Agenda</h2>
+				<div class="flex-container" style="margin-top: 3em;">
+					<ol class="agenda-list">
+						<li>Data processing (Shih-Min)</li>
+						<li>Combining annotations</li>
+						<li>Joint supervised training</li>
+						<li>Self-improving SAM3</li>
+						<li>Coupled Visual-Reasoning model</li>
+					</ol>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Combining annotations</h2>
+				<ul class="clean-list">
+					<li class="fragment" data-fragment-index="0">
+						Line from masks
+						<ul>
+							<li class="fragment" data-fragment-index="1">GB SAM3 segmentation + no-go zone GT => S4b line</li>
+						</ul>
+					</li>
+					<li class="fragment" data-fragment-index="2">
+						Mask from line + depth
+						<ul>
+							<li class="fragment" data-fragment-index="3">No-go line + S4b + depth estimation => no-go zone</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Joint supervised training</h2>
+				<ol class="clean-list">
+					<li class="fragment" data-fragment-index="0">
+						Train on all types of label (bboxes, lines, masks)
+						<ul>
+							<li class="fragment" data-fragment-index="1">Lines to masks</li>
+							<li class="fragment" data-fragment-index="2">Both regularly sampled frames and selected keyframes</li>
+							<li class="fragment" data-fragment-index="3">+ EndoScapes</li>
+							<li class="fragment" data-fragment-index="4">Weighted</li>
+						</ul>
+					</li>
+					<li class="fragment" data-fragment-index="5">
+						Results
+						<ul>
+							<li class="fragment" data-fragment-index="6">
+								Decent CBD detection
+								<p class="metric-line">
+									<em>All frames</em>
+									<span>mAP <strong>0.32</strong></span>
+									<span>AP@50 <strong>0.71</strong></span>
+									<span>P@50 <strong>0.59</strong></span>
+									<span>R@50 <strong>0.81</strong></span>
+									<span>F1@50 <strong>0.68</strong></span>
+									<span class="metric-comparison">YOLO mAP <strong>0.27</strong></span>
+								</p>
+								<p class="metric-line">
+									<em>Keyframes</em>
+									<span>mAP <strong>0.36</strong></span>
+									<span>AP@50 <strong>0.83</strong></span>
+									<span>P@50 <strong>0.83</strong></span>
+									<span>R@50 <strong>0.87</strong></span>
+									<span>F1@50 <strong>0.85</strong></span>
+								</p>
+							</li>
+							<li class="fragment" data-fragment-index="7">
+								Decent no-go zone segmentation
+								<p class="metric-line">
+									<span>mAP <strong>0.24</strong></span>
+									<span>AP@50 <strong>0.39</strong></span>
+									<span>P@50 <strong>0.34</strong></span>
+									<span>R@50 <strong>0.96</strong></span>
+									<span>F1@50 <strong>0.50</strong></span>
+									<span>Dice <strong>0.87</strong></span>
+									<span>IoU <strong>0.78</strong></span>
+								</p>
+							</li>
+							<li class="fragment" data-fragment-index="8">
+								Poor CD detection
+								<p class="metric-line">
+									<span>mAP <strong>0.14</strong></span>
+									<span>AP@50 <strong>0.39</strong></span>
+									<span>P@50 <strong>0.27</strong></span>
+									<span>R@50 <strong>0.71</strong></span>
+									<span>F1@50 <strong>0.39</strong></span>
+								</p>
+							</li>
+						</ul>
+					</li>
+				</ol>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Self-improving SAM3</h2>
+				<ol class="clean-list">
+					<li class="fragment" data-fragment-index="0">
+						Train GB+L segmenter
+						<ul>
+							<li class="fragment" data-fragment-index="1">Bidirectional tracking of sparse GT annotations</li>
+							<li class="fragment" data-fragment-index="2">Deterministic coarse to fine correction</li>
+							<li class="fragment" data-fragment-index="3">Retrain tracker and segmenter</li>
+						</ul>
+						<p class="fragment takeaway" data-fragment-index="4"><strong>Dense, smooth, spatio-temporally consistent GB+L segmentation</strong></p>
+					</li>
+					<li class="fragment" data-fragment-index="5">
+						Train RS+S4b segmenter
+						<ul>
+							<li class="fragment" data-fragment-index="6">As for GB+L</li>
+						</ul>
+						<p class="fragment takeaway" data-fragment-index="7"><strong>Dense, smooth, spatio-temporally consistent RS+S4b segmentation</strong></p>
+					</li>
+				</ol>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Coupled Visual-Reasoning model</h2>
+				<ul class="clean-list">
+					<li class="fragment" data-fragment-index="0">
+						Structured latent (<code>z_coarse</code>, <code>z_bsafe</code>, <code>z_plan</code>)
+					</li>
+					<li class="fragment" data-fragment-index="1">
+						Two models: visual decoder, purely geometric reasoning
+						<ol>
+							<li class="fragment" data-fragment-index="2">Visual decoder extracts <code>z_coarse</code></li>
+							<li class="fragment" data-fragment-index="3">Geometric reasoner deduces bsafe queries and plan queries from <code>z_coarse</code></li>
+							<li class="fragment" data-fragment-index="4">Visual decoder deduces <code>z_bsafe</code> and <code>z_plan</code> from <code>z_coarse</code> and queries</li>
+						</ol>
+					</li>
+					<li class="fragment" data-fragment-index="5">Temporal latent state</li>
+				</ul>
+			</section>
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// Bounds for smallest/largest possible scale to apply to content
+				// minScale: 0.2,
+				// maxScale: 2.0,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>
