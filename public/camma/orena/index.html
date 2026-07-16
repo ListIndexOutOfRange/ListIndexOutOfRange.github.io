@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Meeting Orena 2026.07.16</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section class="title-slide">
+				<h1>Meeting Orena 2026.07.16</h1>
+				<!-- <h3>Luc / Shih-Min / Pietro / Nicolas</h3> -->
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h2>Agenda</h2>
+				<div class="flex-container" style="margin-top: 3em;">
+					<ol class="agenda-list">
+						<li>About the data</li>
+						<li>First results</li>
+						<li>What's next?</li>
+					</ol>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>1. About the data</h2>
+				<p class="slide-subtitle">Two surgical QA datasets, covering different procedures</p>
+				<table class="results-table dataset-table">
+					<thead>
+						<tr>
+							<th>Dataset</th>
+							<th>Procedure</th>
+							<th>Total QA pairs</th>
+							<th>Train</th>
+							<th>Test</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>heico</th>
+							<td>Colorectal surgery</td>
+							<td>6,000</td>
+							<td>4,000</td>
+							<td>2,000</td>
+						</tr>
+						<tr>
+							<th>lapchole</th>
+							<td>Cholecystectomy</td>
+							<td>8,000</td>
+							<td>5,748</td>
+							<td>2,252</td>
+						</tr>
+					</tbody>
+				</table>
+				<img class="qa-groups-image" src="assets/focus_track_qa_groups.png" alt="Focus-track QA groups">
+			</section>
+
+			<section data-auto-animate class="topleft question-types-slide">
+				<h2>1. About the data</h2>
+				<p class="slide-subtitle">QA pairs by question type and dataset split</p>
+				<div class="pie-chart-grid">
+					<div class="pie-chart-card">
+						<div class="pie-chart heico-train" role="img" aria-label="Heico train question type distribution"></div>
+						<h3>heico · train</h3>
+					</div>
+					<div class="pie-chart-card">
+						<div class="pie-chart heico-test" role="img" aria-label="Heico test question type distribution"></div>
+						<h3>heico · test</h3>
+					</div>
+					<div class="pie-chart-card">
+						<div class="pie-chart lapchole-train" role="img" aria-label="Lapchole train question type distribution"></div>
+						<h3>lapchole · train</h3>
+					</div>
+					<div class="pie-chart-card">
+						<div class="pie-chart lapchole-test" role="img" aria-label="Lapchole test question type distribution"></div>
+						<h3>lapchole · test</h3>
+					</div>
+				</div>
+				<table class="results-table question-types-table">
+					<thead>
+						<tr>
+							<th>Question type</th>
+							<th>heico train</th>
+							<th>heico test</th>
+							<th>lapchole train</th>
+							<th>lapchole test</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><th><span class="question-key key-identification"></span>Object identification</th><td>1,820</td><td>966</td><td>2,176</td><td>866</td></tr>
+						<tr><th><span class="question-key key-aggregation"></span>Object aggregation</th><td>864</td><td>470</td><td>2,520</td><td>955</td></tr>
+						<tr><th><span class="question-key key-attributes"></span>Object attributes and state</th><td>220</td><td>67</td><td>391</td><td>192</td></tr>
+						<tr><th><span class="question-key key-camera"></span>Spatial localization · camera</th><td>1,008</td><td>450</td><td>575</td><td>213</td></tr>
+						<tr><th><span class="question-key key-situs"></span>Spatial localization · situs</th><td>88</td><td>47</td><td>84</td><td>25</td></tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section data-auto-animate class="topleft results-slide">
+				<h2>2. First results</h2>
+				<p class="slide-subtitle"><strong>Qwen3-VL-4B-Instruct</strong> fine-tuned on the surgical QA data</p>
+				<table class="results-table accuracy-table">
+					<thead>
+						<tr>
+							<th>Subset</th>
+							<th>Base model accuracy</th>
+							<th>Fine-tuned accuracy</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>heico</th>
+							<td>17.3%</td>
+							<td class="highlight-value">60.64%</td>
+						</tr>
+						<tr>
+							<th>lapchole</th>
+							<td>11.3%</td>
+							<td class="highlight-value">33.10%</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="results-details">
+					<div class="detail-card">
+						<h3>Fine-tuning setup</h3>
+						<p><strong>LoRA</strong> applied to the language layers only.</p>
+					</div>
+					<div class="detail-card">
+						<h3>Context provided</h3>
+						<p>Surgical procedure plus a list of all possible foreign objects, each with a detailed description.</p>
+					</div>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft stratified-results-slide">
+				<h2>2. First results</h2>
+				<p class="slide-subtitle">Stratified evaluation · overall accuracy across all QA pairs</p>
+				<table class="results-table model-results-table">
+					<thead>
+						<tr>
+							<th>Model</th>
+							<th>Fine-tuning</th>
+							<th>heico</th>
+							<th>lapchole</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>Qwen3-VL-4B-Instruct</th>
+							<td>Vanilla VLM</td>
+							<td>17.30%</td>
+							<td>11.32%</td>
+						</tr>
+						<tr class="best-model">
+							<th>Qwen3-VL-4B-Instruct</th>
+							<td>LoRA · language only</td>
+							<td>50.95%</td>
+							<td>33.08%</td>
+						</tr>
+						<tr>
+							<th>Qwen3-VL-8B-Instruct</th>
+							<td>LoRA · language only</td>
+							<td>52.20%</td>
+							<td>32.10%</td>
+						</tr>
+						<tr>
+							<th>Qwen3-VL-32B-Instruct</th>
+							<td>LoRA · language only</td>
+							<td>45.55%</td>
+							<td>32.37%</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="model-takeaway">
+					<span>Takeaway</span>
+					<strong>Language-only LoRA substantially improves over the vanilla VLM.</strong>
+				</div>
+			</section>
+
+			<section data-auto-animate class="confusion-slide">
+				<section data-auto-animate class="topleft supra-results-slide">
+					<h2>2. First results</h2>
+					<p class="slide-subtitle">Qwen3-VL-4B-Instruct · LoRA language only · weighted accuracy by supra-category</p>
+					<div class="supra-legend"><span><i class="legend-heico"></i>heico</span><span><i class="legend-lapchole"></i>lapchole</span></div>
+					<div class="supra-results">
+						<div class="supra-row">
+							<div class="supra-label">Object identification</div>
+							<div class="supra-bars"><div class="supra-bar heico-bar" style="--value: 51.86%;"><span>51.86%</span></div><div class="supra-bar lapchole-bar" style="--value: 33.37%;"><span>33.37%</span></div></div>
+						</div>
+						<div class="supra-row">
+							<div class="supra-label">Object aggregation</div>
+							<div class="supra-bars"><div class="supra-bar heico-bar" style="--value: 78.94%;"><span>78.94%</span></div><div class="supra-bar lapchole-bar" style="--value: 31.52%;"><span>31.52%</span></div></div>
+						</div>
+						<div class="supra-row">
+							<div class="supra-label">Spatial localization · camera</div>
+							<div class="supra-bars"><div class="supra-bar heico-bar" style="--value: 21.33%;"><span>21.33%</span></div><div class="supra-bar lapchole-bar" style="--value: 23.47%;"><span>23.47%</span></div></div>
+						</div>
+						<div class="supra-row">
+							<div class="supra-label">Object attributes</div>
+							<div class="supra-bars"><div class="supra-bar heico-bar" style="--value: 34.33%;"><span>34.33%</span></div><div class="supra-bar lapchole-bar" style="--value: 43.23%;"><span>43.23%</span></div></div>
+						</div>
+						<div class="supra-row">
+							<div class="supra-label">Spatial localization · situs</div>
+							<div class="supra-bars"><div class="supra-bar heico-bar" style="--value: 59.57%;"><span>59.57%</span></div><div class="supra-bar lapchole-bar" style="--value: 84.00%;"><span>84.00%</span></div></div>
+						</div>
+					</div>
+				</section>
+				<section class="topleft"><h2>2. First results</h2><p class="slide-subtitle">Foreign-object confusion matrix · heico</p><img class="confusion-matrix-single" src="assets/confusion_matrices/confusion_matrix_vlm_qwen4b_lora_llm_heico.png" alt="Qwen4B LoRA heico confusion matrix"><p class="confusion-caption">Qwen4B LoRA · language only</p></section>
+					<section class="topleft"><h2>2. First results</h2><p class="slide-subtitle">Foreign-object confusion matrix · heico</p><img class="confusion-matrix-single" src="assets/confusion_matrices/confusion_matrix_vlm_qwen8b_exp01_run01_heico.png" alt="Qwen8B heico confusion matrix"><p class="confusion-caption">Qwen8B LoRA · language only</p></section>
+					<section class="topleft"><h2>2. First results</h2><p class="slide-subtitle">Foreign-object confusion matrix · heico</p><img class="confusion-matrix-single" src="assets/confusion_matrices/confusion_matrix_vlm_qwen32b_exp01_run01_heico.png" alt="Qwen32B heico confusion matrix"><p class="confusion-caption">Qwen32B LoRA · language only</p></section>
+					<section class="topleft"><h2>2. First results</h2><p class="slide-subtitle">Foreign-object confusion matrix · lapchole</p><img class="confusion-matrix-single" src="assets/confusion_matrices/confusion_matrix_vlm_qwen4b_lora_llm_lapchole.png" alt="Qwen4B LoRA lapchole confusion matrix"><p class="confusion-caption">Qwen4B LoRA · language only</p></section>
+					<section class="topleft"><h2>2. First results</h2><p class="slide-subtitle">Foreign-object confusion matrix · lapchole</p><img class="confusion-matrix-single" src="assets/confusion_matrices/confusion_matrix_vlm_qwen8b_exp01_run01_lapchole.png" alt="Qwen8B lapchole confusion matrix"><p class="confusion-caption">Qwen8B LoRA · language only</p></section>
+					<section class="topleft"><h2>2. First results</h2><p class="slide-subtitle">Foreign-object confusion matrix · lapchole</p><img class="confusion-matrix-single" src="assets/confusion_matrices/confusion_matrix_vlm_qwen32b_exp01_run01_lapchole.png" alt="Qwen32B LoRA lapchole confusion matrix"><p class="confusion-caption">Qwen32B LoRA · language only</p></section>
+			</section>
+
+			<section data-auto-animate class="topleft next-slide">
+				<h2>3. What's next?</h2>
+				<div class="next-placeholder">
+					<p>Next steps to be defined</p>
+				</div>
+			</section>
+			
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// Bounds for smallest/largest possible scale to apply to content
+				// minScale: 0.2,
+				// maxScale: 2.0,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>

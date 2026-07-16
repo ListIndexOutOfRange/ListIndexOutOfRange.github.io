@@ -1,0 +1,7 @@
+fo_tag,n,correct,accuracy
+Sponge,750,538,0.7173
+Clip,406,165,0.4064
+Needle,177,1,0.0056
+External Drain,169,4,0.0237
+Specimen Bag,24,0,0.0
+Specimen,8,0,0.0
