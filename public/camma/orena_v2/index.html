@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ORENA challenge debrief</title>
+  <link rel="stylesheet" href="../_reveal/dist/reset.css">
+  <link rel="stylesheet" href="../_reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <div id="custom-slide-number"></div>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide" data-no-count data-no-number>
+        <div class="eyebrow">CAMMA · ORENA</div>
+        <h1>ORENA challenge<br><span>debrief</span></h1>
+        <p>What worked, what plateaued, and where the model still fails</p>
+        <div class="title-meta">8 September 2026</div>
+      </section>
+
+      <section class="topleft context-slide" data-start-from="1">
+        <div class="section-label">01 · TASK</div>
+        <h2>Two capabilities under evaluation</h2>
+        <div class="capability-layout">
+          <article class="capability recognition">
+            <div class="capability-index">A</div>
+            <h3>Object recognition</h3>
+            <p>Detect the relevant objects, identify them, then answer basic questions about their presence or state.</p>
+            <div class="example-line"><span>Core operation</span> What is visible?</div>
+          </article>
+          <div class="capability-divider" aria-hidden="true"></div>
+          <article class="capability aggregation">
+            <div class="capability-index">B</div>
+            <h3>Aggregation</h3>
+            <p>Count object instances, then use that count to answer a simple question about the scene.</p>
+            <div class="example-line"><span>Core operation</span> How many are visible?</div>
+          </article>
+        </div>
+        <p class="bottom-note">Both tracks combine visual perception with lightweight reasoning.</p>
+      </section>
+
+      <section class="topleft model-slide">
+        <div class="section-label">02 · MODEL</div>
+        <h2>Model selection under a fixed compute budget</h2>
+        <div class="model-layout">
+          <div class="model-copy">
+            <p class="lead">We compared a broad set of VLM baselines before selecting <strong>Qwen3.8 27B</strong>.</p>
+            <p>It gave us the best balance between visual capability and deployability for the challenge.</p>
+          </div>
+          <div class="model-lockup" aria-label="Selected model and deployment constraint">
+            <div class="model-name">Qwen3.8</div>
+            <div class="model-size">27B</div>
+            <div class="budget-rule"></div>
+            <div class="budget-caption"><strong>Quantized</strong><br>to fit the imposed budget</div>
+          </div>
+        </div>
+        <div class="baseline-strip"><span>Many VLM baselines</span><i></i><strong>Selected configuration</strong></div>
+      </section>
+
+      <section class="topleft training-slide">
+        <div class="section-label">03 · TRAINING</div>
+        <h2>Adaptation targeted both sides of the model</h2>
+        <div class="training-flow">
+          <div class="data-source challenge-data"><span>Challenge data</span><small>Task-specific supervision</small></div>
+          <div class="plus">+</div>
+          <div class="data-source external-data"><span>External datasets</span><small>Broader visual coverage</small></div>
+          <div class="flow-chevron">›</div>
+          <div class="lora-core">
+            <div class="core-title">LoRA fine-tuning</div>
+            <div class="core-halves"><span>Vision</span><span>Language</span></div>
+          </div>
+        </div>
+        <p class="training-takeaway">Unlike the first experiments, the final recipe adapts the vision and language components.</p>
+      </section>
+
+      <section class="topleft result-slide">
+        <div class="section-label">04 · RESULT</div>
+        <h2>A useful improvement, not a breakthrough</h2>
+        <div class="result-layout">
+          <div class="rank-block"><span class="approx">≈</span><span class="rank">40</span><span class="ordinal">th</span><p>final ranking</p></div>
+          <div class="result-copy">
+            <div class="result-line positive"><span>01</span><p>The method <strong>beats the provided baseline</strong>.</p></div>
+            <div class="result-line restrained"><span>02</span><p>The gain remains modest against the full leaderboard.</p></div>
+          </div>
+        </div>
+        <p class="bottom-note">The base recipe was competitive enough to validate, but left a large gap to the strongest entries.</p>
+      </section>
+
+      <section class="topleft annotations-slide">
+        <div class="section-label">05 · DETECTION DATA</div>
+        <h2>Manual boxes added direct detection supervision</h2>
+        <div class="annotation-layout">
+          <div class="annotation-copy">
+            <p class="lead">Tristan manually annotated a substantial set of bounding boxes.</p>
+            <p>The goal was to target object detection directly instead of relying only on question-answer supervision.</p>
+          </div>
+          <div class="annotation-canvas" aria-label="Bounding-box annotation illustration">
+            <span class="canvas-label">IMAGE</span>
+            <div class="box box-one"><b>object</b></div>
+            <div class="box box-two"><b>object</b></div>
+            <div class="box box-three"><b>object</b></div>
+          </div>
+        </div>
+        <p class="annotation-credit">High-effort supervision · built specifically for the detection bottleneck</p>
+      </section>
+
+      <section class="topleft experiments-slide">
+        <div class="section-label">06 · EXPERIMENTS</div>
+        <h2>Several ways to inject localization signals</h2>
+        <div class="experiment-list">
+          <article><span class="experiment-number">01</span><div><h3>SAM3 crop proposals</h3><p>Generate candidate regions, then pass the crops to Qwen for recognition and reasoning.</p></div></article>
+          <article><span class="experiment-number">02</span><div><h3>Detection-specific fine-tuning</h3><p>Use the manual boxes to strengthen object-level visual supervision.</p></div></article>
+          <article><span class="experiment-number">03</span><div><h3>SAM3 token fusion</h3><p>Let SAM3 tokens cross-attend with Qwen tokens inside the model.</p></div></article>
+        </div>
+        <div class="plateau-callout"><span>Observed outcome</span><strong>Little to no consistent change</strong></div>
+      </section>
+
+      <section class="topleft plateau-slide">
+        <div class="section-label">07 · INTERPRETATION</div>
+        <h2>Why localization added little</h2>
+        <div class="difficulty-spectrum">
+          <div class="difficulty easy">
+            <span class="difficulty-label">Visually obvious</span>
+            <div class="visual-placeholder">DROP IN<br>EXAMPLE</div>
+            <h3>Qwen already succeeds</h3>
+            <p>Extra proposals add limited information.</p>
+          </div>
+          <div class="spectrum-axis"><span>Object difficulty</span></div>
+          <div class="difficulty hard">
+            <span class="difficulty-label">Visually ambiguous</span>
+            <div class="visual-placeholder">DROP IN<br>EXAMPLE</div>
+            <h3>SAM3 cannot rescue it</h3>
+            <p>The object is too small, rare, or unclear.</p>
+          </div>
+        </div>
+        <p class="bottom-note">The useful middle ground appears narrow: most objects sit at one of the two extremes.</p>
+      </section>
+
+      <section class="topleft failures-slide">
+        <div class="section-label">08 · FAILURE MODES</div>
+        <h2>Two errors dominate our qualitative review</h2>
+        <div class="failure-layout">
+          <article class="failure failure-count">
+            <div class="failure-visual clips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="failure-copy"><span>01 · AGGREGATION</span><h3>Counting small objects</h3><p>Repeated, tiny instances are easy to miss or merge.</p><strong>Typical case: clips</strong></div>
+          </article>
+          <article class="failure failure-rare">
+            <div class="failure-visual rare-object" aria-hidden="true"><div>?</div></div>
+            <div class="failure-copy"><span>02 · RECOGNITION</span><h3>Detecting rare objects</h3><p>Limited exposure makes uncommon classes hard to recognize.</p><strong>Typical case: specimen</strong></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="topleft shift-slide">
+        <div class="section-label">09 · TEST-SET SHIFT</div>
+        <h2>The leaderboard test set exposes a different weakness</h2>
+        <div class="shift-layout">
+          <table class="shift-table">
+            <thead><tr><th>Evaluation split</th><th>Main observed failure</th><th>Evidence</th></tr></thead>
+            <tbody>
+              <tr><th>Public test set</th><td><strong>Aggregation</strong></td><td class="table-placeholder">ADD VALUE</td></tr>
+              <tr><th>Leaderboard test set</th><td><strong>Recognition OOD</strong></td><td class="table-placeholder">ADD VALUE</td></tr>
+            </tbody>
+          </table>
+          <aside class="hypothesis"><span>Working hypothesis</span><p>A different class distribution may explain the shift toward out-of-distribution recognition failures.</p></aside>
+        </div>
+        <p class="table-instruction">Replace the placeholder cells with the final breakdown before presenting.</p>
+      </section>
+
+      <section class="topleft closing-slide">
+        <div class="section-label">10 · TAKEAWAY</div>
+        <h2>Small and rare objects remain the main gap</h2>
+        <div class="closing-statement">
+          <p>Qwen3.8 27B plus joint LoRA provides a solid baseline.</p>
+          <p>Additional localization machinery does not solve the hardest cases.</p>
+          <p class="closing-focus">Better coverage of small and rare objects is the clearest next direction.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+  <script src="../_reveal/dist/reveal.js"></script>
+  <script src="../_reveal/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, slideNumber: false, progress: true, center: true, transition: 'fade', backgroundTransition: 'fade', plugins: [RevealNotes] });
+    (function () {
+      const box = document.getElementById('custom-slide-number');
+      function slidesInOrder() {
+        const order = [];
+        for (const horizontal of Reveal.getHorizontalSlides()) {
+          const vertical = horizontal.querySelectorAll(':scope > section');
+          vertical.length ? vertical.forEach(slide => order.push(slide)) : order.push(horizontal);
+        }
+        return order;
+      }
+      function computeNumberFor(current, slides) {
+        let value = 0;
+        for (const slide of slides) {
+          if (slide.hasAttribute('data-start-from')) value = Number(slide.dataset.startFrom) - 1;
+          if (!slide.hasAttribute('data-no-count')) value += 1;
+          if (slide === current) break;
+        }
+        return value;
+      }
+      function updateNumber() {
+        const current = Reveal.getCurrentSlide();
+        if (!current || current.hasAttribute('data-no-number')) { box.hidden = true; return; }
+        box.hidden = false;
+        box.textContent = String(computeNumberFor(current, slidesInOrder())).padStart(2, '0');
+      }
+      Reveal.on('ready', updateNumber);
+      Reveal.on('slidechanged', updateNumber);
+    })();
+  </script>
+</body>
+</html>

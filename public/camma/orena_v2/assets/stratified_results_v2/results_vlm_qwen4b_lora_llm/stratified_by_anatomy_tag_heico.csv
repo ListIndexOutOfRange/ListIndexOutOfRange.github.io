@@ -1,0 +1,13 @@
+anatomy_tag,n,correct,accuracy
+Descending colon,6,1,0.1667
+Mesentery,6,6,1.0
+Transverse colon,5,4,0.8
+Small intestine,3,3,1.0
+Dissected mesentery,3,3,1.0
+Rectal stump,2,1,0.5
+Dissected adhesions,1,1,1.0
+Blood collection,1,0,0.0
+Ileum,1,1,1.0
+Sigmoid colon,1,0,0.0
+Distal ileum,1,1,1.0
+Colonic conduit,1,0,0.0

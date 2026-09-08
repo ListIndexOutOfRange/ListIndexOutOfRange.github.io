@@ -1,0 +1,8 @@
+fo_tag,n,correct,accuracy
+Clip,466,245,0.5258
+Specimen,401,138,0.3441
+Specimen Bag,298,56,0.1879
+Sponge,257,38,0.1479
+Gallstone,29,3,0.1034
+External Drain,25,0,0.0
+Needle,1,0,0.0
