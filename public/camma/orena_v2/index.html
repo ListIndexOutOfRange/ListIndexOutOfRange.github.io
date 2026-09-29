@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ORENA challenge debrief</title>
+  <link rel="stylesheet" href="../_reveal/dist/reset.css">
+  <link rel="stylesheet" href="../_reveal/dist/reveal.css">
+  <link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+  <link rel="stylesheet" href="css/custom.css?v=2x2-fit">
+</head>
+<body>
+  <div id="custom-slide-number"></div>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title-slide" data-no-count data-no-number>
+        <h1>ORENA challenge debrief</h1>
+        <div class="title-meta">8 September 2026</div>
+      </section>
+
+      <section class="topleft context-slide" data-start-from="1">
+        <div class="section-label">01 · TASK</div>
+        <h2>Two capabilities under evaluation</h2>
+        <div class="capability-layout">
+          <article class="capability recognition">
+            <div class="capability-index">A</div>
+            <h3>Object recognition</h3>
+            <p>Detect the relevant objects, identify them, then answer basic questions about their presence or state.</p>
+            <div class="example-line"><span>Core operation</span> What is visible?</div>
+          </article>
+          <div class="capability-divider" aria-hidden="true"></div>
+          <article class="capability aggregation">
+            <div class="capability-index">B</div>
+            <h3>Aggregation</h3>
+            <p>Count object instances, then use that count to answer a simple question about the scene.</p>
+            <div class="example-line"><span>Core operation</span> How many are visible?</div>
+          </article>
+        </div>
+        <p class="bottom-note">Both tracks combine visual perception with lightweight reasoning.</p>
+      </section>
+
+      <section class="topleft model-slide">
+        <div class="section-label">02 · MODEL</div>
+        <h2>Model selection under a fixed compute budget</h2>
+        <div class="model-layout">
+          <div class="model-copy">
+            <p class="lead">We compared a broad set of VLM baselines before selecting <strong>Qwen3.8 27B</strong>.</p>
+            <p>It gave us the best balance between visual capability and deployability for the challenge.</p>
+          </div>
+          <div class="model-lockup" aria-label="Selected model and deployment constraint">
+            <div class="model-name">Qwen3.8</div>
+            <div class="model-size">27B</div>
+            <div class="budget-rule"></div>
+            <div class="budget-caption"><strong>Quantized</strong><br>to fit the imposed budget</div>
+          </div>
+        </div>
+        <div class="baseline-strip"><span>Many VLM baselines</span><i></i><strong>Selected configuration</strong></div>
+      </section>
+
+      <section class="topleft training-slide">
+        <div class="section-label">03 · TRAINING</div>
+        <h2>Adaptation targeted both sides of the model</h2>
+        <div class="training-flow">
+          <div class="data-source challenge-data">
+            <span>Challenge data</span>
+            <ul><li>HeiCo</li><li>LapChole</li></ul>
+          </div>
+          <div class="plus">+</div>
+          <div class="data-source external-data">
+            <span>External datasets</span>
+            <ul>
+              <li>Cholec80-VQA</li>
+              <li>SSG-VQA</li>
+              <li>Surgical-VQLA++</li>
+              <li>PitVQA</li>
+              <li>Kvasir-VQA</li>
+              <li>DAISI-VQA</li>
+            </ul>
+          </div>
+          <div class="flow-chevron">›</div>
+          <div class="lora-core">
+            <div class="core-title">LoRA fine-tuning</div>
+            <div class="core-halves"><span>Vision</span><span>Language</span></div>
+          </div>
+        </div>
+        <p class="training-takeaway">Unlike the first experiments, the final recipe adapts the vision and language components.</p>
+      </section>
+
+      <section class="topleft result-slide">
+        <div class="section-label">04 · RESULT</div>
+        <h2>Result</h2>
+        <div class="result-layout">
+          <div class="rank-block"><span class="rank">66</span><span class="ordinal">th</span><p>final rank</p></div>
+          <figure class="rank-chart">
+            <svg viewBox="0 0 800 390" role="img" aria-label="Leaderboard score by rank">
+              <line class="chart-axis" x1="72" y1="330" x2="752" y2="330"></line>
+              <line class="chart-axis" x1="72" y1="55" x2="72" y2="330"></line>
+              <line class="chart-grid" x1="72" y1="55" x2="752" y2="55"></line>
+              <line class="chart-grid" x1="72" y1="147" x2="752" y2="147"></line>
+              <line class="chart-grid" x1="72" y1="238" x2="752" y2="238"></line>
+              <text class="chart-tick" x="18" y="61">0.64</text>
+              <text class="chart-tick" x="18" y="153">0.61</text>
+              <text class="chart-tick" x="18" y="244">0.58</text>
+              <text class="chart-tick" x="18" y="336">0.55</text>
+              <path class="chart-line" d="M 88 72 L 184 116 L 280 147 L 376 204 L 472 234 L 568 259 L 664 290 L 728 315" fill="none"></path>
+              <g class="chart-point"><circle cx="88" cy="72" r="6"></circle><text x="88" y="48">0.6343</text><text x="88" y="360">1st</text></g>
+              <g class="chart-point"><circle cx="184" cy="116" r="6"></circle><text x="184" y="94">0.6198</text><text x="184" y="360">10th</text></g>
+              <g class="chart-point"><circle cx="280" cy="147" r="6"></circle><text x="280" y="125">0.6095</text><text x="280" y="360">20th</text></g>
+              <g class="chart-point"><circle cx="376" cy="204" r="6"></circle><text x="376" y="182">0.5908</text><text x="376" y="360">30th</text></g>
+              <g class="chart-point"><circle cx="472" cy="234" r="6"></circle><text x="472" y="212">0.5809</text><text x="472" y="360">40th</text></g>
+              <g class="chart-point"><circle cx="568" cy="259" r="6"></circle><text x="568" y="237">0.5727</text><text x="568" y="360">50th</text></g>
+              <g class="chart-point"><circle cx="664" cy="290" r="6"></circle><text x="664" y="268">0.5626</text><text x="664" y="360">60th</text></g>
+              <g class="chart-point ours"><circle cx="728" cy="315" r="8"></circle><text x="728" y="292">0.5545</text><text x="728" y="360">ours</text></g>
+            </svg>
+          </figure>
+        </div>
+      </section>
+
+      <section class="topleft annotations-slide">
+        <div class="section-label">05 · DETECTION DATA</div>
+        <h2>Manual boxes added direct detection supervision</h2>
+        <div class="annotation-layout">
+          <div class="annotation-copy">
+            <p class="lead">Tristan manually annotated bounding boxes.</p>
+            <p class="annotation-count"><strong>3,205</strong> bounding boxes over <strong>1,687</strong> frames.</p>
+            <p>The goal was to target object detection directly instead of relying only on question-answer supervision.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="topleft experiments-slide">
+        <div class="section-label">06 · EXPERIMENTS</div>
+        <h2>Several ways to inject localization signals</h2>
+        <div class="experiment-list">
+          <article><span class="experiment-number">01</span><div><h3>SAM3 crop proposals</h3><p>Generate candidate regions, then pass the crops to Qwen for recognition and reasoning.</p></div></article>
+          <article><span class="experiment-number">02</span><div><h3>Detection-specific fine-tuning</h3><p>Use the manual boxes to strengthen object-level visual supervision.</p></div></article>
+          <article><span class="experiment-number">03</span><div><h3>SAM3 token fusion</h3><p>Let SAM3 tokens cross-attend with Qwen tokens inside the model.</p></div></article>
+        </div>
+        <div class="plateau-callout"><span>Observed outcome</span><strong>Little to no consistent change</strong></div>
+      </section>
+
+      <section class="topleft plateau-slide">
+        <div class="section-label">07 · INTERPRETATION</div>
+        <h2>Why localization added little</h2>
+        <div class="failure-example-grid">
+          <figure><img src="assets/hard_gt.png" alt="Ground truth for the first failure case"><figcaption>Failure case 1 · ground truth</figcaption></figure>
+          <figure><img src="assets/hard_pred.png" alt="Prediction for the first failure case"><figcaption>Failure case 1 · prediction</figcaption></figure>
+          <figure><img src="assets/specimen_gt.png" alt="Ground truth for the second failure case"><figcaption>Failure case 2 · ground truth</figcaption></figure>
+          <figure><img src="assets/specimen_pred.png" alt="Prediction for the second failure case"><figcaption>Failure case 2 · prediction</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="topleft failures-slide">
+        <div class="section-label">08 · FAILURE MODES</div>
+        <h2>Two errors dominate our qualitative review</h2>
+        <div class="failure-layout">
+          <article class="failure failure-count">
+            <div class="failure-visual clips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="failure-copy"><span>01 · AGGREGATION</span><h3>Counting small objects</h3><p>Repeated, tiny instances are easy to miss or merge.</p><strong>Typical case: clips</strong></div>
+          </article>
+          <article class="failure failure-rare">
+            <div class="failure-visual rare-object" aria-hidden="true"><div>?</div></div>
+            <div class="failure-copy"><span>02 · RECOGNITION</span><h3>Detecting rare objects</h3><p>Limited exposure makes uncommon classes hard to recognize.</p><strong>Typical case: specimen</strong></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="topleft shift-slide">
+        <div class="section-label">09 · TEST-SET SHIFT</div>
+        <h2>Evaluation results</h2>
+        <div class="shift-layout">
+          <table class="shift-table">
+            <thead><tr><th>Test set</th><th>Subset</th><th>Recognition</th><th>Aggregation</th></tr></thead>
+            <tbody>
+              <tr><th rowspan="2">Public</th><td>HeiCo</td><td>79</td><td>80</td></tr>
+              <tr><td>LapChole</td><td>78</td><td>45</td></tr>
+              <tr class="private-start"><th rowspan="2">Leaderboard private</th><td>ID</td><td>64</td><td>52</td></tr>
+              <tr><td>OOD</td><td>45</td><td>60</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="evaluation-note">ID: in distribution. OOD: out of distribution.</p>
+      </section>
+
+    </div>
+  </div>
+  <script src="../_reveal/dist/reveal.js"></script>
+  <script src="../_reveal/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({ width: 1280, height: 720, margin: 0, hash: true, slideNumber: false, progress: true, center: true, transition: 'fade', backgroundTransition: 'fade', plugins: [RevealNotes] });
+    (function () {
+      const box = document.getElementById('custom-slide-number');
+      function slidesInOrder() {
+        const order = [];
+        for (const horizontal of Reveal.getHorizontalSlides()) {
+          const vertical = horizontal.querySelectorAll(':scope > section');
+          vertical.length ? vertical.forEach(slide => order.push(slide)) : order.push(horizontal);
+        }
+        return order;
+      }
+      function computeNumberFor(current, slides) {
+        let value = 0;
+        for (const slide of slides) {
+          if (slide.hasAttribute('data-start-from')) value = Number(slide.dataset.startFrom) - 1;
+          if (!slide.hasAttribute('data-no-count')) value += 1;
+          if (slide === current) break;
+        }
+        return value;
+      }
+      function updateNumber() {
+        const current = Reveal.getCurrentSlide();
+        if (!current || current.hasAttribute('data-no-number')) { box.hidden = true; return; }
+        box.hidden = false;
+        box.textContent = String(computeNumberFor(current, slidesInOrder())).padStart(2, '0');
+      }
+      Reveal.on('ready', updateNumber);
+      Reveal.on('slidechanged', updateNumber);
+    })();
+  </script>
+</body>
+</html>

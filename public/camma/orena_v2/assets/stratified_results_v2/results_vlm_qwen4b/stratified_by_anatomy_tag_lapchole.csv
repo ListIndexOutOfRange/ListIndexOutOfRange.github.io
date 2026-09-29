@@ -1,0 +1,5 @@
+anatomy_tag,n,correct,accuracy
+Liver,3,2,0.6667
+cystic duct,1,1,1.0
+cystic artery,1,1,1.0
+Cystic artery,1,0,0.0

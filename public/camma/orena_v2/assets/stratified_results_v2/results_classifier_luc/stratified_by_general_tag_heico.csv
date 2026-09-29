@@ -1,0 +1,4 @@
+general_tag,n,correct,accuracy
+object_identification+single_class,451,189,0.4191
+object_identification+class_list,363,192,0.5289
+spatial_localization_camera+all_object_quadrants,236,34,0.1441
