@@ -111,14 +111,123 @@ body { background: var(--paper); }
 .reveal .agenda h3 { font-size: 31px; margin: 0 0 12px; }
 .reveal .agenda p { font-size: 26px; color: var(--muted); line-height: 1.35; margin: 0; max-width: 970px; }
 
-.demo-controls { display:flex; align-items:center; gap:20px; margin:0 0 24px; padding:16px 20px; background:#e7f0f0; font-size:23px; }
-.demo-controls label { display:flex; align-items:center; gap:12px; }
-.demo-controls select { font:inherit; color:var(--ink); border:1px solid #b9ced2; background:white; padding:8px 12px; border-radius:4px; }
-.demo-controls input { flex:1; min-width:100px; accent-color:var(--gastro); }
-.demo-controls output { font-variant-numeric:tabular-nums; min-width:60px; }
-.reveal .optimization-demo h3 { font-size:25px; }
-.reveal .optimization-demo svg { max-height:250px; }
-.demo-readout { display:flex; justify-content:space-between; gap:20px; font-size:20px; margin-top:14px; font-variant-numeric:tabular-nums; }
-#cost-value { color:#a44f2e; }
-#minimum-value { color:var(--gastro); }
-.demo-controls :focus-visible { outline:3px solid #376bb3; outline-offset:4px; }
+/* Pricing introduction: charts and editorial columns share the deck palette. */
+.reveal .pricing-slide h2 { margin-bottom: 24px; }
+.pricing-layout { display: grid; grid-template-columns: 1.55fr 1fr; gap: 38px; align-items: center; min-height: 400px; }
+.reveal .pricing-slide svg { max-height: 350px; overflow: visible; }
+.reveal .chart-caption { font-size: 22px; color: var(--muted); margin: 0 0 12px; }
+.pricing-copy { border-left: 1px solid var(--line); padding-left: 30px; }
+.reveal .pricing-copy h3 { font-size: 25px; margin: 0 0 16px; }
+.reveal .pricing-copy p { font-size: 25px; margin: 16px 0; }
+.reveal .pricing-copy .formula { font-size: 29px; margin: 15px 0; white-space: nowrap; }
+.reveal .pricing-slide .pricing-note { font-size: 19px; color: var(--muted); line-height: 1.4; }
+.reveal .pricing-slide .takeaway { margin-top: 24px; font-size: 26px; }
+.reveal .pricing-table { margin: 22px 0; font-size: 25px; }
+.reveal .pricing-table th { font-size: 18px; }
+.reveal .pricing-table td, .reveal .pricing-table th { padding: 12px 10px; }
+.reveal .pricing-copy .optimum-number { font-size: 62px; color: var(--gastro); letter-spacing: -2px; line-height: 1; margin: 26px 0; }
+.optimum-number span { display: block; font-size: 21px; line-height: 1.4; letter-spacing: 0; margin-top: 9px; color: var(--muted); }
+.price-control { display: flex; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding-top: 21px; margin-top: 15px; font-size: 22px; font-variant-numeric: tabular-nums; }
+.price-control input { accent-color: var(--gastro); flex: 1; min-width: 100px; }
+.price-control output { min-width: 74px; color: #a44f2e; font-weight: 600; }
+.price-control input:focus-visible { outline: 3px solid #376bb3; outline-offset: 5px; }
+#profit-value { min-width: 305px; text-align: right; }
+.reveal .pricing-lead { font-size: 27px; max-width: 1060px; margin: 25px 0 30px; }
+.penalty-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.penalty-columns > div { border-top: 2px solid var(--gastro); padding-top: 14px; }
+.penalty-columns > div + div { border-color: var(--pneumo); }
+.reveal .penalty-columns > div + div h3, .reveal .penalty-columns > div + div .penalty-ratio { color: var(--pneumo); }
+.reveal .penalty-columns .formula { font-size: 32px; margin: 24px 0; }
+.reveal .penalty-columns p { font-size: 24px; }
+.reveal .penalty-columns .penalty-ratio { font-size: 52px; color: var(--gastro); margin: 22px 0 12px; line-height: 1; }
+.penalty-ratio span { display: block; font-size: 22px; line-height: 1.4; margin-top: 12px; color: var(--muted); }
+.criterion-row { border-bottom: 1px solid var(--line); padding: 15px 0; }
+.criterion-row:last-child { border-bottom: 0; }
+.reveal .criterion-row h3 { color: inherit; font-size: 23px; margin: 0 0 4px; }
+.reveal .criterion-row p { font-family: Georgia, serif; font-size: 22px; margin: 4px 0 7px; color: var(--ink); }
+.criterion-row b { font-size: 29px; font-variant-numeric: tabular-nums; }
+.profit-color { color: #376bb3; }
+.l1-color { color: var(--gastro); }
+.l2-color { color: var(--pneumo); }
+.inline-formula { font-family: Georgia, serif; }
+.convergence-definitions { margin: 25px 0; font-size: 24px; }
+.convergence-definitions dt { color: var(--gastro); font-weight: 600; margin-top: 20px; }
+.convergence-definitions dd { margin: 6px 0 0; color: var(--muted); }
+.convex-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; margin-top: 28px; }
+.reveal .convex-comparison h3 { font-size: 24px; }
+.reveal .convex-comparison svg { max-height: 280px; }
+.reveal .convex-comparison p { font-size: 24px; margin: 14px 0 0; }
+.diagnosis-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 68px; margin: 42px 0 36px; }
+.diagnosis-number { color: var(--gastro); font-size: 48px; font-weight: 300; }
+.reveal .diagnosis-columns h3 { font-size: 30px; margin: 14px 0 20px; }
+.reveal .diagnosis-columns p { font-size: 28px; }
+.reveal .diagnosis-columns .diagnosis-example { border-top: 1px solid var(--line); margin-top: 26px; padding-top: 20px; color: var(--muted); font-size: 24px; }
+
+.reveal .optimization-components h2 { font-size: 41px; }
+.optimization-overview { margin-top: 12px; }
+.optimization-overview > div { padding: 18px 0; grid-template-columns: 72px 1fr; }
+.reveal .optimization-overview h3 { font-size: 28px; margin-bottom: 9px; }
+.reveal .optimization-overview p { font-size: 25px; }
+.reveal .optimization-components .takeaway { font-size: 25px; margin-top: 22px; }
+
+/* Eight reveals: academic stage, then corresponding experience. */
+.reveal :is(.journey, .agenda, .optimization-components) .fragment { transition-duration: 450ms; transition-timing-function: ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal :is(.journey, .agenda, .optimization-components) .fragment { transition-duration: 0ms; transform: none; }
+}
+
+.reveal .triptych-intro { font-size:25px; margin:0 0 24px; color:var(--muted); }
+.price-charts { display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+.price-charts > div + div { border-left:1px solid var(--line); padding-left:20px; }
+.reveal .price-charts h3 { font-size:25px; margin:0 0 8px; }
+.reveal .price-charts .triptych-formula { font:23px Georgia,serif; margin:0 0 8px; }
+.reveal .price-charts svg { max-height:none; width:100%; }
+.price-charts output { display:block; text-align:center; font-size:24px; font-weight:600; color:#a44f2e; font-variant-numeric:tabular-nums; }
+.price-triptych .price-control { margin-top:22px; padding-top:16px; }
+.profit-conclusion { display:grid; grid-template-columns:1fr 1.3fr; gap:32px; margin-top:22px; padding:15px 20px; background:#e7f0f0; border-left:4px solid var(--gastro); }
+.reveal .profit-conclusion p { font-size:23px; margin:0; line-height:1.4; }
+.reveal .price-charts svg { height:225px; }
+
+/* Price + advertising: the optimization sequence. */
+.reveal .opt-sequence h2 { font-size:40px; margin-bottom:26px; }
+.opt-layout { display:grid; grid-template-columns:1.42fr 1fr; gap:32px; align-items:center; min-height:405px; }
+.opt-copy { padding-left:25px; border-left:1px solid var(--line); }
+.reveal .opt-copy h3 { font-size:25px; margin:14px 0 9px; }
+.reveal .opt-copy p, .reveal .opt-copy li { font-size:24px; line-height:1.35; margin:10px 0 16px; }
+.reveal .opt-copy .formula { font-size:28px; margin:20px 0; }
+.reveal .opt-sequence .opt-small { font-size:19px; line-height:1.4; color:var(--muted); }
+.reveal .opt-sequence .takeaway { font-size:25px; margin-top:22px; }
+.reveal .opt-sequence img.landscape, .reveal .opt-sequence svg { display:block; width:100%; height:auto; max-height:390px; margin:0; }
+.reveal .opt-copy .criterion-row { padding:10px 0; }
+.reveal .opt-copy .criterion-row h3 { margin:0 0 5px; font-size:24px; }
+.reveal .opt-copy .criterion-row p { font-size:22px; margin:3px 0 5px; }
+.reveal .opt-list { margin:0 0 0 23px; }
+.reveal .opt-list li { margin-bottom:14px; }
+.iteration-control { display:flex; align-items:center; gap:16px; border-top:1px solid var(--line); padding-top:12px; font-size:20px; }
+.iteration-control input { flex:1; accent-color:var(--gastro); min-width:100px; }
+.iteration-control output { min-width:465px; font-variant-numeric:tabular-nums; }
+#pricing-descent .opt-layout { min-height:350px; }
+#pricing-descent img, #pricing-descent svg { max-height:335px; }
+#pricing-descent .takeaway { margin-top:18px; }
+.opt-pair { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:32px; }
+.reveal .opt-pair h3 { font-size:24px; }
+.reveal .opt-pair img.landscape { max-height:310px; }
+.decision-flow { display:grid; grid-template-columns:1fr 1fr; gap:35px 70px; margin:44px 55px 20px; }
+.decision-flow > div { border-top:2px solid var(--gastro); padding:16px 20px; position:relative; }
+.decision-flow > div:nth-child(2) { border-color:var(--pneumo); }
+.decision-flow > div:nth-child(2) h3 { color:var(--pneumo); }
+.decision-flow > div:nth-child(-n+2)::after { content:'↓'; position:absolute; bottom:-36px; font-size:32px; color:var(--gastro); }
+.decision-flow .flow-demand::after { content:'→'; position:absolute; right:-52px; top:40px; font-size:36px; color:var(--gastro); }
+.reveal .decision-flow h3 { font-size:29px; margin:0 0 12px; }
+.reveal .decision-flow p { font-size:25px; margin:0; }
+.flow-profit { background:#e7f0f0; }
+.reveal .opt-domain { font-size:23px; color:var(--muted); margin:25px 55px; }
+.reveal .opt-copy .local-label { color:#b35c36; }
+.optimization-pipeline { display:grid; grid-template-columns:repeat(3,1fr); gap:24px 45px; margin:35px 0; }
+.optimization-pipeline > div { border-top:1px solid var(--line); padding-top:14px; display:flex; gap:18px; align-items:center; }
+.optimization-pipeline span { font-size:38px; color:var(--gastro); font-weight:300; }
+.optimization-pipeline b { font-size:25px; line-height:1.3; }
+.summary-comparison { display:grid; grid-template-columns:1fr 1fr; gap:50px; margin-top:35px; }
+.reveal .summary-comparison h3 { font-size:25px; }
+.reveal .summary-comparison p { font-size:24px; line-height:1.4; }
+@media print { .iteration-control { display:none; } }

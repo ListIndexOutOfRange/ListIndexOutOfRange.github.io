@@ -7,16 +7,6 @@
   const demand = p => 100 - 5*p;
   const profit = p => (p-4)*demand(p);
   const criterion = p => -profit(p);
-  const groups = [[60,8,10],[40,15,15],[20,22,8]];
-  const marketDemand = p => groups.reduce((sum,[a,m,v]) => sum + a*Math.exp(-((p-m)**2)/v),0);
-  const marketCost = p => -(p-4)*marketDemand(p);
-  const marketGradient = p => -marketDemand(p) - (p-4)*groups.reduce((sum,[a,m,v]) => sum + a*Math.exp(-((p-m)**2)/v)*(-2*(p-m)/v),0);
-  const trajectories = [7,14,20].map(start => {
-    const prices = [start];
-    for (let k=0; k<120; k++) prices.push(prices[k] - .008*marketGradient(prices[k]));
-    return prices;
-  });
-  const minima = trajectories.map(prices => prices[prices.length-1]);
   const text = (x,y,label,fill=color.muted,anchor='start',size=22) => `<text x="${x}" y="${y}" fill="${fill}" text-anchor="${anchor}" font-size="${size}">${label}</text>`;
   const line = (x1,y1,x2,y2,stroke=color.grid,dash='') => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="1.5" ${dash ? `stroke-dasharray="${dash}"`:''}/>`;
   const dot = (x,y,fill,r=7) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="#f6f8f8" stroke-width="2.5"/>`;
@@ -41,27 +31,31 @@
       render: () => {el.innerHTML = content;}
     };
   }
-  const d = chart('demand-plot',{xmin:4,xmax:20,ymin:0,ymax:85,xticks:[4,8,12,16,20],yticks:[0,20,40,60,80]});
-  d.curve(demand,color.blue);
-  for (const [p,label,dx,dy] of [[10,'10 € : 50 unités',18,-17],[15,'15 € : 25 unités',18,-17]]) {
-    d.add(line(d.x(p),d.y(0),d.x(p),d.y(demand(p)),color.teal,'5 5'));
-    d.add(dot(d.x(p),d.y(demand(p)),color.teal));
-    d.add(text(d.x(p)+dx,d.y(demand(p))+dy,label,color.teal,'start',24));
+  function drawPriceChart(id, fn, max, ticks, p, stroke, showOptimum) {
+    const x = v => 58+(v-4)/16*352, y = v => 260-v/max*218;
+    let svg = '';
+    for (const v of ticks) svg += line(58,y(v),410,y(v))+text(48,y(v)+6,format(v),color.muted,'end',19);
+    svg += line(58,42,58,260)+line(58,260,410,260);
+    for (const v of [4,8,12,16,20]) svg += text(x(v),286,v,color.muted,'middle',19);
+    svg += text(410,315,'Prix (€)',color.muted,'end',18);
+    svg += `<polyline points="${Array.from({length:161},(_,i)=>{const v=4+i/10;return `${x(v)},${y(fn(v))}`;}).join(' ')}" fill="none" stroke="${stroke}" stroke-width="3"/>`;
+    if(showOptimum) svg += line(x(12),260,x(12),y(fn(12)),color.teal,'4 4')+dot(x(12),y(fn(12)),color.teal,7)+text(x(12),y(fn(12))-17,'Maximum',color.teal,'middle',19);
+    svg += line(x(p),260,x(p),y(fn(p)),color.orange,'4 4')+dot(x(p),y(fn(p)),color.orange,7);
+    document.getElementById(id).innerHTML=svg;
   }
-  d.render();
-  function renderProfit() {
-    const p = Number(document.getElementById('price').value);
-    const c = chart('profit-plot',{xmin:4,xmax:20,ymin:0,ymax:360,xticks:[4,8,12,16,20],yticks:[0,100,200,300]});
-    c.curve(profit,color.blue);
-    c.add(line(c.x(12),c.y(0),c.x(12),c.y(320),color.teal,'5 5'));
-    c.add(dot(c.x(12),c.y(320),color.teal,8));
-    c.add(text(c.x(12),c.y(320)-20,'Maximum : 320 €',color.teal,'middle',24));
-    c.add(line(c.x(p),c.y(0),c.x(p),c.y(profit(p)),color.orange,'4 5'));
-    c.add(dot(c.x(p),c.y(profit(p)),color.orange,8));
-    c.render();
-    document.getElementById('price-value').textContent = `${format(p,1)} €`;
-    document.getElementById('price').setAttribute('aria-valuetext',`${format(p,1)} euros`);
-    document.getElementById('profit-value').textContent = `${format(demand(p),1)} unités / profit : ${format(profit(p),2)} €`;
+  function renderPrices(p) {
+    for(const prefix of ['pricing-decision','pricing-profit']) {
+      const slider=document.getElementById(prefix+'-price'); slider.value=p;
+      slider.setAttribute('aria-valuetext',`${format(p,1)} euros`);
+      document.getElementById(prefix+'-price-value').textContent=`${format(p,1)} €`;
+      for(const [key,fn,max,ticks,stroke,unit] of [
+        ['demand',demand,85,[0,20,40,60,80],color.blue,'unités'],
+        ['margin',p=>p-4,18,[0,4,8,12,16],color.purple,'€ / unité'],
+        ['profit',profit,380,[0,100,200,300],color.teal,'€ de profit']]) {
+        drawPriceChart(prefix+'-'+key,fn,max,ticks,p,stroke,prefix==='pricing-profit'&&key==='profit');
+        document.getElementById(prefix+'-'+key+'-value').textContent=`${format(fn(p),key==='profit'?2:1)} ${unit}`;
+      }
+    }
   }
   const compare = chart('criteria-plot',{xmin:8,xmax:14,ymin:-330,ymax:-80,xticks:[8,9,10,11,12,13,14],yticks:[-300,-200,-100]});
   compare.add(line(compare.x(10),compare.box.top,compare.x(10),compare.box.bottom,color.muted,'4 5'));
@@ -71,39 +65,9 @@
     compare.add(dot(compare.x(best),compare.y(fn(best)),stroke,8));
   }
   compare.render();
-  function drawMarket(id,height=420,annotate=true) {
-    const c = chart(id,{xmin:4,xmax:28,ymin:annotate?-600:-500,ymax:0,xticks:[4,8,12,16,20,24,28],yticks:annotate?[-600,-400,-200,0]:[-500,-250,0],height});
-    c.curve(marketCost,color.ink);
-    minima.forEach((p,i)=>{
-      const stroke = i===1 ? color.teal : color.orange;
-      c.add(dot(c.x(p),c.y(marketCost(p)),stroke,8));
-      if(annotate) {
-        c.add(text(c.x(p),c.y(marketCost(p))+29,i===1?'Global':'Local',stroke,'middle',24));
-        c.add(text(c.x(p),c.y(marketCost(p))+55,`${format(p,2)} €`,stroke,'middle',21));
-      }
-    });
-    c.render();
-  }
-  drawMarket('market-plot');
-  drawMarket('nonconvex-plot',360,false);
-  const cv = chart('convex-plot',{xmin:4,xmax:20,ymin:-350,ymax:0,xticks:[4,8,12,16,20],yticks:[-300,-150,0],height:360});
-  cv.curve(criterion,color.blue);
-  cv.add(dot(cv.x(12),cv.y(-320),color.teal,8));
-  cv.render();
-  const it = chart('convergence-plot',{xmin:0,xmax:20,ymin:5,ymax:25,xticks:[0,5,10,15,20],yticks:[5,10,15,20,25],xlabel:'Itération',right:150});
-  trajectories.forEach((prices,i)=>{
-    const stroke = [color.orange,color.teal,color.purple][i];
-    const values = prices.slice(0,21);
-    it.add(`<polyline points="${values.map((p,k)=>`${it.x(k)},${it.y(p)}`).join(' ')}" fill="none" stroke="${stroke}" stroke-width="3.5"/>`);
-    values.forEach((p,k)=>it.add(dot(it.x(k),it.y(p),stroke,4.5)));
-    it.add(text(it.x(0)+9,it.y(prices[0])+(i===0?25:30),`${prices[0]} €`,stroke,'start',23));
-    it.add(text(it.x(20)+16,it.y(minima[i])-5,`${format(minima[i],2)} €`,stroke,'start',25));
-    it.add(text(it.x(20)+16,it.y(minima[i])+22,i===1?'global':'local',stroke,'start',21));
+  document.querySelectorAll('.shared-price').forEach(slider=>{
+    slider.addEventListener('input',()=>renderPrices(Number(slider.value)));
+    slider.addEventListener('keydown',event=>event.stopPropagation());
   });
-  it.add(text(it.box.left,19,'Prix p (€)',color.muted,'start',22));
-  it.render();
-  const slider = document.getElementById('price');
-  slider.addEventListener('input',renderProfit);
-  slider.addEventListener('keydown',event=>event.stopPropagation());
-  renderProfit();
+  renderPrices(8);
 })();

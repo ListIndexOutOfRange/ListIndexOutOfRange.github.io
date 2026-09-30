@@ -2,28 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/example/</loc>
+    <loc>http://localhost:36857/tags/example/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>http://localhost:36857/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/placeholder-text/</loc>
+    <loc>http://localhost:36857/tags/placeholder-text/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/resume/</loc>
+    <loc>http://localhost:36857/resume/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/sample/</loc>
+    <loc>http://localhost:36857/tags/sample/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>http://localhost:36857/tags/</loc>
     <lastmod>2021-04-03T22:41:10+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/pfgm/</loc>
+    <loc>http://localhost:36857/pfgm/</loc>
   </url><url>
-    <loc>http://localhost:1313/polar/</loc>
+    <loc>http://localhost:36857/polar/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>http://localhost:36857/categories/</loc>
   </url>
 </urlset>

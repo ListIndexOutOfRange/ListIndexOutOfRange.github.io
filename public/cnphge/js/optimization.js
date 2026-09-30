@@ -1,49 +1,73 @@
-/* Synthetic data shared with the regression slides. No external dependencies. */
+/* Pricing examples from optimization_pricing_example.md. All charts use the
+   actual functions, and all iterations use their analytic derivatives. */
 (() => {
-  const points = [1.1, 1.9, 3.2, 3.8, 5.1, 6, 12].map((y, i) => ({x: i + 1, y}));
-  const slider = document.getElementById('slope');
-  const selector = document.getElementById('criterion');
-  const format = n => n.toLocaleString('fr-FR', {maximumFractionDigits: 2, minimumFractionDigits: 2});
-  const cost = (a, criterion) => points.reduce((sum, p) => sum + (criterion === 'L2' ? (p.y-a*p.x)**2 : Math.abs(p.y-a*p.x)), 0);
-  const l2 = points.reduce((sum,p)=>sum+p.x*p.y,0) / points.reduce((sum,p)=>sum+p.x*p.x,0);
-  const sorted = [...points].sort((p,q)=>p.y/p.x-q.y/q.x);
-  let weight = 0;
-  const l1 = sorted.find(p => (weight += p.x) >= points.reduce((s,p)=>s+p.x,0)/2);
-  const optimum = {L2:l2, L1:l1.y/l1.x};
-  const line = (x1,y1,x2,y2,color='#c3d1d7',extra='') => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="2" ${extra}/>`;
-  const text = (x,y,value,color='#526777',extra='') => `<text x="${x}" y="${y}" fill="${color}" font-size="18" ${extra}>${value}</text>`;
-  const circle = (x,y,color,r=6) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}"/>`;
-  function render() {
-    const a = Number(slider.value), criterion = selector.value;
-    const px = x => 52 + x*68, py = y => 282-y*14;
-    let fit = line(52,282,565,282)+line(52,282,52,18)+text(570,307,'x')+text(22,22,'y');
-    for (const x of [0,2,4,6]) fit += text(px(x),307,x,'#526777','text-anchor="middle"');
-    for (const y of [5,10,15]) fit += line(48,py(y),565,py(y),'#e4ebee')+text(40,py(y)+6,y,'#526777','text-anchor="end"');
-    points.forEach(p => {fit += line(px(p.x),py(p.y),px(p.x),py(a*p.x),'#bd613b','stroke-dasharray="5 4"');});
-    fit += line(px(0),py(0),px(7.4),py(a*7.4),'#376bb3','style="stroke-width:3"');
-    points.forEach(p=>{fit+=circle(px(p.x),py(p.y),p.x===7?'#bd613b':'#22364a');});
-    document.getElementById('fit-plot').innerHTML = fit;
-    const max = Math.ceil(Math.max(cost(0,criterion),cost(2.5,criterion))/10)*10;
-    const cx = a => 58+a/2.5*500, cy = c => 282-c/max*245;
-    let curve = line(58,282,565,282)+line(58,282,58,18)+text(582,307,'a')+text(12,20,'J(a)');
-    for (const x of [0,.5,1,1.5,2,2.5]) curve += text(cx(x),307,String(x).replace('.',','),'#526777','text-anchor="middle"');
-    for (const y of [0,max/2,max]) curve += line(58,cy(y),558,cy(y),'#e4ebee')+text(48,cy(y)+6,y,'#526777','text-anchor="end"');
-    // Include every L1 breakpoint so the piecewise-linear curve is exact.
-    const samples = [...Array.from({length:251},(_,i)=>i/100), ...points.map(p=>p.y/p.x)].sort((a,b)=>a-b);
-    curve += `<polyline points="${samples.map(a=>`${cx(a)},${cy(cost(a,criterion))}`).join(' ')}" fill="none" stroke="#376bb3" stroke-width="3"/>`;
-    const best=optimum[criterion];
-    curve += line(cx(a),282,cx(a),cy(cost(a,criterion)),'#bd613b','stroke-dasharray="5 4"');
-    curve += circle(cx(best),cy(cost(best,criterion)),'#087e83',7)+circle(cx(a),cy(cost(a,criterion)),'#bd613b',8);
-    document.getElementById('cost-plot').innerHTML=curve;
-    document.getElementById('slope-value').textContent=format(a);
-    slider.setAttribute('aria-valuetext',format(a));
-    document.getElementById('cost-title').textContent=criterion==='L2'?'Le critère J₂(a) = ∑ rᵢ²':'Le critère J₁(a) = ∑ |rᵢ|';
-    document.getElementById('cost-value').textContent=`● Pente choisie : a = ${format(a)} · J(a) = ${format(cost(a,criterion))}`;
-    document.getElementById('minimum-value').textContent=`● Minimum ${criterion} : a ≈ ${format(best)} · J ≈ ${format(cost(best,criterion))}`;
+  'use strict';
+  const color = {ink:'#172e40', muted:'#5b6e79', grid:'#d5e0e3', blue:'#376bb3', teal:'#087e83', purple:'#6656aa', orange:'#b35c36'};
+  const format = (n, digits=0) => n.toLocaleString('fr-FR', {minimumFractionDigits:digits, maximumFractionDigits:digits});
+  const demand = p => 100 - 5*p;
+  const profit = p => (p-4)*demand(p);
+  const criterion = p => -profit(p);
+  const text = (x,y,label,fill=color.muted,anchor='start',size=22) => `<text x="${x}" y="${y}" fill="${fill}" text-anchor="${anchor}" font-size="${size}">${label}</text>`;
+  const line = (x1,y1,x2,y2,stroke=color.grid,dash='') => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="1.5" ${dash ? `stroke-dasharray="${dash}"`:''}/>`;
+  const dot = (x,y,fill,r=7) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="#f6f8f8" stroke-width="2.5"/>`;
+  function chart(id,{xmin,xmax,ymin,ymax,xticks,yticks,xlabel='Prix p (€)',height=420,right=28}) {
+    const el = document.getElementById(id);
+    const box = {left:75,top:30,right:720-right,bottom:height-70};
+    const x = v => box.left+(v-xmin)/(xmax-xmin)*(box.right-box.left);
+    const y = v => box.bottom-(v-ymin)/(ymax-ymin)*(box.bottom-box.top);
+    let content = '';
+    for (const v of yticks) content += line(box.left,y(v),box.right,y(v)) + text(box.left-13,y(v)+7,format(v),color.muted,'end',21);
+    content += line(box.left,box.top,box.left,box.bottom)+line(box.left,box.bottom,box.right,box.bottom);
+    for (const v of xticks) content += line(x(v),box.bottom,x(v),box.bottom+7)+text(x(v),box.bottom+32,format(v),color.muted,'middle',21);
+    content += text(box.right,height-7,xlabel,color.muted,'end',22);
+    return {
+      x,y,box,
+      add: markup => {content += markup;},
+      curve(fn,stroke,dash='') {
+        // Sampling includes the L1 breakpoint p=10 exactly for the comparison.
+        const values = Array.from({length:481},(_,i)=>xmin+(xmax-xmin)*i/480);
+        content += `<polyline points="${values.map(v=>`${x(v).toFixed(2)},${y(fn(v)).toFixed(2)}`).join(' ')}" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round" ${dash?`stroke-dasharray="${dash}"`:''}/>`;
+      },
+      render: () => {el.innerHTML = content;}
+    };
   }
-  slider.addEventListener('input', render);
-  selector.addEventListener('change', render);
-  // Let arrow keys operate form controls without advancing Reveal slides.
-  for (const control of [slider,selector]) control.addEventListener('keydown',e=>e.stopPropagation());
-  render();
+  function drawPriceChart(id, fn, max, ticks, p, stroke, showOptimum) {
+    const x = v => 58+(v-4)/16*352, y = v => 260-v/max*218;
+    let svg = '';
+    for (const v of ticks) svg += line(58,y(v),410,y(v))+text(48,y(v)+6,format(v),color.muted,'end',19);
+    svg += line(58,42,58,260)+line(58,260,410,260);
+    for (const v of [4,8,12,16,20]) svg += text(x(v),286,v,color.muted,'middle',19);
+    svg += text(410,315,'Prix (€)',color.muted,'end',18);
+    svg += `<polyline points="${Array.from({length:161},(_,i)=>{const v=4+i/10;return `${x(v)},${y(fn(v))}`;}).join(' ')}" fill="none" stroke="${stroke}" stroke-width="3"/>`;
+    if(showOptimum) svg += line(x(12),260,x(12),y(fn(12)),color.teal,'4 4')+dot(x(12),y(fn(12)),color.teal,7)+text(x(12),y(fn(12))-17,'Maximum',color.teal,'middle',19);
+    svg += line(x(p),260,x(p),y(fn(p)),color.orange,'4 4')+dot(x(p),y(fn(p)),color.orange,7);
+    document.getElementById(id).innerHTML=svg;
+  }
+  function renderPrices(p) {
+    for(const prefix of ['pricing-decision','pricing-profit']) {
+      const slider=document.getElementById(prefix+'-price'); slider.value=p;
+      slider.setAttribute('aria-valuetext',`${format(p,1)} euros`);
+      document.getElementById(prefix+'-price-value').textContent=`${format(p,1)} €`;
+      for(const [key,fn,max,ticks,stroke,unit] of [
+        ['demand',demand,85,[0,20,40,60,80],color.blue,'unités'],
+        ['margin',p=>p-4,18,[0,4,8,12,16],color.purple,'€ / unité'],
+        ['profit',profit,380,[0,100,200,300],color.teal,'€ de profit']]) {
+        drawPriceChart(prefix+'-'+key,fn,max,ticks,p,stroke,prefix==='pricing-profit'&&key==='profit');
+        document.getElementById(prefix+'-'+key+'-value').textContent=`${format(fn(p),key==='profit'?2:1)} ${unit}`;
+      }
+    }
+  }
+  const compare = chart('criteria-plot',{xmin:8,xmax:14,ymin:-330,ymax:-80,xticks:[8,9,10,11,12,13,14],yticks:[-300,-200,-100]});
+  compare.add(line(compare.x(10),compare.box.top,compare.x(10),compare.box.bottom,color.muted,'4 5'));
+  compare.add(text(compare.x(10)+12,compare.box.top+18,'Référence : 10 €',color.muted,'start',21));
+  for (const [fn,best,stroke,dash] of [[criterion,12,color.blue,''],[p=>criterion(p)+10*Math.abs(p-10),11,color.teal,'10 5'],[p=>criterion(p)+10*(p-10)**2,32/3,color.purple,'3 5']]) {
+    compare.curve(fn,stroke,dash);
+    compare.add(dot(compare.x(best),compare.y(fn(best)),stroke,8));
+  }
+  compare.render();
+  document.querySelectorAll('.shared-price').forEach(slider=>{
+    slider.addEventListener('input',()=>renderPrices(Number(slider.value)));
+    slider.addEventListener('keydown',event=>event.stopPropagation());
+  });
+  renderPrices(8);
 })();

@@ -162,3 +162,72 @@ body { background: var(--paper); }
 .reveal .diagnosis-columns h3 { font-size: 30px; margin: 14px 0 20px; }
 .reveal .diagnosis-columns p { font-size: 28px; }
 .reveal .diagnosis-columns .diagnosis-example { border-top: 1px solid var(--line); margin-top: 26px; padding-top: 20px; color: var(--muted); font-size: 24px; }
+
+.reveal .optimization-components h2 { font-size: 41px; }
+.optimization-overview { margin-top: 12px; }
+.optimization-overview > div { padding: 18px 0; grid-template-columns: 72px 1fr; }
+.reveal .optimization-overview h3 { font-size: 28px; margin-bottom: 9px; }
+.reveal .optimization-overview p { font-size: 25px; }
+.reveal .optimization-components .takeaway { font-size: 25px; margin-top: 22px; }
+
+/* Eight reveals: academic stage, then corresponding experience. */
+.reveal :is(.journey, .agenda, .optimization-components) .fragment { transition-duration: 450ms; transition-timing-function: ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal :is(.journey, .agenda, .optimization-components) .fragment { transition-duration: 0ms; transform: none; }
+}
+
+.reveal .triptych-intro { font-size:25px; margin:0 0 24px; color:var(--muted); }
+.price-charts { display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+.price-charts > div + div { border-left:1px solid var(--line); padding-left:20px; }
+.reveal .price-charts h3 { font-size:25px; margin:0 0 8px; }
+.reveal .price-charts .triptych-formula { font:23px Georgia,serif; margin:0 0 8px; }
+.reveal .price-charts svg { max-height:none; width:100%; }
+.price-charts output { display:block; text-align:center; font-size:24px; font-weight:600; color:#a44f2e; font-variant-numeric:tabular-nums; }
+.price-triptych .price-control { margin-top:22px; padding-top:16px; }
+.profit-conclusion { display:grid; grid-template-columns:1fr 1.3fr; gap:32px; margin-top:22px; padding:15px 20px; background:#e7f0f0; border-left:4px solid var(--gastro); }
+.reveal .profit-conclusion p { font-size:23px; margin:0; line-height:1.4; }
+.reveal .price-charts svg { height:225px; }
+
+/* Price + advertising: the optimization sequence. */
+.reveal .opt-sequence h2 { font-size:40px; margin-bottom:26px; }
+.opt-layout { display:grid; grid-template-columns:1.42fr 1fr; gap:32px; align-items:center; min-height:405px; }
+.opt-copy { padding-left:25px; border-left:1px solid var(--line); }
+.reveal .opt-copy h3 { font-size:25px; margin:14px 0 9px; }
+.reveal .opt-copy p, .reveal .opt-copy li { font-size:24px; line-height:1.35; margin:10px 0 16px; }
+.reveal .opt-copy .formula { font-size:28px; margin:20px 0; }
+.reveal .opt-sequence .opt-small { font-size:19px; line-height:1.4; color:var(--muted); }
+.reveal .opt-sequence .takeaway { font-size:25px; margin-top:22px; }
+.reveal .opt-sequence img.landscape, .reveal .opt-sequence svg { display:block; width:100%; height:auto; max-height:390px; margin:0; }
+.reveal .opt-copy .criterion-row { padding:10px 0; }
+.reveal .opt-copy .criterion-row h3 { margin:0 0 5px; font-size:24px; }
+.reveal .opt-copy .criterion-row p { font-size:22px; margin:3px 0 5px; }
+.reveal .opt-list { margin:0 0 0 23px; }
+.reveal .opt-list li { margin-bottom:14px; }
+.iteration-control { display:flex; align-items:center; gap:16px; border-top:1px solid var(--line); padding-top:12px; font-size:20px; }
+.iteration-control input { flex:1; accent-color:var(--gastro); min-width:100px; }
+.iteration-control output { min-width:465px; font-variant-numeric:tabular-nums; }
+#pricing-descent .opt-layout { min-height:350px; }
+#pricing-descent img, #pricing-descent svg { max-height:335px; }
+#pricing-descent .takeaway { margin-top:18px; }
+.opt-pair { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:32px; }
+.reveal .opt-pair h3 { font-size:24px; }
+.reveal .opt-pair img.landscape { max-height:310px; }
+.decision-flow { display:grid; grid-template-columns:1fr 1fr; gap:35px 70px; margin:44px 55px 20px; }
+.decision-flow > div { border-top:2px solid var(--gastro); padding:16px 20px; position:relative; }
+.decision-flow > div:nth-child(2) { border-color:var(--pneumo); }
+.decision-flow > div:nth-child(2) h3 { color:var(--pneumo); }
+.decision-flow > div:nth-child(-n+2)::after { content:'↓'; position:absolute; bottom:-36px; font-size:32px; color:var(--gastro); }
+.decision-flow .flow-demand::after { content:'→'; position:absolute; right:-52px; top:40px; font-size:36px; color:var(--gastro); }
+.reveal .decision-flow h3 { font-size:29px; margin:0 0 12px; }
+.reveal .decision-flow p { font-size:25px; margin:0; }
+.flow-profit { background:#e7f0f0; }
+.reveal .opt-domain { font-size:23px; color:var(--muted); margin:25px 55px; }
+.reveal .opt-copy .local-label { color:#b35c36; }
+.optimization-pipeline { display:grid; grid-template-columns:repeat(3,1fr); gap:24px 45px; margin:35px 0; }
+.optimization-pipeline > div { border-top:1px solid var(--line); padding-top:14px; display:flex; gap:18px; align-items:center; }
+.optimization-pipeline span { font-size:38px; color:var(--gastro); font-weight:300; }
+.optimization-pipeline b { font-size:25px; line-height:1.3; }
+.summary-comparison { display:grid; grid-template-columns:1fr 1fr; gap:50px; margin-top:35px; }
+.reveal .summary-comparison h3 { font-size:25px; }
+.reveal .summary-comparison p { font-size:24px; line-height:1.4; }
+@media print { .iteration-control { display:none; } }

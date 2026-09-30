@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Placeholder Text on Luc Vedrenne</title>
-    <link>http://localhost:1313/tags/placeholder-text/</link>
+    <link>http://localhost:36857/tags/placeholder-text/</link>
     <description>Recent content in Placeholder Text on Luc Vedrenne</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 03 Apr 2021 22:41:10 +0530</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/placeholder-text/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:36857/tags/placeholder-text/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Resume</title>
-      <link>http://localhost:1313/resume/</link>
+      <link>http://localhost:36857/resume/</link>
       <pubDate>Sat, 03 Apr 2021 22:41:10 +0530</pubDate>
-      <guid>http://localhost:1313/resume/</guid>
+      <guid>http://localhost:36857/resume/</guid>
       <description></description>
     </item>
   </channel>
