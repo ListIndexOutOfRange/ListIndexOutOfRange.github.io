@@ -5,6 +5,10 @@ on:
     branches: ["master"]
   workflow_dispatch:
 
+env:
+  # Change to "full" when the presentation is ready to publish.
+  CNPHGE_PUBLICATION: title
+
 permissions:
   contents: read
   pages: write
@@ -38,6 +42,9 @@ jobs:
 
       - name: Build
         run: hugo --minify --gc
+
+      - name: Prepare CNPHGE publication
+        run: python3 scripts/prepare_cnphge_publication.py public --mode "$CNPHGE_PUBLICATION"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

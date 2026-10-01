@@ -231,3 +231,61 @@ body { background: var(--paper); }
 .reveal .summary-comparison h3 { font-size:25px; }
 .reveal .summary-comparison p { font-size:24px; line-height:1.4; }
 @media print { .iteration-control { display:none; } }
+
+/* Clinician-facing sequence: a pair of decisions, a relief, then moving points. */
+.surface-layout { display:grid; grid-template-columns:1.9fr 1fr; gap:30px; align-items:center; height:410px; }
+.reveal .surface-slide .surface-chart { width:100%; height:410px; max-height:none; overflow:visible; }
+.surface-copy { border-left:1px solid var(--line); padding-left:27px; }
+.reveal .surface-copy h3 { font-size:25px; margin:18px 0 9px; }
+.reveal .surface-copy p { font-size:24px; margin:10px 0 18px; line-height:1.35; }
+.reveal .surface-copy .surface-note { font-size:18px; line-height:1.45; color:var(--muted); margin-top:20px; }
+.reveal .surface-copy .surface-explanation { font-size:23px; }
+.reveal .descent-instructions { margin:0 0 24px 23px; }
+.reveal .descent-instructions li { font-size:25px; padding-left:6px; margin-bottom:18px; }
+.animation-controls { display:flex; align-items:center; gap:14px; height:42px; margin-top:8px; font-size:19px; }
+.animation-controls button { font:inherit; color:var(--ink); background:transparent; border:1px solid #9eb9c0; border-radius:3px; padding:7px 14px; cursor:pointer; }
+.animation-controls .play-animation { color:white; background:var(--gastro); border-color:var(--gastro); min-width:78px; }
+.animation-controls label { margin-left:12px; }
+.animation-controls input { flex:1; accent-color:var(--gastro); min-width:90px; }
+.animation-controls output { width:88px; font-variant-numeric:tabular-nums; text-align:right; }
+.animation-controls :focus-visible { outline:3px solid var(--pneumo); outline-offset:4px; }
+.reveal .surface-slide:has(.animation-controls) .takeaway { margin-top:15px; font-size:24px; padding:12px 19px; }
+#pricing-descent .surface-chart { max-height:none; }
+.reveal .surface-copy #convergence-history { max-height:none; height:130px; }
+.reveal .surface-copy .local-text,.local-text { color:#b35c36; }
+.reveal .surface-copy .global-text,.global-text { color:var(--pneumo); }
+.reveal .surface-copy .trajectory-legend { font-size:20px; line-height:1.7; margin:0 0 18px; }
+.trajectory-legend span::before { content:''; display:inline-block; width:22px; border-top:3px solid currentColor; vertical-align:middle; margin-right:9px; }
+@media print { .animation-controls { display:none; } }
+
+/* Two levers, parallel trade-offs, one shared profit objective. */
+.tradeoff-columns { display:grid; grid-template-columns:1fr 1fr; gap:70px; margin:34px 0 24px; }
+.tradeoff-columns > div { border-top:2px solid var(--gastro); padding-top:18px; }
+.tradeoff-columns > div + div { border-color:var(--pneumo); }
+.reveal .tradeoff-columns h3 { font-size:30px; margin:0 0 22px; }
+.reveal .tradeoff-columns > div + div h3 { color:var(--pneumo); }
+.tradeoff-effect { display:flex; align-items:center; gap:22px; margin:18px 0; }
+.tradeoff-effect > span { width:30px; flex-shrink:0; font-size:42px; font-weight:300; }
+.effect-up { color:var(--gastro); }
+.effect-down { color:#b35c36; }
+.reveal .tradeoff-effect p { font-size:26px; line-height:1.35; margin:0; }
+.shared-profit { border-top:1px solid var(--line); padding-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+.reveal .shared-profit h3 { color:var(--ink); font-size:29px; margin:0; }
+.reveal .shared-profit p { font-size:24px; margin:0; }
+
+/* Section dividers echo the dark cover without competing with its title. */
+.reveal .section-title { color:#fff; padding:88px 70px; }
+.reveal .section-title .section-index { font-size:86px; font-weight:300; color:#83d7cf; line-height:1; margin:35px 0 45px; letter-spacing:-3px; }
+.reveal .section-title h2 { font-size:64px; font-weight:600; line-height:1.14; letter-spacing:-1.8px; margin:0; }
+.reveal .section-title h2::before { display:none; }
+.reveal .section-title::after { background:#335365; }
+.error-comparison { display:grid; grid-template-columns:1fr 1fr; gap:60px; margin:40px 0 30px; }
+.error-comparison > div { border-top:2px solid var(--gastro); padding-top:20px; }
+.error-comparison > div + div { border-color:#b35c36; }
+.reveal .error-comparison h3 { font-size:29px; line-height:1.25; min-height:74px; color:var(--ink); margin:0 0 22px; }
+.reveal .error-comparison p { font-size:26px; line-height:1.4; margin:18px 0; }
+.reveal .error-comparison .error-status { font-size:24px; font-weight:650; margin:0 0 18px; }
+.criterion-status { color:var(--gastro); }
+.solver-status { color:#b35c36; }
+.reveal .error-comparison .error-example { font-size:22px; color:var(--muted); border-top:1px solid var(--line); margin-top:25px; padding-top:18px; }
+.reveal .optimization-errors .takeaway { font-size:25px; margin-top:22px; }

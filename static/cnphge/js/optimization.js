@@ -45,7 +45,7 @@
   }
   function renderPrices(p) {
     for(const prefix of ['pricing-decision','pricing-profit']) {
-      const slider=document.getElementById(prefix+'-price'); slider.value=p;
+      const slider=document.getElementById(prefix+'-price'); if (!slider) continue; slider.value=p;
       slider.setAttribute('aria-valuetext',`${format(p,1)} euros`);
       document.getElementById(prefix+'-price-value').textContent=`${format(p,1)} €`;
       for(const [key,fn,max,ticks,stroke,unit] of [
