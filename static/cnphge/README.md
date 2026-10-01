@@ -36,15 +36,15 @@ Deux intertitres introduisent les parties « Introduction à l’optimisation »
 
 ## Publication pendant la préparation
 
-Le workflow `.github/workflows/hugo.yaml` utilise `CNPHGE_PUBLICATION: title`.
+Le workflow `.github/workflows/hugo.yaml` utilise désormais `CNPHGE_PUBLICATION: full` : le prochain push sur `master` publiera le deck complet à `/cnphge/`.
+
+Le mode `title` reste disponible pour revenir temporairement à la couverture. Dans ce mode,
 Après la construction Hugo, `scripts/prepare_cnphge_publication.py` remplace uniquement
 le dossier généré `public/cnphge` par la couverture et son style, sans les autres
 slides, notes ou ressources de travail. L’URL publique reste `/cnphge/`.
-Les aperçus locaux conservent le deck complet ; les commits intermédiaires peuvent
-être poussés sur `master` sans publier les slides en cours.
+Les aperçus locaux conservent toujours le deck complet. En mode `full`, chaque push sur `master` publie les dernières modifications des slides.
 
-Pour publier la présentation complète, changer ce réglage en `full`, puis pousser
-sur `master`. Revenir à `title` rétablit la couverture au déploiement suivant.
+La présentation complète est activée. Revenir à `title` rétablit la couverture au déploiement suivant.
 Ce réglage limite le site publié, pas la visibilité des sources dans le dépôt Git.
 
 Les anciennes slides 18–19 sont réunies dans `specialty-alignment` : quatre étapes avec les flèches, adaptation schématique de Braun (1988), figure 1. Les échelles logarithmiques coulissent sans déformation puis sont superposées ; les petits écarts résiduels sont conservés. `js/alignment.js` gère les transitions, le retour arrière et la réduction des animations.

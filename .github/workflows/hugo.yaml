@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  # Change to "full" when the presentation is ready to publish.
-  CNPHGE_PUBLICATION: title
+  # Use "title" to publish only the cover again.
+  CNPHGE_PUBLICATION: full
 
 permissions:
   contents: read
