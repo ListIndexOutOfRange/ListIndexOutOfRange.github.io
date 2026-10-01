@@ -1,6 +1,6 @@
 # Présentation CNPHGE
 
-Deck Reveal.js en français : 35 diapositives principales, puis 6 annexes. La diapositive « Comment construire une échelle commune ? » reste masquée. Le compteur se calcule automatiquement.
+Deck Reveal.js en français : 27 diapositives principales, puis 9 annexes. La diapositive « Comment construire une échelle commune ? » reste masquée. Le compteur se calcule automatiquement.
 
 - URL Hugo : `/cnphge/`.
 - Aperçu autonome : `python3 -m http.server 8765 --directory static`, puis `http://localhost:8765/cnphge/`.
@@ -46,3 +46,29 @@ Les aperçus locaux conservent le deck complet ; les commits intermédiaires peu
 Pour publier la présentation complète, changer ce réglage en `full`, puis pousser
 sur `master`. Revenir à `title` rétablit la couverture au déploiement suivant.
 Ce réglage limite le site publié, pas la visibilité des sources dans le dépôt Git.
+
+Les anciennes slides 18–19 sont réunies dans `specialty-alignment` : quatre étapes avec les flèches, adaptation schématique de Braun (1988), figure 1. Les échelles logarithmiques coulissent sans déformation puis sont superposées ; les petits écarts résiduels sont conservés. `js/alignment.js` gère les transitions, le retour arrière et la réduction des animations.
+
+### Articles de référence fournis
+
+- Hsiao WC, Yntema DB, Braun P, Dunn D, Spencer C. *Measurement and Analysis of Intraservice Work*. JAMA. 1988;260:2361–2370. Enquête auprès de 1 977 médecins de 18 spécialités ; estimation relative au service de référence propre à chaque spécialité. Les quatre dimensions étudiées sont le temps, l’effort mental et le jugement, la technicité et l’effort physique, et le stress. La cohérence et la reproductibilité des jugements ne constituent pas une validation par un étalon objectif ; les coefficients estimés ne sont pas à transposer directement entre spécialités.
+- Braun P et al. *Cross-Specialty Linkage of Resource-Based Relative Value Scales: Linking Specialties by Services and Procedures of Equal Work*. JAMA. 1988;260:2390–2396. Liens entre services identiques ou jugés équivalents, sélection clinique et contrôle des temps ; 82 liens finaux et 133 évaluations participant aux liens. Alignement des logarithmes par moindres carrés pondérés, avec positions communes de compromis et fixation d’une origine arbitraire. Les rapports internes sont préservés. L’écart RMS d’environ 7 % décrit l’ajustement aux liens retenus, pas une erreur mesurée face à une vérité externe. Six liens aux écarts extrêmes ont été retirés avant le réseau final ; les analyses de sensibilité rapportées concernent ce processus historique, pas automatiquement l’implémentation française.
+
+La figure animée de la slide 18 reprend le principe qualitatif de la figure 1 de Braun (p. 2392), et non ses coordonnées ni des données cliniques réelles. Les écarts persistants préparent l’explication ultérieure du compromis entre liens.
+
+Les anciennes slides 19–21 sont fusionnées dans `network-objective` : apparition du réseau et des variables, puis des résidus annotés, puis du coût quadratique pondéré. Le schéma distingue explicitement cette forme pédagogique par liens du critère français restant à documenter. Les positions graphiques des nœuds ne représentent pas les variables numériques.
+
+Sur `network-objective`, b désigne un décalage logarithmique. Le résidu signé est r_AB = (b_A − b_B) − c_AB, où c_AB traduit la relation clinique entre les actes liés. Le critère présenté est la somme non pondérée des carrés ; une origine est fixée. La conversion depuis les facteurs multiplicatifs et les limites de cette formulation pédagogique par liens sont précisées dans les notes orateur.
+
+
+Les slides 20–21 (`optimization-procedure`, `optimization-analysis`) s’appuient sur l’analyse SFED fournie, *CCAM – Tome 2*, T. Ponchon, L. Palazzo, J.-M. Canard, p. 10–11, 17–18 et 22. La procédure rapportée alterne ajustement et retrait de la pire passerelle dépassant un seuil relatif de 20 %. Le dénominateur, le cas d’égalité, le critère exact et les règles d’ex æquo restent à préciser. Le seuil de 25 % sur les durées est distinct. L’analyse sépare la convexité du modèle quadratique à réseau fixé de la sélection itérative des liens ; elle ne prétend pas démontrer la convexité du logiciel français. Les résidus de la slide 19 utilisent uniformément les décalages logarithmiques.
+
+Une slide `graph-consistency` suit le réseau (slide 20) : triangle GP–PK–GK, cohérence des c sur les cycles et compromis sur les résidus. La procédure et son analyse passent aux slides 21–22. L’étape Ajuster montre les quatre nœuds et cinq liens du réseau, conservés ensemble avant tout retrait.
+
+Fin resserrée aux slides 23–25 : redondance et ponts, qualité et incertitude des liens, transparence. Les comparaisons L2/L1, les biais partagés et les six tests de sensibilité sont déplacés aux annexes G–I. Le constat de transparence est attribué au document SFED historique, sans affirmer un état actuel non vérifié.
+
+La slide 26 (`take-home-message`) conclut avec les trois composantes de l’optimisation, les risques liés au critère et les exigences de redondance indépendante, d’incertitude et de transparence.
+
+L’intertitre de troisième partie `section-interpretation` est placé après la slide 22 : « Interprétation — Forces et limites de la procédure ».
+
+L’intertitre de troisième partie précède désormais l’analyse de convexité : intertitre en slide 22, analyse en slide 23.
