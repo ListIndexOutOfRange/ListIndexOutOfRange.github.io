@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Meeting CAMMA 2026.10.06</title>
+
+		<link rel="stylesheet" href="../_reveal/dist/reset.css">
+		<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+		<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../_reveal/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div id="custom-slide-number"></div>
+		<div class="reveal">
+		<div class="slides">
+			<!---------------------------------------------------------------------------------------------------------------->
+			<!--                                                   SLIDES                                                   -->
+			<!---------------------------------------------------------------------------------------------------------------->
+			
+			<!-- USEFUL STUFF
+			 	- class='topleft' for top-left alignment
+				- use a dedicated row class when you want one column to take more of the normal slide width
+				- slide numbering:
+					- add data-no-count to a section to exclude it from the count
+					- add data-start-from="n" to set the count to n at that slide (inclusive)
+			-->
+
+			<!---------------------------------------------------- TITLE ----------------------------------------------------->
+			<section class="title-slide">
+				<h1>Meeting CAMMA 2026.10.06</h1>
+				<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
+			</section>
+
+			<section data-auto-animate data-start-from="1" class="topleft">
+				<h2>Agenda</h2>
+				<div class="flex-container" style="margin-top: 3em;">
+					<ol class="agenda-list">
+						<li>Preparing IPCAI submissions</li>
+					</ol>
+				</div>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Remaining questions</h2>
+				<!-- <p class="slide-subtitle">Make key frames a first-class training signal</p> -->
+				<ul class="clean-list">
+					<li class="fragment">Combine precision/recall (yolo/sam3)</li>
+					<li class="fragment">sub-analysis of performance on cystic duct/cystic artery on "Cx" phase like Endoscape dataset</li>
+					<li class="fragment">sub-analysis according to different surgical difficulty</li>
+					<li class="fragment">Investigate the relationship or attention matrix between CBD and no-go zone</li>
+					<li class="fragment">Do a real finetune (two-stage) of ICG-final 1-10 videos</li>
+					<li class="fragment">Other method to improve RS detection ?</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Potential short term improvements</h2>
+				<!-- <p class="slide-subtitle">Make key frames a first-class training signal</p> -->
+				<ul class="clean-list">
+					<li class="fragment">Frame sampling and phase aware training <br> (module or prompt with unfrozen language LoRA)</li>
+					<li class="fragment">Better per-annotation type loss</li>
+					<li class="fragment">PU learning</li>
+					<li class="fragment">Self-supervised stage
+						<ul>
+							<li class="fragment">GT bbox prompt to mask, then mask as pseudo-labels</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate class="topleft">
+				<h2>Expected timeline</h2>
+				<!-- <p class="slide-subtitle">Make key frames a first-class training signal</p> -->
+				<ul class="clean-list">
+					<li class="fragment">October 16 ? : finalize method and scope</li>
+					<li class="fragment">October 23 ? : finalize experiments and paper v1</li>
+					<li class="fragment">October 30 : IPCAI submission deadline</li>
+				</ul>
+			</section>
+
+			<!---------------------------------------------------------------------------------------------------------------->
+		</div>
+		</div>
+		<script src="../_reveal/dist/reveal.js"></script>
+		<script src="../_reveal/plugin/notes/notes.js"></script>
+		<script src="../_reveal/plugin/markdown/markdown.js"></script>
+		<script src="../_reveal/plugin/highlight/highlight.js"></script>
+		<script src="../_reveal/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: false,
+				progress: true,
+				center: true,
+				// Bounds for smallest/largest possible scale to apply to content
+				// minScale: 0.2,
+				// maxScale: 2.0,
+				// preloadIframes: true,
+				// viewDistance: 30,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<script>
+			document.querySelectorAll('.image-row').forEach(row => {
+				row.style.setProperty('--n', row.querySelectorAll('img').length);
+			});
+		</script>
+		<script>
+		(function () {
+			const box = document.getElementById('custom-slide-number');
+
+			function slidesInOrder() {
+				// Ordre réel de navigation : horizontal, puis vertical
+				const order = [];
+				const hs = Reveal.getHorizontalSlides();
+				for (const h of hs) {
+					const vs = h.querySelectorAll(':scope > section');
+					if (vs.length === 0) {
+						order.push(h);
+					} else {
+						vs.forEach(v => order.push(v));
+					}
+				}
+				return order;
+			}
+
+			function isEarlier(a, b) {
+				// Compare par "past count" Reveal
+				return Reveal.getSlidePastCount(a) < Reveal.getSlidePastCount(b);
+			}
+
+			function computeNumberFor(slide, all) {
+				let val = 0;
+				for (const s of all) {
+					// reset avant d'incrémenter la slide courante
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1; // -1 car on incrémente juste après si comptée
+					}
+					// Incrémente seulement si elle "compte"
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+					if (s === slide) break;
+				}
+				return val;
+			}
+
+			function computeTotal(all) {
+				let val = 0;
+				for (const s of all) {
+					if (s.hasAttribute('data-start-from')) {
+						const n = parseInt(s.getAttribute('data-start-from'), 10);
+						if (!Number.isNaN(n)) val = n - 1;
+					}
+					if (!s.hasAttribute('data-no-count')) {
+						val += 1;
+					}
+				}
+				return val;
+			}
+
+			function update() {
+				const all = slidesInOrder();
+				const slide = Reveal.getCurrentSlide();
+				if (!slide) return;
+
+				// Si on veut cacher le numéro sur cette slide :
+				if (slide.hasAttribute('data-no-number')) {
+					box.style.display = 'none';
+					return;
+				} else {
+					box.style.display = '';
+				}
+
+				const cur = computeNumberFor(slide, all);
+				const total = computeTotal(all);
+
+				// Affichage "c / t" ; change ici si tu veux juste "c"
+				// box.textContent = `${cur} / ${total}`;
+				box.textContent = `${cur}`;
+			}
+
+			Reveal.on('ready', update);
+			Reveal.on('slidechanged', update);
+		})();
+		</script>
+		<!-- <script>
+			Reveal.on('slidetransitionend', () => {
+				document.querySelectorAll('[data-auto-animate]').forEach(el => {
+					el.style.transform = 'none';
+				});
+			});
+		</script> -->
+	</body>
+</html>
