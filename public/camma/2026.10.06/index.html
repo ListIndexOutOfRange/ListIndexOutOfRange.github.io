@@ -61,16 +61,23 @@
 			<section data-auto-animate class="topleft">
 				<h2>Potential short term improvements</h2>
 				<!-- <p class="slide-subtitle">Make key frames a first-class training signal</p> -->
-				<ul class="clean-list">
+				<ol class="clean-list">
+					<li class="fragment">Finalize annotations bootstrapping
+						<ul>
+							<li class="fragment">no-go mask to no-go line</li>
+							<li class="fragment">s4b line and no-go line to no-go mask</li>
+							<li class="fragment">liver to s4b line</li>
+						</ul>
+						<li class="fragment">Self-supervised stage
+							<ul>
+								<li class="fragment">GT bbox prompt to mask, then mask as pseudo-labels</li>
+							</ul>
+						</li>
+					</li>
 					<li class="fragment">Frame sampling and phase aware training <br> (module or prompt with unfrozen language LoRA)</li>
 					<li class="fragment">Better per-annotation type loss</li>
 					<li class="fragment">PU learning</li>
-					<li class="fragment">Self-supervised stage
-						<ul>
-							<li class="fragment">GT bbox prompt to mask, then mask as pseudo-labels</li>
-						</ul>
-					</li>
-				</ul>
+				</ol>
 			</section>
 
 			<section data-auto-animate class="topleft">
