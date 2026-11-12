@@ -10,7 +10,7 @@ From the repository root:
 python3 -m http.server 8000 --directory static
 ```
 
-Open <http://localhost:8000/camma/meeting/2026.11.11/>. The deck uses the shared Reveal runtime in `static/camma/_reveal/`; serve the full `static` directory, not only this deck folder.
+Open <http://localhost:8000/camma/meeting/2026.11.12/>. The deck uses the shared Reveal runtime in `static/camma/_reveal/`; serve the full `static` directory, not only this deck folder.
 
 - Right / Space: advance (Space also traverses backups).
 - Down / Up: navigate the backup stack.
