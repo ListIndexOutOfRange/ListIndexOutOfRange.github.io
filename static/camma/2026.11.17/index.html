@@ -68,7 +68,13 @@
 
 <section class="topleft" >
 <h2>2. Representation and tracking</h2>
-<p class="slide-subtitle">Proposed model</p><ul class="clean-list"><li><strong>Raw surgical videos:</strong> learn representations with video self-supervision.</li><li><strong>First baseline:</strong> reuse our internal surgical DINO encoder.</li><li>Add temporal query propagation and annotation conditioning, inspired by VidEoMT.</li><li>Predict geometry with outputs for boxes, masks and lines.</li><li>Propagate from both annotated endpoints, then compare predictions within the interval.</li></ul><p class="source">Reference: <a href="https://arxiv.org/abs/2602.17807">VidEoMT, Norouzi et al., 2026</a></p>
+<p class="slide-subtitle">Proposed model</p><ul class="clean-list"><li><strong>Raw surgical videos:</strong> learn representations with video self-supervision.</li><li><strong>First baseline:</strong> reuse our internal surgical DINO encoder.</li><li>Add temporal query propagation and annotation conditioning, inspired by VidEoMT.</li><li>Predict geometry with outputs for boxes, masks and lines.</li><li>Propagate from both annotated endpoints, then compare predictions within the interval.</li></ul>
+<p class="source">References:
+    <ul class="clean-list"> 
+        <li style="font-size: large;"><a href="https://arxiv.org/abs/2602.17807">VidEoMT, Norouzi et al., 2026</a></li>
+        <li style="font-size: large;"><a href="https://arxiv.org/abs/2609.34895">LVMT, Norouzi et al., 2026</a></li>
+    </ul>
+</p>
 <aside class="notes">User proposal, with architecture details proposed for discussion. Source: https://arxiv.org/abs/2602.17807 . VidEoMT performs online video segmentation with a plain ViT, propagating object queries from the previous frame and fusing them with learned temporally agnostic queries. It does not require a separate dedicated tracking module. Annotation conditioning, bidirectional inference, line outputs and uncertainty estimation are proposed extensions here, not capabilities established by that paper. Internal surgical DINO is the available starting encoder, not an assertion that we already have a video-pretrained model.</aside>
 </section>
 
