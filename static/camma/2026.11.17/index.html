@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meeting CAMMA 2026.11.17</title>
+<link rel="stylesheet" href="../_reveal/dist/reset.css">
+<link rel="stylesheet" href="../_reveal/dist/reveal.css">
+<link rel="stylesheet" href="../_reveal/dist/theme/white.css">
+<link rel="stylesheet" href="css/custom.css">
+</head><body><div id="custom-slide-number" aria-hidden="true"></div>
+<div class="reveal"><div class="slides">
+<section class="title-slide" data-no-count data-no-number>
+<h1>Meeting CAMMA<br>2026.11.17</h1>
+<h3>Luc / Shih-Min / Pietro / Nicolas</h3>
+</section>
+
+<section class="topleft" >
+<h2>Agenda</h2>
+<div class="flex-container" style="margin-top:3em"><ol class="agenda-list"><li>RF-DETR performance interpretability</li><li>Next project: annotation densification</li></ol></div>
+<aside class="notes"></aside>
+</section>
+
+<section class="topleft" >
+<h2>1.1. Performance by surgical difficulty</h2>
+<figure class="plot overview"><a href="assets/ap50_by_surgical_difficulty.png" target="_blank" rel="noopener"><img src="assets/ap50_by_surgical_difficulty.png" alt="Mean AP at IoU 0.50 by Nassar and PGS grade, for five anatomical classes in BSAFE and ICGF."></a></figure>
+<aside class="notes">Source: assets/metrics_per_surgical_difficulty.csv and assets/ap50_by_surgical_difficulty.png. The chart does not identify the training regime, so do not describe it as a controlled comparison of BSAFE-only versus joint training. Mean AP@50 is in percent. ICGF CBD under Nassar: 76.21, 68.84, 45.96, with 13, 14, 4 eligible videos. ICGF Rouvière's sulcus under PGS: 39.79, 20.71, 11.82, with 13, 4, 5 eligible videos. BSAFE gallbladder and no-go zone remain above 95 mean AP@50 in every group. Other classes do not show a uniform monotonic trend. Grade groups overlap across the two grading systems. SDs are available in the CSV, not shown on the plot. These are associations, not evidence of a causal effect of surgical difficulty.</aside>
+</section>
+
+<section class="topleft" >
+<h2>1.2. Spatial blur sensitivity</h2>
+<ul class="clean-list"><li><strong>Question:</strong> which image regions affect CBD localization and no-go-zone segmentation?</li><li>Compare BSAFE-only and joint training (BSAFE + ICGF).</li><li>Blur local patches and measure prediction change, GT overlap and confidence.</li><li><strong>Interpretation:</strong> sensitivity to a perturbation, with possible effects of blur artifacts and overlapping anatomy.</li></ul>
+<aside class="notes">Method source: /home/lucvedrenne/Documents/PostDoc/Outputs/2026.11/render_smoothed.py. The displayed local maps use patch side 64/576 of the image long edge and display smoothing sigma = patch side × 0.125. The method matches target-class predictions by confidence × overlap with the reference box, and skips missing or low-confidence baselines. CBD protected areas combine GT and both models' valid baseline boxes, dilated by a configured margin. No-go-zone maps do not protect the CBD. Prediction change = 1 − IoU with the original prediction. GT IoU drop = original minus perturbed GT IoU. Confidence drop = original minus perturbed score. For no-go masks the third column measures change outside the blurred patch. Heatmaps average the effect of overlapping patches at each pixel. Scales are shared between models within a figure, not necessarily between figures. Separate structure-box blurring is shown later.</aside>
+</section>
+
+<section class="topleft" >
+<h2>1.3. CBD: local evidence and context</h2>
+<figure class="plot "><a href="assets/bsafe_CMRP_4_3190.png" target="_blank" rel="noopener"><!-- Crop viewports retain original pixels and omit only the protected column. -->
+<svg class="cbd-comparison" viewBox="0 0 1280 1060" role="img" aria-labelledby="cbd-comparison-title">
+<title id="cbd-comparison-title">CBD box sensitivity for CMRP 4 frame 3190: anatomy and unprotected CBD for BSAFE-only and joint training. Shared 0–0.30 scale for 1 minus IoU, using 64-pixel patches.</title>
+<svg x="0" y="0" width="620" height="900" viewBox="290 80 620 900" overflow="hidden">
+<image href="assets/bsafe_CMRP_4_3190.png" width="2400" height="1120"/>
+</svg>
+<svg x="660" y="0" width="620" height="900" viewBox="1545 80 620 900" overflow="hidden">
+<image href="assets/bsafe_CMRP_4_3190.png" width="2400" height="1120"/>
+</svg>
+<svg x="240" y="940" width="800" height="100" viewBox="810 1020 800 100" overflow="hidden">
+<image href="assets/bsafe_CMRP_4_3190.png" width="2400" height="1120"/>
+</svg>
+</svg></a><figcaption>clear dependence to ICG</figcaption></figure>
+<aside class="notes">Source: assets/bsafe_CMRP_4_3190.png. The displayed crop omits the protected column and preserves the anatomy and unprotected columns, both model rows, and the shared color scale. 64-pixel patches. Qualitative observation on one frame. Both rows share the displayed 0–0.30 scale for 1 − box IoU. Do not infer a population-level difference between training regimes from this example.</aside>
+</section>
+
+<section class="topleft" >
+<h2>1.4. No-go-zone sensitivity</h2>
+<figure class="plot "><a href="assets/bsafe_CMRP_3_6580_no_go_zone_64.png" target="_blank" rel="noopener"><img src="assets/bsafe_CMRP_3_6580_no_go_zone_64.png" alt="No-go-zone predictions and blur sensitivity for CMRP 3 frame 6580, comparing BSAFE-only and joint training."></a><figcaption>Blurring near the CBD changes the no-go mask beyond the blurred patch.</figcaption></figure>
+<aside class="notes">Source: assets/bsafe_CMRP_3_6580_no_go_zone_64.png and render_smoothed.py. Third column: 1 − mask IoU outside the changed pixels, relative to the baseline prediction. This is a qualitative example, not proof of anatomical reasoning.</aside>
+</section>
+
+<section class="topleft" >
+<h2>1.5. Structure-box blur</h2>
+<figure class="plot "><a href="assets/iou_drop.png" target="_blank" rel="noopener"><img src="assets/iou_drop.png" alt="No-go-zone IoU-drop boxplots after blurring CD, GB, CBD or RS boxes for BSAFE-only and joint training."></a><figcaption>Mean no-go-zone IoU drop after CBD blur: <strong>28.00 pp</strong> (BSAFE-only), <strong>19.51 pp</strong> (joint).<br><span class="detail">919 frames across 15 videos. Other structure means are at most 2.28 pp.</span></figcaption></figure>
+<aside class="notes">Sources: assets/iou_drop.png and assets/iou_drop_table.png. Positive drop means worse segmentation. Only frames with positive no-go-zone GT are included. Baseline and blurred means use the same available-structure frames within each row. CBD medians: 28.78 and 7.72 percentage points. CBD mean baseline/blurred IoU: 0.7934/0.5134 (BSAFE-only), 0.7945/0.5994 (joint). Different structures have different frame subsets and box sizes. Frames are correlated within videos. This supports sensitivity to the CBD region under this intervention, not a causal anatomical mechanism or a statistically established advantage. Control region size, overlap and perturbation strength before comparing structures. Full source table in backup.</aside>
+</section>
+
+<section class="topleft" >
+<h2>2. Annotation densification</h2>
+<p class="slide-subtitle">Setup: sparse annotations along video sequences</p><ul class="clean-list"><li>Track <strong>boxes, masks and lines</strong> between regularly annotated frames.</li><li>Use the annotations on both sides of each interval for <strong>bidirectional tracking</strong>.</li><li>Few objects, mostly one instance per class, simplify identity association.</li><li>Detection remains difficult: subtle anatomy and changing ICG appearance.</li><li><strong>Goal:</strong> produce dense candidate annotations with uncertainty for review.</li></ul>
+<aside class="notes">Project setup and goal supplied by Luc. Regular means recurring annotations, not an assumed fixed time interval. Bidirectional tracking is an offline setting using both endpoint annotations. Do not assume single-instance classes never have exceptions. No model results are claimed for this proposed project.</aside>
+</section>
+
+<section class="topleft" >
+<h2>2. Representation and tracking</h2>
+<p class="slide-subtitle">Proposed model</p><ul class="clean-list"><li><strong>Raw surgical videos:</strong> learn representations with video self-supervision.</li><li><strong>First baseline:</strong> reuse our internal surgical DINO encoder.</li><li>Add temporal query propagation and annotation conditioning, inspired by VidEoMT.</li><li>Predict geometry with outputs for boxes, masks and lines.</li><li>Propagate from both annotated endpoints, then compare predictions within the interval.</li></ul><p class="source">Reference: <a href="https://arxiv.org/abs/2602.17807">VidEoMT, Norouzi et al., 2026</a></p>
+<aside class="notes">User proposal, with architecture details proposed for discussion. Source: https://arxiv.org/abs/2602.17807 . VidEoMT performs online video segmentation with a plain ViT, propagating object queries from the previous frame and fusing them with learned temporally agnostic queries. It does not require a separate dedicated tracking module. Annotation conditioning, bidirectional inference, line outputs and uncertainty estimation are proposed extensions here, not capabilities established by that paper. Internal surgical DINO is the available starting encoder, not an assertion that we already have a video-pretrained model.</aside>
+</section>
+
+<section class="topleft" >
+<h2>2. Explicit uncertainty</h2>
+<ul class="clean-list"><li><strong>Forward vs backward:</strong> compare tracks seeded from opposite annotations.</li><li><strong>Conditional vs unconditional:</strong> compare annotation-conditioned tracking with detection without annotation prompts.</li><li><strong>Temporal consistency:</strong> flag abrupt changes, disappearance and unstable geometry.</li></ul>
+<aside class="notes">Proposed uncertainty signals, not validated estimators. “Unconditional” means no annotation prompt or track history, while still observing the image/video. Compare same-class boxes with IoU, masks with overlap or boundary metrics, and lines with a suitable normalized geometric distance. Low disagreement can occur when both directions make the same error. Hold out complete videos and hide evaluation annotations from both tracking seeds and training. Fit acceptance thresholds on validation videos and report error versus accepted coverage on separate test videos. Distinguish actual absence from uncertain visibility.</aside>
+</section>
+
+<section class="topleft" >
+<h2>2. Video self-supervision</h2>
+<p class="slide-subtitle">Internal surgical DINO first, V-JEPA 2.1 next</p><ul class="clean-list"><li><strong>Immediate baseline:</strong> build tracking on the surgical representation we already have.</li><li><strong>Candidate:</strong> V-JEPA 2.1 learns dense video features with improved temporal consistency.</li><li><strong>Hypothesis:</strong> predictive video features may help maintain anatomy through appearance changes, including ICG.</li><li>Compare backbones with the same tracking head, annotation spacing and held-out videos.</li></ul><p class="source"><a href="https://arxiv.org/abs/2603.14482">V-JEPA 2.1, Mur-Labadia et al., 2026</a></p>
+<aside class="notes">Sources: https://arxiv.org/abs/2603.14482 and https://github.com/facebookresearch/vjepa2 . V-JEPA 2.1 targets high-quality dense features with dense predictive loss, supervision at intermediate layers and image/video tokenizers. This motivates testing its encoder for tracking, but does not establish surgical or ICG robustness. The world-model direction refers to predictive latent representations from video. V-JEPA 2-AC is the separate action-conditioned robotics model. We do not propose robot-action conditioning here. Raw surgical-video adaptation is a proposed subsequent stage, with split boundaries fixed before pretraining to keep the evaluation clean.</aside>
+</section>
+
+<section class="topleft" >
+<h2>2. First experiments and discussion</h2>
+<ul class="clean-list"><li>Hide intermediate annotations and reconstruct them from the surrounding anchors.</li><li>Compare framewise detection, forward tracking and bidirectional tracking.</li><li>Vary annotation spacing and evaluate errors during ICG appearance changes.</li><li>Report geometry quality, accepted annotation coverage and manual correction effort.</li></ul>
+<aside class="notes">Proposed evaluation plan for discussion. Use held-out videos and keep hidden evaluation labels out of conditioning. Evaluate boxes, masks and lines with metrics appropriate to each geometry. Compare at the same accepted coverage and include per-video uncertainty estimates. Review effort should be measured rather than assumed. The objective is useful annotation densification, not only higher framewise accuracy. No timeline or compute commitment is assumed.</aside>
+</section>
+
+<section class="topleft" data-backup>
+<h2>Backup: CBD context</h2>
+<figure class="plot "><a href="assets/bsafe_CMRP_10_20443_common_bile_duct_64.png" target="_blank" rel="noopener"><img src="assets/bsafe_CMRP_10_20443_common_bile_duct_64.png" alt="CBD prediction and spatial blur sensitivity, CMRP 10 / 20443"></a><figcaption>CBD protected. Context sensitivity differs between the two models in this frame.<br><span class="detail">CMRP 10 / 20443. Scales are shared within this figure, not across examples.</span></figcaption></figure>
+<aside class="notes">Source: assets/bsafe_CMRP_10_20443_common_bile_duct_64.png. Qualitative example, not a population-level model comparison. Patch side 64/576 of the long edge. Display smoothing sigma = patch × 0.125. White/no-heatmap protected region does not imply zero sensitivity.</aside>
+</section>
+
+<section class="topleft" data-backup>
+<h2>Backup: CBD context</h2>
+<figure class="plot "><a href="assets/bsafe_CMRP_6_36406_common_bile_duct_64.png" target="_blank" rel="noopener"><img src="assets/bsafe_CMRP_6_36406_common_bile_duct_64.png" alt="CBD prediction and spatial blur sensitivity, CMRP 6 / 36406"></a><figcaption>CBD protected. Nearby context can alter the predicted box even when CBD pixels stay fixed.<br><span class="detail">CMRP 6 / 36406. Scales are shared within this figure, not across examples.</span></figcaption></figure>
+<aside class="notes">Source: assets/bsafe_CMRP_6_36406_common_bile_duct_64.png. Qualitative example, not a population-level model comparison. Patch side 64/576 of the long edge. Display smoothing sigma = patch × 0.125. White/no-heatmap protected region does not imply zero sensitivity.</aside>
+</section>
+
+<section class="topleft" data-backup>
+<h2>Backup: CBD context</h2>
+<figure class="plot "><a href="assets/bsafe_CMRP_83_19973_common_bile_duct_64.png" target="_blank" rel="noopener"><img src="assets/bsafe_CMRP_83_19973_common_bile_duct_64.png" alt="CBD prediction and spatial blur sensitivity, CMRP 83 / 19973"></a><figcaption>CBD protected. Localization and confidence responses need separate interpretation.<br><span class="detail">CMRP 83 / 19973. Scales are shared within this figure, not across examples.</span></figcaption></figure>
+<aside class="notes">Source: assets/bsafe_CMRP_83_19973_common_bile_duct_64.png. Qualitative example, not a population-level model comparison. Patch side 64/576 of the long edge. Display smoothing sigma = patch × 0.125. White/no-heatmap protected region does not imply zero sensitivity.</aside>
+</section>
+
+<section class="topleft" data-backup>
+<h2>Backup: structure-box blur results</h2>
+<table class="data-table"><thead><tr><th>Blurred structure</th><th>Frames / videos</th><th>BSAFE-only</th><th>Joint</th></tr></thead><tbody>
+<tr><td>Cystic duct</td><td>417 / 15</td><td>1.74</td><td>1.48</td></tr>
+<tr><td>Gallbladder</td><td>1,015 / 15</td><td>2.28</td><td>1.80</td></tr>
+<tr class="focus"><td>Common bile duct</td><td>919 / 15</td><td><strong>28.00</strong></td><td><strong>19.51</strong></td></tr>
+<tr><td>Rouvière’s sulcus</td><td>300 / 14</td><td>0.98</td><td>0.18</td></tr>
+</tbody></table><p class="slide-subtitle">Mean no-go-zone IoU drop in percentage points.</p>
+<p>Each row uses its own available-structure frame subset.<br>Positive drop means worse segmentation.</p>
+<p class="source"><a href="assets/iou_drop_table.png" target="_blank" rel="noopener">Full source table with original / blurred IoU and medians</a></p>
+<aside class="notes">All numbers transcribed from assets/iou_drop_table.png. Models in source table: segment_bsafe and segment_joint. Positive no-go-zone GT frames only. The same frames support baseline and blurred means within each model/structure row. Frame counts are not independent-video counts. No significance test was supplied.</aside>
+</section>
+</div></div>
+<script src="../_reveal/dist/reveal.js"></script>
+<script src="../_reveal/plugin/notes/notes.js"></script>
+<script src="js/deck.js"></script>
+</body></html>
